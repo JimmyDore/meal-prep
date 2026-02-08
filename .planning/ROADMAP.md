@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ce projet construit un outil de meal prep macro-optimise en 8 phases. On commence par le socle technique complet incluant base de donnees ET deploiement production (Phase 1), eliminant le bloqueur release des le depart. Ensuite le pipeline de donnees recettes (Phase 2), le catalogue consultable (Phase 3), l'authentification et profils (Phase 4), le moteur de calcul macros (Phase 5), l'algorithme de generation de plans basique (Phase 6), le batch cooking et l'historique (Phase 7), et les enhancements utilisateur (Phase 8). Chaque phase livre une capacite complete et verifiable avant de passer a la suivante.
+Ce projet construit un outil de meal prep macro-optimise en 9 phases. On commence par le socle technique complet incluant base de donnees ET deploiement production (Phase 1), eliminant le bloqueur release des le depart. Ensuite le pipeline de donnees recettes (Phase 2), le catalogue consultable (Phase 3), l'authentification et profils (Phase 4), le moteur de calcul macros (Phase 5), l'algorithme de generation de plans basique (Phase 6), le batch cooking et l'historique (Phase 7), les enhancements utilisateur (Phase 8), et la suggestion de recettes a partir des ingredients restants dans le frigo (Phase 9). Chaque phase livre une capacite complete et verifiable avant de passer a la suivante.
 
 ## Phases
 
@@ -13,13 +13,14 @@ Ce projet construit un outil de meal prep macro-optimise en 8 phases. On commenc
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Foundation + Database + Deployment** - Socle technique, schema Postgres, infra de tests, Docker, VPS, domain + SSL, auto-deploy, Hello World connecte a la DB
-- [ ] **Phase 2: Recipe Data Pipeline** - Scraper local Jow, enrichissement macros Claude Code, upload API serveur
+- [x] **Phase 2: Recipe Data Pipeline** - Scraper local Jow, enrichissement macros Claude Code, upload API serveur
 - [ ] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details
 - [ ] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
 - [ ] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
 - [ ] **Phase 6: Basic Meal Plan Generation** - Algorithme de selection de recettes pour plan hebdo sans batch cooking
 - [ ] **Phase 7: Batch Cooking + Plan History** - Support batch cooking avec portions reelles et historique des plans
 - [ ] **Phase 8: Plan Customization + Enhancements** - Lock/swap de repas, liste de courses, favoris
+- [ ] **Phase 9: Fridge Ingredient Recipe Selection** - Suggestion de recettes a partir des ingredients restants dans le frigo
 
 ## Phase Details
 
@@ -57,11 +58,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Schema migration (new recipe columns, ingredients.name unique) + pipeline scaffolding (types, schemas, JSONL utils, logger)
-- [ ] 02-02-PLAN.md -- Jow.fr scraper (Playwright, sitemap discovery, recipe detail extraction, JSONL output, resumability)
-- [ ] 02-03-PLAN.md -- Claude CLI macro enrichment (enricher wrapper, prompt, validation, retry, cross-validation)
-- [ ] 02-04-PLAN.md -- Upload API endpoint (bearer token auth, Zod validation, Drizzle upsert transaction)
-- [ ] 02-05-PLAN.md -- Upload client + end-to-end pipeline integration and verification
+- [x] 02-01-PLAN.md -- Schema migration (new recipe columns, ingredients.name unique) + pipeline scaffolding (types, schemas, JSONL utils, logger)
+- [x] 02-02-PLAN.md -- Jow.fr scraper (Playwright, sitemap discovery, recipe detail extraction, JSONL output, resumability)
+- [x] 02-03-PLAN.md -- Claude CLI macro enrichment (enricher wrapper, prompt, validation, retry, cross-validation)
+- [x] 02-04-PLAN.md -- Upload API endpoint (bearer token auth, Zod validation, Drizzle upsert transaction)
+- [x] 02-05-PLAN.md -- Upload client + end-to-end pipeline integration and verification
 
 ### Phase 3: Recipe Catalogue
 **Goal**: L'utilisateur peut parcourir, rechercher et consulter les recettes avec leurs macros dans une interface web
@@ -162,18 +163,31 @@ Plans:
 - [ ] 08-02: Generation liste de courses (agregation ingredients, normalisation unites, batch cooking)
 - [ ] 08-03: Systeme de favoris/notes recettes (notation, poids dans l'algorithme de selection)
 
+### Phase 9: Fridge Ingredient Recipe Selection
+**Goal**: L'utilisateur peut saisir les ingredients qu'il a dans son frigo et obtenir des suggestions de recettes qui les utilisent, pour reduire le gaspillage alimentaire
+**Depends on**: Phase 8
+**Success Criteria** (what must be TRUE):
+  1. L'utilisateur peut saisir une liste d'ingredients disponibles dans son frigo (avec autocompletion depuis la base d'ingredients existante)
+  2. Le systeme suggere des recettes qui maximisent l'utilisation des ingredients saisis, triees par pertinence (nombre d'ingredients matches)
+  3. L'utilisateur peut voir quels ingredients de chaque recette suggeree sont deja dans son frigo et lesquels manquent
+**Plans**: TBD
+
+Plans:
+- [ ] 09-01: TBD (run /gsd:plan-phase 9 to break down)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Foundation + Database + Deployment | 6/6 | ✓ Complete | 2026-02-08 |
-| 2. Recipe Data Pipeline | 0/5 | Not started | - |
+| 2. Recipe Data Pipeline | 5/5 | Complete | 2026-02-08 |
 | 3. Recipe Catalogue | 0/3 | Not started | - |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
 | 8. Plan Customization + Enhancements | 0/3 | Not started | - |
+| 9. Fridge Ingredient Recipe Selection | 0/? | Not started | - |
