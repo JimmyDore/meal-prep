@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details
 - [x] **Phase 3.1: Pipeline Enrichment Optimization** [INSERTED] - Enrichissement par ingredient unique (pas par recette), deduplication massive pour reduire les appels Claude CLI
 - [x] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
-- [ ] **Phase 4.1: Comprehensive Unit Tests** [INSERTED] - Tests unitaires complets pour pipeline, API, DB queries, schemas, et composants React
+- [x] **Phase 4.1: Comprehensive Unit Tests** [INSERTED] - Tests unitaires complets pour pipeline, API, DB queries, schemas, et composants React
 - [ ] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
 - [ ] **Phase 6: Basic Meal Plan Generation** - Algorithme de selection de recettes pour plan hebdo sans batch cooking
 - [ ] **Phase 7: Batch Cooking + Plan History** - Support batch cooking avec portions reelles et historique des plans
@@ -140,12 +140,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 04.1-01-PLAN.md -- Fix vitest config + export private helpers + pipeline pure function tests (jow-parser, recipe-assembler, claude-enricher helpers)
-- [ ] 04.1-02-PLAN.md -- Pipeline impure function tests with mocks (JSONL, API client, claude-enricher, ingredient-extractor)
-- [ ] 04.1-03-PLAN.md -- Zod schema boundary tests (pipeline schemas + profile schemas)
-- [ ] 04.1-04-PLAN.md -- API upload route tests + DB integration tests (recipes, profiles)
-- [ ] 04.1-05-PLAN.md -- React catalogue component tests (SearchBar, TagFilter, PaginationControls)
-- [ ] 04.1-06-PLAN.md -- React auth/onboarding component tests (LoginForm, RegisterForm, OnboardingWizard)
+- [x] 04.1-01-PLAN.md -- Fix vitest config + export private helpers + pipeline pure function tests (jow-parser, recipe-assembler, claude-enricher helpers)
+- [x] 04.1-02-PLAN.md -- Pipeline impure function tests with mocks (JSONL, API client, claude-enricher, ingredient-extractor)
+- [x] 04.1-03-PLAN.md -- Zod schema boundary tests (pipeline schemas + profile schemas)
+- [x] 04.1-04-PLAN.md -- API upload route tests + DB integration tests (recipes, profiles)
+- [x] 04.1-05-PLAN.md -- React catalogue component tests (SearchBar, TagFilter, PaginationControls)
+- [x] 04.1-06-PLAN.md -- React auth/onboarding component tests (LoginForm, RegisterForm, OnboardingWizard)
 
 ### Phase 5: Macro Calculation Engine
 **Goal**: Le systeme calcule automatiquement les targets macros hebdomadaires et les macros reelles par portion de recette
@@ -235,7 +235,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -
 | 3. Recipe Catalogue | 5/5 | Complete | 2026-02-08 |
 | 3.1 Pipeline Enrichment Optimization | 2/2 | Complete | 2026-02-08 |
 | 4. Authentication + User Profile | 4/4 | Complete | 2026-02-08 |
-| 4.1 Comprehensive Unit Tests | 0/6 | Not started | - |
+| 4.1 Comprehensive Unit Tests | 6/6 | Complete | 2026-02-08 |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
