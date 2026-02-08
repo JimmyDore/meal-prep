@@ -16,11 +16,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Catalogue Recettes
 
-- [ ] **CAT-01**: User peut parcourir le catalogue de recettes avec pagination
-- [ ] **CAT-02**: User peut rechercher des recettes par nom (full-text search)
-- [ ] **CAT-03**: User peut filtrer les recettes par tags alimentaires (vegetarien, sans gluten, sans porc, etc.)
-- [ ] **CAT-04**: User peut voir le detail d'une recette (ingredients, macros par portion, temps, photo)
-- [ ] **CAT-05**: User peut cliquer sur un lien vers la recette Jow originale
+- [x] **CAT-01**: User peut parcourir le catalogue de recettes avec pagination
+- [x] **CAT-02**: User peut rechercher des recettes par nom (full-text search)
+- [x] **CAT-03**: User peut filtrer les recettes par tags alimentaires (vegetarien, sans gluten, sans porc, etc.)
+- [x] **CAT-04**: User peut voir le detail d'une recette (ingredients, macros par portion, temps, photo)
+- [x] **CAT-05**: User peut cliquer sur un lien vers la recette Jow originale
 
 ### Profil Utilisateur
 
@@ -104,11 +104,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DATA-02 | Phase 2 | Complete |
 | DATA-03 | Phase 2 | Complete |
 | DATA-04 | Phase 1 | Complete |
-| CAT-01 | Phase 3 | Pending |
-| CAT-02 | Phase 3 | Pending |
-| CAT-03 | Phase 3 | Pending |
-| CAT-04 | Phase 3 | Pending |
-| CAT-05 | Phase 3 | Pending |
+| CAT-01 | Phase 3 | Complete |
+| CAT-02 | Phase 3 | Complete |
+| CAT-03 | Phase 3 | Complete |
+| CAT-04 | Phase 3 | Complete |
+| CAT-05 | Phase 3 | Complete |
 | PROF-01 | Phase 4 | Pending |
 | PROF-02 | Phase 4 | Pending |
 | PROF-03 | Phase 4 | Pending |

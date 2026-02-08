@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 3 in progress: Recipe Catalogue
+**Current focus:** Phase 3 complete. Ready for Phase 4: Authentication + User Profile
 
 ## Current Position
 
-Phase: 3 of 9 (Recipe Catalogue)
-Plan: 1 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-08 - Completed 03-01-PLAN.md (Foundation: shadcn/ui, queries, components)
+Phase: 3 of 9 (Recipe Catalogue) -- COMPLETE
+Plan: 3 of 3 in current phase (all complete)
+Status: Phase 3 complete
+Last activity: 2026-02-08 - Completed Phase 3 (Recipe Catalogue)
 
-Progress: [###.......] 32% (12/38 plans)
+Progress: [####......] 37% (14/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 7min
-- Total execution time: 1.5 hours
+- Total plans completed: 14
+- Average duration: 6min
+- Total execution time: 1.7 hours
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [###.......] 32% (12/38 plans)
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
-| 03 | 1/3 | 4min | 4min |
+| 03 | 3/3 | 10min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 6min, 13min, 16min, 4min
-- Trend: fast execution for foundation/scaffolding tasks
+- Last 5 plans: 13min, 16min, 4min, 4min, 2min
+- Trend: fast execution for UI/component plans
 
 *Updated after each plan completion*
 
@@ -84,6 +84,11 @@ Recent decisions affecting current work:
 - [03-01]: Drizzle relational query (db.query.recipes.findFirst with nested with) for getRecipeById detail page
 - [03-01]: AND logic for tag filters via exists subquery per slug -- recipe must have ALL selected tags
 - [03-01]: Fixed db singleton typing with createDb factory pattern to preserve schema type through global cache
+- [03-02]: URL search params as single source of truth for catalogue state (search, tags, page)
+- [03-02]: 300ms debounce on search bar via setTimeout + useRef
+- [03-02]: Home page (/) redirects to /recipes
+- [03-03]: NutritionPerServing interface for jowNutritionPerServing JSONB typed casting
+- [03-03]: generateMetadata for dynamic recipe titles in browser tab
 
 ### Pending Todos
 
@@ -101,8 +106,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T17:54:00Z
-Stopped at: Completed 03-01-PLAN.md (Foundation: shadcn/ui, queries, components)
+Last session: 2026-02-08T18:04:00Z
+Stopped at: Phase 3 complete (Recipe Catalogue) -- all 3 plans executed, verified
 Resume file: None
 
 ## Phase 1 Status
@@ -125,6 +130,10 @@ Plan 05 complete: Upload client maps EnrichedRecipe to API payload with bearer a
 
 ## Phase 3 Status
 
-**IN PROGRESS** - 1/3 plans complete
+**COMPLETE** - All 3 plans executed successfully
 
 Plan 01 complete: 7 shadcn/ui components installed, Next.js image domains configured, Drizzle query layer (getRecipes with paginated search/filter + nested tags, getRecipeById with ingredients/tags, getAllTags), RecipeCard and MacroBadge server components.
+
+Plan 02 complete: /recipes catalogue page with debounced search, AND-logic tag filtering, pagination, responsive grid, loading skeleton. Home page redirects to /recipes. URL search params drive all state.
+
+Plan 03 complete: /recipes/[id] detail page with image, macros per serving from JSONB, ingredient list with per-100g macros, Jow external link, not-found handling, generateMetadata for dynamic titles.
