@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 3 gap closure in progress (plans 04-05)
+**Current focus:** Phase 3 complete. Ready for Phase 4: Authentication + User Profile
 
 ## Current Position
 
-Phase: 3 of 9 (Recipe Catalogue) -- gap closure in progress
-Plan: 4 of 5 in current phase (gap closure)
-Status: In progress
-Last activity: 2026-02-08 - Completed 03-04-PLAN.md (fix prod 500 code-level root causes)
+Phase: 3 of 9 (Recipe Catalogue) -- COMPLETE
+Plan: 5 of 5 in current phase (all complete)
+Status: Phase 3 complete
+Last activity: 2026-02-08 - Completed Phase 3 gap closure (plans 04-05)
 
-Progress: [####......] 39% (15/38 plans)
+Progress: [####......] 42% (16/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: 6min
-- Total execution time: 1.7 hours
+- Total execution time: 1.8 hours
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [####......] 39% (15/38 plans)
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
-| 03 | 4/5 | 11min | 3min |
+| 03 | 5/5 | 15min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 16min, 4min, 4min, 2min, 1min
-- Trend: fast execution for config/infra fixes
+- Last 5 plans: 4min, 4min, 2min, 1min, 4min
+- Trend: fast execution for UI/config/deploy plans
 
 *Updated after each plan completion*
 
@@ -92,12 +92,14 @@ Recent decisions affecting current work:
 - [03-04]: PIPELINE_TOKEN uses ${PIPELINE_TOKEN:-} empty default in docker-compose.prod.yml
 - [03-04]: sha256 hash dedup for migration tracking in deploy workflow
 - [03-04]: sleep 5 after container start ensures DB ready before migration psql commands
+- [03-05]: UUID regex validation in getRecipeById prevents Postgres error on invalid UUID strings (returns 404 not 500)
+- [03-05]: PIPELINE_TOKEN set on VPS via openssl rand -hex 32, persists in .env across deploys
 
 ### Pending Todos
 
 1. **Test the Shannon tool on the website** (testing) - 2026-02-08
-2. **Set PIPELINE_TOKEN on production VPS** (deployment) - before pipeline goes live
-3. **Run pipeline at scale** (data) - scrape/enrich/upload 50+ recipes for Phase 3 catalogue
+2. ~~**Set PIPELINE_TOKEN on production VPS**~~ DONE - set via openssl rand -hex 32
+3. **Run pipeline at scale** (data) - scrape/enrich/upload 50+ recipes to populate catalogue
 
 ### Blockers/Concerns
 
@@ -109,8 +111,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T18:45:00Z
-Stopped at: Completed 03-04-PLAN.md (fix prod 500 code-level root causes)
+Last session: 2026-02-08T19:00:00Z
+Stopped at: Phase 3 complete (Recipe Catalogue) -- all 5 plans executed, verified, deployed to production
 Resume file: None
 
 ## Phase 1 Status
@@ -133,7 +135,7 @@ Plan 05 complete: Upload client maps EnrichedRecipe to API payload with bearer a
 
 ## Phase 3 Status
 
-**COMPLETE** - All 3 plans executed successfully
+**COMPLETE** - All 5 plans executed successfully
 
 Plan 01 complete: 7 shadcn/ui components installed, Next.js image domains configured, Drizzle query layer (getRecipes with paginated search/filter + nested tags, getRecipeById with ingredients/tags, getAllTags), RecipeCard and MacroBadge server components.
 
@@ -142,3 +144,5 @@ Plan 02 complete: /recipes catalogue page with debounced search, AND-logic tag f
 Plan 03 complete: /recipes/[id] detail page with image, macros per serving from JSONB, ingredient list with per-100g macros, Jow external link, not-found handling, generateMetadata for dynamic titles.
 
 Plan 04 complete: PIPELINE_TOKEN made optional in env.ts, passed to prod container via docker-compose.prod.yml, automated Drizzle migration step added to deploy.yml with sha256 dedup tracking.
+
+Plan 05 complete: Code fixes deployed to production, PIPELINE_TOKEN set on VPS, 5 recipes uploaded, UUID validation fix for recipe detail 404. Production verified: mealprep.jimmydore.fr/recipes serves recipe catalogue.

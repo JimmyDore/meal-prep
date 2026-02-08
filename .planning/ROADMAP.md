@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Foundation + Database + Deployment** - Socle technique, schema Postgres, infra de tests, Docker, VPS, domain + SSL, auto-deploy, Hello World connecte a la DB
 - [x] **Phase 2: Recipe Data Pipeline** - Scraper local Jow, enrichissement macros Claude Code, upload API serveur
-- [ ] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details (gap closure in progress)
+- [x] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details
 - [ ] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
 - [ ] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
 - [ ] **Phase 6: Basic Meal Plan Generation** - Algorithme de selection de recettes pour plan hebdo sans batch cooking
@@ -80,8 +80,8 @@ Plans:
 - [x] 03-01-PLAN.md -- Foundation: shadcn/ui components, image config, DB query functions, shared UI components
 - [x] 03-02-PLAN.md -- Catalogue page: recipe grid, search bar, tag filters, pagination, loading skeleton
 - [x] 03-03-PLAN.md -- Recipe detail page: ingredients, macros, photo, Jow link, not-found handling
-- [ ] 03-04-PLAN.md -- Gap closure: fix PIPELINE_TOKEN env, optional env validation, auto-migration deploy step
-- [ ] 03-05-PLAN.md -- Gap closure: deploy fixes to production, verify, upload recipe data
+- [x] 03-04-PLAN.md -- Gap closure: fix PIPELINE_TOKEN env, optional env validation, auto-migration deploy step
+- [x] 03-05-PLAN.md -- Gap closure: deploy fixes to production, verify, upload recipe data
 
 ### Phase 4: Authentication + User Profile
 **Goal**: Les utilisateurs peuvent creer un compte, se connecter, et configurer leur profil sportif et alimentaire
@@ -186,7 +186,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 |-------|----------------|--------|-----------|
 | 1. Project Foundation + Database + Deployment | 6/6 | Complete | 2026-02-08 |
 | 2. Recipe Data Pipeline | 5/5 | Complete | 2026-02-08 |
-| 3. Recipe Catalogue | 3/5 | Gap closure | - |
+| 3. Recipe Catalogue | 5/5 | Complete | 2026-02-08 |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
