@@ -10,6 +10,8 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
+ARG NEXT_PUBLIC_APP_URL
+ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV SKIP_ENV_VALIDATION=1
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"

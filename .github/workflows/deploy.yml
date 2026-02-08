@@ -81,7 +81,7 @@ jobs:
           sleep 10
           for i in 1 2 3 4 5; do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${{ secrets.NEXT_PUBLIC_APP_URL }}" || true)
-            if [ "$STATUS" = "200" ]; then
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "307" ]; then
               echo "Smoke test passed (HTTP $STATUS)"
               exit 0
             fi

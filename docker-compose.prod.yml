@@ -17,7 +17,10 @@ services:
       - internal
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     restart: unless-stopped
     ports:
       - "127.0.0.1:3000:3000"
