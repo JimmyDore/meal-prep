@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 3 complete. Ready for Phase 4: Authentication + User Profile
+**Current focus:** Phase 3 gap closure in progress (plans 04-05)
 
 ## Current Position
 
-Phase: 3 of 9 (Recipe Catalogue) -- COMPLETE
-Plan: 3 of 3 in current phase (all complete)
-Status: Phase 3 complete
-Last activity: 2026-02-08 - Completed Phase 3 (Recipe Catalogue)
+Phase: 3 of 9 (Recipe Catalogue) -- gap closure in progress
+Plan: 4 of 5 in current phase (gap closure)
+Status: In progress
+Last activity: 2026-02-08 - Completed 03-04-PLAN.md (fix prod 500 code-level root causes)
 
-Progress: [####......] 37% (14/38 plans)
+Progress: [####......] 39% (15/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: 6min
 - Total execution time: 1.7 hours
 
@@ -29,11 +29,11 @@ Progress: [####......] 37% (14/38 plans)
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
-| 03 | 3/3 | 10min | 3min |
+| 03 | 4/5 | 11min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 13min, 16min, 4min, 4min, 2min
-- Trend: fast execution for UI/component plans
+- Last 5 plans: 16min, 4min, 4min, 2min, 1min
+- Trend: fast execution for config/infra fixes
 
 *Updated after each plan completion*
 
@@ -89,6 +89,9 @@ Recent decisions affecting current work:
 - [03-02]: Home page (/) redirects to /recipes
 - [03-03]: NutritionPerServing interface for jowNutritionPerServing JSONB typed casting
 - [03-03]: generateMetadata for dynamic recipe titles in browser tab
+- [03-04]: PIPELINE_TOKEN uses ${PIPELINE_TOKEN:-} empty default in docker-compose.prod.yml
+- [03-04]: sha256 hash dedup for migration tracking in deploy workflow
+- [03-04]: sleep 5 after container start ensures DB ready before migration psql commands
 
 ### Pending Todos
 
@@ -99,15 +102,15 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - [Phase 1]: ~~VPS provider + domain name a confirmer avant debut de la Phase 1~~ RESOLVED - VPS configured at mealprep.jimmydore.fr with SSL
-- [Phase 2]: Migration automation needed before schema changes become frequent -- currently manual via docker compose exec
+- [Phase 2]: ~~Migration automation needed before schema changes become frequent -- currently manual via docker compose exec~~ RESOLVED - Automated migration step added to deploy.yml in 03-04
 - [Phase 2]: ~~Jow.fr structure a inspecter en live -- Playwright necessaire ou HTTP+Cheerio suffisant?~~ RESOLVED - Playwright used, __NEXT_DATA__ + JSON-LD merge strategy confirmed working for 3,214 recipes
 - [Phase 2]: ~~End-to-end pipeline verification~~ RESOLVED - 5 recipes verified scrape->enrich->upload->DB
 - [Phase 6]: Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur
 
 ## Session Continuity
 
-Last session: 2026-02-08T18:04:00Z
-Stopped at: Phase 3 complete (Recipe Catalogue) -- all 3 plans executed, verified
+Last session: 2026-02-08T18:45:00Z
+Stopped at: Completed 03-04-PLAN.md (fix prod 500 code-level root causes)
 Resume file: None
 
 ## Phase 1 Status
@@ -137,3 +140,5 @@ Plan 01 complete: 7 shadcn/ui components installed, Next.js image domains config
 Plan 02 complete: /recipes catalogue page with debounced search, AND-logic tag filtering, pagination, responsive grid, loading skeleton. Home page redirects to /recipes. URL search params drive all state.
 
 Plan 03 complete: /recipes/[id] detail page with image, macros per serving from JSONB, ingredient list with per-100g macros, Jow external link, not-found handling, generateMetadata for dynamic titles.
+
+Plan 04 complete: PIPELINE_TOKEN made optional in env.ts, passed to prod container via docker-compose.prod.yml, automated Drizzle migration step added to deploy.yml with sha256 dedup tracking.
