@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 4.1 (Comprehensive Unit Tests)
-Plan: 03 of 6 complete
+Plan: 04 of 6 complete
 Status: In progress
-Last activity: 2026-02-08 - Completed 04.1-03-PLAN.md (Zod schema boundary tests)
+Last activity: 2026-02-08 - Completed 04.1-01-PLAN.md (Pipeline pure function tests)
 
-Progress: [########..] 82% (23/28 plans)
+Progress: [########..] 86% (24/28 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
+- Total plans completed: 24
 - Average duration: 6min
-- Total execution time: 2.37 hours
+- Total execution time: 2.42 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [########..] 82% (23/28 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
-| 04.1 | 3/6 | 6min | 2min |
+| 04.1 | 4/6 | 9min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 7min, 4min, 4min, 13min, 2min
+- Last 5 plans: 4min, 4min, 13min, 2min, 3min
 - Trend: fast for test-only plans
 
 *Updated after each plan completion*
@@ -115,6 +115,8 @@ Recent decisions affecting current work:
 - [04-04]: Sonner for toast notifications -- lightweight, works with server actions
 - [04-04]: x-pathname header from proxy for server-side path detection in layout -- Next.js 16 server layouts cannot access pathname directly
 - [04.1-03]: Profile age bounds tested against actual schema (14-100) not plan estimate (10-120) -- tests must match code
+- [04.1-01]: Exported parseClaudeOutput, validateIngredients, boundsCheck from claude-enricher.ts -- pure helpers only, impure functions stay private
+- [04.1-01]: Pipeline tests use relative imports (../jow-parser) since @/* resolves to src/* only
 
 ### Pending Todos
 
@@ -136,8 +138,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T21:53:41Z
-Stopped at: Completed 04.1-03-PLAN.md (Zod schema boundary tests)
+Last session: 2026-02-08T21:54:26Z
+Stopped at: Completed 04.1-01-PLAN.md (Pipeline pure function tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -194,6 +196,8 @@ Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sp
 
 ## Phase 4.1 Status
 
-**IN PROGRESS** - 3 of 6 plans executed
+**IN PROGRESS** - 4 of 6 plans executed
+
+Plan 01 complete: 67 unit tests for pipeline pure functions -- jow-parser (35 tests), recipe-assembler (6 tests), claude-enricher pure helpers (26 tests). Vitest config updated for scripts/**/*.test.ts discovery. Exported parseClaudeOutput, validateIngredients, boundsCheck.
 
 Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline schemas (enrichedIngredient, ingredientMacro, scrapedRecipe, enrichedRecipe) and profile schemas (physical, goal, dietary, sportActivity, sport, profile composite). All numeric bounds and enum values tested.
