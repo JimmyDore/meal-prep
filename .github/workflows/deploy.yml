@@ -32,6 +32,7 @@ jobs:
       - name: Run tests
         run: pnpm test run --exclude 'src/db/**'
         env:
+          SKIP_ENV_VALIDATION: "1"
           DATABASE_URL: "postgresql://skip:skip@localhost:5432/skip"
           NODE_ENV: test
 
