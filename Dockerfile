@@ -11,6 +11,8 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV SKIP_ENV_VALIDATION=1
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 
 RUN pnpm run build
 
