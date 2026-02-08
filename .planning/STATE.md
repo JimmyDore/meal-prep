@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 4.1 (Comprehensive Unit Tests)
-Plan: 05 of 6 complete
+Plan: 04 of 6 complete
 Status: In progress
-Last activity: 2026-02-08 - Completed 04.1-05-PLAN.md (Catalogue component tests)
+Last activity: 2026-02-08 - Completed 04.1-04-PLAN.md (API upload + DB query tests)
 
-Progress: [########..] 89% (25/28 plans)
+Progress: [######....] 68% (26/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
+- Total plans completed: 26
 - Average duration: 6min
-- Total execution time: 2.45 hours
+- Total execution time: 2.5 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [########..] 89% (25/28 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
-| 04.1 | 5/6 | 11min | 2min |
+| 04.1 | 4/6 | 14min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 13min, 2min, 3min, 2min
+- Last 5 plans: 13min, 2min, 3min, 2min, 3min
 - Trend: fast for test-only plans
 
 *Updated after each plan completion*
@@ -117,6 +117,8 @@ Recent decisions affecting current work:
 - [04.1-03]: Profile age bounds tested against actual schema (14-100) not plan estimate (10-120) -- tests must match code
 - [04.1-01]: Exported parseClaudeOutput, validateIngredients, boundsCheck from claude-enricher.ts -- pure helpers only, impure functions stay private
 - [04.1-01]: Pipeline tests use relative imports (../jow-parser) since @/* resolves to src/* only
+- [04.1-04]: DB integration tests must run with --fileParallelism=false to avoid deadlocks on shared test DB truncation
+- [04.1-04]: API route tests fully mocked (db.transaction, env) -- no Docker dependency for unit tests
 
 ### Pending Todos
 
@@ -138,8 +140,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T21:55:03Z
-Stopped at: Completed 04.1-05-PLAN.md (Catalogue component tests)
+Last session: 2026-02-08T21:56:06Z
+Stopped at: Completed 04.1-04-PLAN.md (API upload + DB query tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -196,10 +198,12 @@ Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sp
 
 ## Phase 4.1 Status
 
-**IN PROGRESS** - 5 of 6 plans executed
+**IN PROGRESS** - 4 of 6 plans executed
 
 Plan 01 complete: 67 unit tests for pipeline pure functions -- jow-parser (35 tests), recipe-assembler (6 tests), claude-enricher pure helpers (26 tests). Vitest config updated for scripts/**/*.test.ts discovery. Exported parseClaudeOutput, validateIngredients, boundsCheck.
 
 Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline schemas (enrichedIngredient, ingredientMacro, scrapedRecipe, enrichedRecipe) and profile schemas (physical, goal, dietary, sportActivity, sport, profile composite). All numeric bounds and enum values tested.
+
+Plan 04 complete: 35 tests for API upload route (11 unit tests with mocked DB/env: auth 401, validation 400, success 201, error 500) + recipe DB queries (12 integration tests: pagination, search, tag AND filter, getById) + profile DB queries (12 integration tests: upsert, isComplete, dietary preferences).
 
 Plan 05 complete: 33 unit tests for catalogue interactive components -- SearchBar (9 tests: debounce timing, URL params), TagFilter (10 tests: toggle on/off, variant assertion), PaginationControls (14 tests: page links, nav buttons, ellipsis, param preservation).
