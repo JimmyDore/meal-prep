@@ -75,8 +75,14 @@ All three stages are resumable (skip already-processed items) and idempotent.
 
 ### Tests
 - Vitest with jsdom environment, globals enabled
-- Pattern: `src/**/*.test.{ts,tsx}`
+- Pattern: `src/**/*.test.{ts,tsx}` + `scripts/**/*.test.ts`
 - Setup file: `src/test/setup.ts` (includes `@testing-library/jest-dom`)
+- **Every new feature/module MUST include unit tests** — no code ships without tests
+- Pure functions: test directly with boundary values and edge cases
+- External calls (Playwright, Claude CLI, fetch, filesystem): mock with `vi.mock()`
+- DB queries: integration tests with test DB (`docker compose up -d db-test`)
+- React components: test with `@testing-library/react`, mock `next/navigation` and `authClient`
+- CI runs unit tests only (excludes DB integration tests via `--exclude 'src/db/**'`)
 
 ## Architecture
 

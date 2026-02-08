@@ -50,3 +50,14 @@ drizzle/meta/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE / tool configs
+.claude/
+.cursorindexingignore
+.specstory/
+.playwright-mcp/
+
+# GSD agent tracking / debug
+.planning/agent-history.json
+.planning/current-agent-id.txt
+.planning/debug/

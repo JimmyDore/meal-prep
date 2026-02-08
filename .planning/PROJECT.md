@@ -51,7 +51,7 @@ L'utilisateur obtient un plan de repas hebdomadaire optimisé pour ses macros sa
 - **Synchro données**: Upload via API — le script local envoie les recettes au serveur
 - **Enrichissement**: Manuel via Claude Code — pas d'API nutritionnelle automatique, utilisation du plan Max
 - **Source de données**: Jow uniquement — pas d'autres sources de recettes pour le v1
-- **Qualité code**: Tests unitaires et d'intégration obligatoires — couverture de test béton
+- **Qualité code**: Tests unitaires et d'intégration obligatoires — couverture de test béton. **Chaque plan de phase DOIT inclure des taches de tests unitaires pour le code produit dans ce plan.** Pas de code sans tests. Les fonctions pures sont testees directement, les appels externes sont mockes (vi.mock). Les schemas Zod sont testes aux bornes. Les composants React interactifs sont testes avec @testing-library/react.
 - **Tests manuels IA**: Les agents executors/verifiers doivent lancer le projet en local et tester visuellement via MCP Puppeteer (navigateur Chrome) quand c'est pertinent — pas juste des tests automatisés, aussi une vérification visuelle par l'agent
 - **Architecture**: Abstraire la source de recettes (interface/adapter pattern) — Jow aujourd'hui, d'autres sources demain
 
