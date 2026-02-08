@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Lint & format check
+        run: pnpm biome ci .
+
+      - name: Type check
+        run: pnpm tsc --noEmit
+        env:
+          SKIP_ENV_VALIDATION: "1"
+
+      - name: Run tests
+        run: pnpm test run --exclude 'src/db/**'
+        env:
+          DATABASE_URL: "postgresql://skip:skip@localhost:5432/skip"
+          NODE_ENV: test
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /home/jimmydore/meal-prep
+            git pull origin main
+            docker compose -f docker-compose.prod.yml build
+            docker compose -f docker-compose.prod.yml up -d
+            docker image prune -f
