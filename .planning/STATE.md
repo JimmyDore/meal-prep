@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 4 (Authentication + User Profile)
-Plan: 01 of 4 complete
+Plan: 03 of 4 complete
 Status: In progress
-Last activity: 2026-02-08 - Completed 04-01-PLAN.md (Auth foundation)
+Last activity: 2026-02-08 - Completed 04-03-PLAN.md (Profile data layer)
 
-Progress: [#####.....] 50% (19/38 plans)
+Progress: [#####.....] 55% (21/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
+- Total plans completed: 21
 - Average duration: 6min
-- Total execution time: 2.02 hours
+- Total execution time: 2.12 hours
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [#####.....] 50% (19/38 plans)
 | 02 | 5/5 | 46min | 9min |
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
-| 04 | 1/4 | 7min | 7min |
+| 04 | 3/4 | 15min | 5min |
 
 **Recent Trend:**
-- Last 5 plans: 1min, 4min, 3min, 3min, 7min
+- Last 5 plans: 3min, 3min, 7min, 4min, 4min
 - Trend: consistent execution
 
 *Updated after each plan completion*
@@ -107,6 +107,9 @@ Recent decisions affecting current work:
 - [04-01]: Better Auth CLI generates auth schema with text() IDs and explicit column name mappings
 - [04-01]: baseURL added to Better Auth server config to suppress base URL warning
 - [04-01]: shadcn/ui form components pre-installed for Plans 02-04
+- [04-03]: pgEnum for all constrained values (sex, activity_level, goal, dietary_preference, activity_type) -- DB-level enforcement
+- [04-03]: Transactional delete+insert for set operations (dietary preferences, sport activities) -- simpler than diff-based upsert
+- [04-03]: isProfileComplete checks 6 required fields (weight, height, age, sex, activityLevel, goal)
 
 ### Pending Todos
 
@@ -124,8 +127,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T20:12:25Z
-Stopped at: Completed 04-01-PLAN.md (Auth foundation)
+Last session: 2026-02-08T20:21:00Z
+Stopped at: Completed 04-03-PLAN.md (Profile data layer)
 Resume file: None
 
 ## Phase 1 Status
@@ -170,6 +173,10 @@ Plan 02 complete: Recipe assembler module (loadMacroLookup + assembleEnrichedRec
 
 ## Phase 4 Status
 
-**IN PROGRESS** - 1 of 4 plans complete
+**IN PROGRESS** - 3 of 4 plans complete
 
 Plan 01 complete: Better Auth 1.4.18 with Drizzle adapter, 4 auth tables (user, session, account, verification), API handler at /api/auth/[...all], proxy.ts route protection, BETTER_AUTH_SECRET + NEXT_PUBLIC_APP_URL env vars, 7 shadcn/ui components pre-installed.
+
+Plan 02 complete: Auth page with login/register tab forms, authenticated route group layout with server-side session check, Header with user avatar and logout, recipe pages moved to (authenticated) group.
+
+Plan 03 complete: 3 DB tables (user_profiles, user_dietary_preferences, user_sport_activities) with 5 pgEnum types. Zod validation schemas for onboarding wizard. Query layer with CRUD, transactional set operations, getFullUserProfile, isProfileComplete.
