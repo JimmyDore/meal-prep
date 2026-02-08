@@ -120,6 +120,7 @@ Recent decisions affecting current work:
 3. **Run pipeline at scale** (data) - scrape/enrich/upload 50+ recipes to populate catalogue
 4. **Add Google login** (auth) - 2026-02-08
 5. **Add recipe instructions to detail page** (ui) - 2026-02-08
+6. **Accent-insensitive recipe search** (database) - 2026-02-08 — "pates" should match "pâtes"
 
 ### Blockers/Concerns
 
