@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 4.1 (Comprehensive Unit Tests)
-Plan: 04 of 6 complete
-Status: In progress
-Last activity: 2026-02-08 - Completed 04.1-04-PLAN.md (API upload + DB query tests)
+Plan: 06 of 6 complete
+Status: Phase complete
+Last activity: 2026-02-08 - Completed 04.1-06-PLAN.md (Auth forms + onboarding wizard tests)
 
-Progress: [######....] 68% (26/38 plans)
+Progress: [#######...] 71% (27/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 26
+- Total plans completed: 27
 - Average duration: 6min
-- Total execution time: 2.5 hours
+- Total execution time: 2.6 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [######....] 68% (26/38 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
-| 04.1 | 4/6 | 14min | 4min |
+| 04.1 | 6/6 | 22min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 13min, 2min, 3min, 2min, 3min
+- Last 5 plans: 3min, 2min, 3min, 4min, 4min
 - Trend: fast for test-only plans
 
 *Updated after each plan completion*
@@ -119,6 +119,10 @@ Recent decisions affecting current work:
 - [04.1-01]: Pipeline tests use relative imports (../jow-parser) since @/* resolves to src/* only
 - [04.1-04]: DB integration tests must run with --fileParallelism=false to avoid deadlocks on shared test DB truncation
 - [04.1-04]: API route tests fully mocked (db.transaction, env) -- no Docker dependency for unit tests
+- [04.1-06]: vi.hoisted() required for mock functions referenced in vi.mock factory -- vitest hoists vi.mock above const declarations
+- [04.1-06]: window.location.href stubbed via Object.defineProperty -- auth forms use window.location.href not router.push
+- [04.1-06]: ResizeObserver + hasPointerCapture polyfills needed for Radix UI in jsdom
+- [04.1-06]: Wizard navigation tests use defaultValues to skip Radix Select interaction -- jsdom lacks scrollIntoView
 
 ### Pending Todos
 
@@ -140,8 +144,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T21:56:06Z
-Stopped at: Completed 04.1-04-PLAN.md (API upload + DB query tests)
+Last session: 2026-02-08T21:58:21Z
+Stopped at: Completed 04.1-06-PLAN.md (Auth forms + onboarding wizard tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -198,7 +202,7 @@ Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sp
 
 ## Phase 4.1 Status
 
-**IN PROGRESS** - 4 of 6 plans executed
+**COMPLETE** - All 6 plans executed successfully
 
 Plan 01 complete: 67 unit tests for pipeline pure functions -- jow-parser (35 tests), recipe-assembler (6 tests), claude-enricher pure helpers (26 tests). Vitest config updated for scripts/**/*.test.ts discovery. Exported parseClaudeOutput, validateIngredients, boundsCheck.
 
@@ -207,3 +211,5 @@ Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline s
 Plan 04 complete: 35 tests for API upload route (11 unit tests with mocked DB/env: auth 401, validation 400, success 201, error 500) + recipe DB queries (12 integration tests: pagination, search, tag AND filter, getById) + profile DB queries (12 integration tests: upsert, isComplete, dietary preferences).
 
 Plan 05 complete: 33 unit tests for catalogue interactive components -- SearchBar (9 tests: debounce timing, URL params), TagFilter (10 tests: toggle on/off, variant assertion), PaginationControls (14 tests: page links, nav buttons, ellipsis, param preservation).
+
+Plan 06 complete: 27 unit tests for auth forms and onboarding wizard -- LoginForm (8 tests: rendering, validation, signIn, redirect, errors), RegisterForm (8 tests: rendering, password mismatch, signUp+signIn flow, errors), OnboardingWizard (11 tests: step rendering, navigation, validation blocking, submit in both modes, error handling).
