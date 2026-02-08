@@ -62,7 +62,7 @@ function writeTempFile(data: unknown): string {
  * Parse Claude CLI JSON output and extract structured ingredients.
  * Handles both `structured_output` field and `result` field formats.
  */
-function parseClaudeOutput(
+export function parseClaudeOutput(
   rawOutput: string,
 ): { ingredients: EnrichedIngredient[] } | null {
   const parsed = JSON.parse(rawOutput);
@@ -96,7 +96,7 @@ function parseClaudeOutput(
  * Validate ingredients against Zod schema bounds.
  * Returns validated ingredients or throws on validation failure.
  */
-function validateIngredients(raw: unknown[]): EnrichedIngredient[] {
+export function validateIngredients(raw: unknown[]): EnrichedIngredient[] {
   return raw.map((item, index) => {
     const result = enrichedIngredientSchema.safeParse(item);
     if (!result.success) {
@@ -112,7 +112,7 @@ function validateIngredients(raw: unknown[]): EnrichedIngredient[] {
  * Check if ingredient macros are within reasonable bounds.
  * Returns an array of error messages (empty = all good).
  */
-function boundsCheck(ingredients: EnrichedIngredient[]): string[] {
+export function boundsCheck(ingredients: EnrichedIngredient[]): string[] {
   const errors: string[] = [];
 
   for (const ing of ingredients) {
