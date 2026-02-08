@@ -5,34 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 2: Recipe Data Pipeline - Upload endpoint ready, pipeline can persist recipes
+**Current focus:** Phase 2: Recipe Data Pipeline - Enrichment + upload ready, scraper and integration remaining
 
 ## Current Position
 
 Phase: 2 of 8 (Recipe Data Pipeline)
-Plan: 4 of 5 in current phase
+Plan: 3 of 5 in current phase (01, 03, 04 complete)
 Status: In progress
-Last activity: 2026-02-08 - Completed 02-04-PLAN.md (Recipe Upload Endpoint)
+Last activity: 2026-02-08 - Completed 02-03-PLAN.md (Claude CLI Enrichment)
 
-Progress: [##........] 21% (8/38 plans)
+Progress: [##........] 24% (9/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 7min
-- Total execution time: 0.9 hours
+- Total execution time: 1.0 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
-| 02 | 2/5 | 11min | 6min |
+| 02 | 3/5 | 17min | 6min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 15min, 10min, 7min, 4min
-- Trend: stable, getting faster
+- Last 5 plans: 15min, 10min, 7min, 4min, 6min
+- Trend: stable around 6-7min average
 
 *Updated after each plan completion*
 
@@ -67,6 +67,10 @@ Recent decisions affecting current work:
 - [02-01]: Applied migration SQL directly to dev DB -- drizzle-kit push interactive prompt not automatable
 - [02-01]: PIPELINE_TOKEN added to .env with dev-pipeline-token placeholder
 - [02-01]: Zod macro bounds: protein/carbs/fat 0-100 per 100g, calories 0-900 per 100g
+- [02-03]: Claude CLI --tools "" instead of --max-turns 1 (flag absent) to prevent tool use and keep single-turn
+- [02-03]: Claude CLI structured_output field (not result) contains --json-schema data in --output-format json mode
+- [02-03]: All dynamic content (prompt, schema, recipe) via temp files to avoid shell expansion
+- [02-03]: --model sonnet for cost efficiency on nutritional estimation tasks
 - [02-04]: Tag upsert targets slug (not name) for case-insensitive deduplication -- "Rapide" and "rapide" resolve to same tag
 - [02-04]: PIPELINE_TOKEN upgraded from placeholder to secure random 64-char hex for local dev
 
@@ -84,8 +88,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T16:12:08Z
-Stopped at: Completed 02-04-PLAN.md (Recipe Upload Endpoint)
+Last session: 2026-02-08T16:12:50Z
+Stopped at: Completed 02-03-PLAN.md (Claude CLI Enrichment)
 Resume file: None
 
 ## Phase 1 Status
@@ -94,10 +98,12 @@ Resume file: None
 
 ## Phase 2 Status
 
-**IN PROGRESS** - 2/5 plans completed
+**IN PROGRESS** - 3/5 plans completed
 
 Plan 01 complete: Schema extended with 11 recipe columns, ingredients.name unique constraint, PIPELINE_TOKEN env validation, pipeline shared library (types, schemas, JSONL utils, logger).
 
+Plan 03 complete: Claude CLI enrichment wrapper with --json-schema structured output, Zod bounds validation, retry on aberrant values, cross-validation against Jow nutrition, resumable JSONL pipeline.
+
 Plan 04 complete: POST /api/recipes/upload endpoint with bearer auth, Zod validation, transactional upsert for recipes/ingredients/tags.
 
-Next: Plans 02, 03, 05 remaining
+Next: Plans 02 (scraper), 05 (integration test) remaining
