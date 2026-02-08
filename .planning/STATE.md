@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 4: Authentication + User Profile
+**Current focus:** Phase 4.1: Comprehensive Unit Tests
 
 ## Current Position
 
-Phase: 4 (Authentication + User Profile)
-Plan: 04 of 4 complete
-Status: Phase complete
-Last activity: 2026-02-08 - Completed 04-04-PLAN.md (Onboarding wizard + settings)
+Phase: 4.1 (Comprehensive Unit Tests)
+Plan: 03 of 6 complete
+Status: In progress
+Last activity: 2026-02-08 - Completed 04.1-03-PLAN.md (Zod schema boundary tests)
 
-Progress: [######....] 58% (22/38 plans)
+Progress: [########..] 82% (23/28 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: 6min
-- Total execution time: 2.34 hours
+- Total execution time: 2.37 hours
 
 **By Phase:**
 
@@ -32,10 +32,11 @@ Progress: [######....] 58% (22/38 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
+| 04.1 | 3/6 | 6min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 7min, 4min, 4min, 13min
-- Trend: consistent execution
+- Last 5 plans: 7min, 4min, 4min, 13min, 2min
+- Trend: fast for test-only plans
 
 *Updated after each plan completion*
 
@@ -46,6 +47,7 @@ Progress: [######....] 58% (22/38 plans)
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Roadmap]: Phase 4.1 inserted -- comprehensive unit tests for all existing code (pipeline, API, DB, schemas, React components) before building Phase 5+
 - [Roadmap]: Phase 3.1 inserted -- pipeline enrichment optimization (deduplicate ingredients, enrich unique ones once via Claude CLI instead of per-recipe)
 - [Roadmap]: 9 phases (revised from 8), Phase 9 added for fridge ingredient recipe selection
 - [Roadmap]: Original 8 phases with algorithm split en 2 (basic Phase 6, batch cooking Phase 7)
@@ -112,6 +114,7 @@ Recent decisions affecting current work:
 - [04-03]: isProfileComplete checks 6 required fields (weight, height, age, sex, activityLevel, goal)
 - [04-04]: Sonner for toast notifications -- lightweight, works with server actions
 - [04-04]: x-pathname header from proxy for server-side path detection in layout -- Next.js 16 server layouts cannot access pathname directly
+- [04.1-03]: Profile age bounds tested against actual schema (14-100) not plan estimate (10-120) -- tests must match code
 
 ### Pending Todos
 
@@ -133,8 +136,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T20:43:00Z
-Stopped at: Completed 04-04-PLAN.md (Onboarding wizard + settings)
+Last session: 2026-02-08T21:53:41Z
+Stopped at: Completed 04.1-03-PLAN.md (Zod schema boundary tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -188,3 +191,9 @@ Plan 02 complete: Auth page with login/register tab forms, authenticated route g
 Plan 03 complete: 3 DB tables (user_profiles, user_dietary_preferences, user_sport_activities) with 5 pgEnum types. Zod validation schemas for onboarding wizard. Query layer with CRUD, transactional set operations, getFullUserProfile, isProfileComplete.
 
 Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sport) with react-hook-form + Zod validation. Server action saves profile via query layer. Onboarding page redirects completed profiles. Settings page pre-populates wizard. Layout redirects incomplete profiles to /onboarding. Header has "Mon profil" link.
+
+## Phase 4.1 Status
+
+**IN PROGRESS** - 3 of 6 plans executed
+
+Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline schemas (enrichedIngredient, ingredientMacro, scrapedRecipe, enrichedRecipe) and profile schemas (physical, goal, dietary, sportActivity, sport, profile composite). All numeric bounds and enum values tested.
