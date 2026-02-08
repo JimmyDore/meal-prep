@@ -5,7 +5,7 @@ import { recipes } from "./recipes";
 
 export const ingredients = pgTable("ingredients", {
   ...idColumn,
-  name: text().notNull(),
+  name: text().unique().notNull(),
   caloriesPer100g: real(),
   proteinPer100g: real(),
   carbsPer100g: real(),

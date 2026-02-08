@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, real, text } from "drizzle-orm/pg-core";
 import { idColumn, timestamps } from "./common";
 import { recipeIngredients } from "./ingredients";
 import { recipeTags } from "./tags";
@@ -8,10 +8,21 @@ export const recipes = pgTable("recipes", {
   ...idColumn,
   jowId: text().unique().notNull(),
   title: text().notNull(),
+  description: text(),
   imageUrl: text(),
   jowUrl: text().notNull(),
   cookTimeMin: integer(),
+  prepTimeMin: integer(),
+  totalTimeMin: integer(),
+  difficulty: text(),
+  instructions: jsonb(),
+  nutriScore: text(),
+  rating: real(),
+  ratingCount: integer(),
+  cuisine: text(),
+  category: text(),
   originalPortions: integer(),
+  jowNutritionPerServing: jsonb(),
   ...timestamps,
 });
 
