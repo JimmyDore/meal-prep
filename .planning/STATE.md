@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 3 complete. Ready for Phase 4: Authentication + User Profile
+**Current focus:** Phase 3.1: Pipeline Enrichment Optimization (inserted)
 
 ## Current Position
 
-Phase: 3 of 9 (Recipe Catalogue) -- COMPLETE
-Plan: 5 of 5 in current phase (all complete)
-Status: Phase 3 complete
-Last activity: 2026-02-08 - Completed Phase 3 gap closure (plans 04-05)
+Phase: 3.1 (Pipeline Enrichment Optimization) [INSERTED]
+Plan: 01 of 2 complete
+Status: In progress
+Last activity: 2026-02-08 - Completed 03.1-01-PLAN.md (Stage 1 infrastructure)
 
-Progress: [####......] 42% (16/38 plans)
+Progress: [####......] 45% (17/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 6min
-- Total execution time: 1.8 hours
+- Total execution time: 1.85 hours
 
 **By Phase:**
 
@@ -30,10 +30,11 @@ Progress: [####......] 42% (16/38 plans)
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
 | 03 | 5/5 | 15min | 3min |
+| 03.1 | 1/2 | 3min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 4min, 2min, 1min, 4min
-- Trend: fast execution for UI/config/deploy plans
+- Last 5 plans: 4min, 2min, 1min, 4min, 3min
+- Trend: consistent fast execution
 
 *Updated after each plan completion*
 
@@ -44,6 +45,7 @@ Progress: [####......] 42% (16/38 plans)
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Roadmap]: Phase 3.1 inserted -- pipeline enrichment optimization (deduplicate ingredients, enrich unique ones once via Claude CLI instead of per-recipe)
 - [Roadmap]: 9 phases (revised from 8), Phase 9 added for fridge ingredient recipe selection
 - [Roadmap]: Original 8 phases with algorithm split en 2 (basic Phase 6, batch cooking Phase 7)
 - [Roadmap]: Deployment merged into Phase 1 -- deploy-first strategy eliminates release blocker early
@@ -94,6 +96,9 @@ Recent decisions affecting current work:
 - [03-04]: sleep 5 after container start ensures DB ready before migration psql commands
 - [03-05]: UUID regex validation in getRecipeById prevents Postgres error on invalid UUID strings (returns 404 not 500)
 - [03-05]: PIPELINE_TOKEN set on VPS via openssl rand -hex 32, persists in .env across deploys
+- [03.1-01]: IngredientMacro structurally identical to EnrichedIngredient -- same Zod bounds, separate type for semantic clarity
+- [03.1-01]: Batch count validation: throw if Claude returns fewer/more ingredients than input count
+- [03.1-01]: Prompt updated for ingredient-list context, backward compatible with recipe context
 
 ### Pending Todos
 
@@ -111,8 +116,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T19:00:00Z
-Stopped at: Phase 3 complete (Recipe Catalogue) -- all 5 plans executed, verified, deployed to production
+Last session: 2026-02-08T19:30:00Z
+Stopped at: Completed 03.1-01-PLAN.md (Stage 1 infrastructure: ingredient extractor + batch enrichment)
 Resume file: None
 
 ## Phase 1 Status
@@ -146,3 +151,9 @@ Plan 03 complete: /recipes/[id] detail page with image, macros per serving from 
 Plan 04 complete: PIPELINE_TOKEN made optional in env.ts, passed to prod container via docker-compose.prod.yml, automated Drizzle migration step added to deploy.yml with sha256 dedup tracking.
 
 Plan 05 complete: Code fixes deployed to production, PIPELINE_TOKEN set on VPS, 5 recipes uploaded, UUID validation fix for recipe detail 404. Production verified: mealprep.jimmydore.fr/recipes serves recipe catalogue.
+
+## Phase 3.1 Status
+
+**IN PROGRESS** - 1/2 plans executed
+
+Plan 01 complete: Ingredient extractor (924 unique from 19,239 occurrences), batch Claude CLI enrichment with Zod validation and count checking, IngredientMacro type and schema.
