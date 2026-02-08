@@ -251,6 +251,115 @@ export function enrichRecipeWithRetry(recipe: ScrapedRecipe): {
 }
 
 /**
+ * Call Claude CLI to enrich a batch of ingredient names with macro data.
+ * Takes an array of ingredient name strings (batch of up to 20).
+ * Uses the same Claude CLI invocation pattern as enrichRecipe().
+ * Validates that the returned ingredient count matches the input count.
+ */
+export function enrichIngredientBatch(
+  ingredientNames: string[],
+): EnrichedIngredient[] {
+  const systemPrompt = readSystemPrompt();
+  const input = {
+    ingredients: ingredientNames.map((name) => ({ name })),
+  };
+  const tmpInputFile = writeTempFile(input);
+  const tmpSchemaFile = writeTempFile(JSON.parse(ENRICHMENT_JSON_SCHEMA));
+  const tmpPromptFile = join(tmpdir(), `prompt-${randomUUID()}.txt`);
+  writeFileSync(tmpPromptFile, systemPrompt, "utf-8");
+
+  try {
+    const command = [
+      `cat "${tmpInputFile}"`,
+      "|",
+      "claude -p",
+      `--system-prompt "$(cat "${tmpPromptFile}")"`,
+      "--output-format json",
+      `--json-schema "$(cat "${tmpSchemaFile}")"`,
+      "--no-session-persistence",
+      "--model sonnet",
+      '--tools ""',
+    ].join(" ");
+
+    const rawOutput = execSync(command, {
+      encoding: "utf-8",
+      timeout: 120_000,
+      maxBuffer: 10 * 1024 * 1024,
+      shell: "/bin/bash",
+    });
+
+    const parsed = parseClaudeOutput(rawOutput);
+    if (!parsed || !parsed.ingredients) {
+      throw new Error("Claude output missing ingredients array");
+    }
+
+    const validated = validateIngredients(parsed.ingredients);
+
+    // Ensure Claude returned macros for every ingredient in the batch
+    if (validated.length !== ingredientNames.length) {
+      throw new Error(
+        `Expected ${ingredientNames.length} ingredients, got ${validated.length}`,
+      );
+    }
+
+    return validated;
+  } finally {
+    for (const f of [tmpInputFile, tmpSchemaFile, tmpPromptFile]) {
+      try {
+        unlinkSync(f);
+      } catch {
+        // Ignore cleanup errors
+      }
+    }
+  }
+}
+
+/**
+ * Enrich ingredient batch with retry on aberrant values.
+ * Retries once if bounds check fails, then flags for manual review.
+ */
+export function enrichIngredientBatchWithRetry(
+  ingredientNames: string[],
+): {
+  ingredients: EnrichedIngredient[];
+  flagged: boolean;
+} {
+  // First attempt
+  const ingredients = enrichIngredientBatch(ingredientNames);
+  const errors = boundsCheck(ingredients);
+
+  if (errors.length === 0) {
+    return { ingredients, flagged: false };
+  }
+
+  // Bounds check failed -- retry once
+  console.warn(
+    `[enrich] Bounds check failed for batch of ${ingredientNames.length} ingredients, retrying: ${errors.join("; ")}`,
+  );
+
+  try {
+    const retryIngredients = enrichIngredientBatch(ingredientNames);
+    const retryErrors = boundsCheck(retryIngredients);
+
+    if (retryErrors.length === 0) {
+      return { ingredients: retryIngredients, flagged: false };
+    }
+
+    // Still failing after retry -- flag for review
+    console.warn(
+      `[enrich] Retry still has aberrant values for batch: ${retryErrors.join("; ")}`,
+    );
+    return { ingredients: retryIngredients, flagged: true };
+  } catch (retryError) {
+    // Retry itself failed -- return first attempt flagged
+    console.warn(
+      `[enrich] Retry failed for batch: ${retryError instanceof Error ? retryError.message : String(retryError)}`,
+    );
+    return { ingredients, flagged: true };
+  }
+}
+
+/**
  * Cross-validate Claude's per-ingredient estimates against Jow's per-serving nutrition.
  * Best-effort validation: only runs when Jow nutrition data is available and
  * all ingredient quantities are in grams.
