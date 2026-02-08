@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 2 complete. Ready for Phase 3: Recipe Catalogue
+**Current focus:** Phase 3 in progress: Recipe Catalogue
 
 ## Current Position
 
-Phase: 2 of 9 (Recipe Data Pipeline) -- COMPLETE
-Plan: 5 of 5 in current phase (all complete)
-Status: Phase 2 complete
-Last activity: 2026-02-08 - Completed 02-05-PLAN.md (Upload Client + E2E Verification)
+Phase: 3 of 9 (Recipe Catalogue)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-08 - Completed 03-01-PLAN.md (Foundation: shadcn/ui, queries, components)
 
-Progress: [###.......] 29% (11/38 plans)
+Progress: [###.......] 32% (12/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 7min
-- Total execution time: 1.4 hours
+- Total execution time: 1.5 hours
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [###.......] 29% (11/38 plans)
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
+| 03 | 1/3 | 4min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 7min, 4min, 6min, 13min, 16min
-- Trend: slightly increasing due to integration complexity and checkpoint waits
+- Last 5 plans: 4min, 6min, 13min, 16min, 4min
+- Trend: fast execution for foundation/scaffolding tasks
 
 *Updated after each plan completion*
 
@@ -79,6 +80,10 @@ Recent decisions affecting current work:
 - [02-02]: Real Jow __NEXT_DATA__: directions[].label for steps, nutritionalFacts[{id,amount}] for nutrition, cookingTime/preparationTime as minute integers, coversCount for portions
 - [02-05]: Upload relies on API upsert idempotency (no client-side dedup tracking needed)
 - [02-05]: Per-recipe error handling: failures logged and counted, pipeline continues without aborting
+- [03-01]: Batch tag fetch via inArray (not N+1) for getRecipes performance -- fetch recipes, then batch tags in single query
+- [03-01]: Drizzle relational query (db.query.recipes.findFirst with nested with) for getRecipeById detail page
+- [03-01]: AND logic for tag filters via exists subquery per slug -- recipe must have ALL selected tags
+- [03-01]: Fixed db singleton typing with createDb factory pattern to preserve schema type through global cache
 
 ### Pending Todos
 
@@ -96,8 +101,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T16:40:00Z
-Stopped at: Completed 02-05-PLAN.md (Upload Client + E2E Verification) -- Phase 2 COMPLETE
+Last session: 2026-02-08T17:54:00Z
+Stopped at: Completed 03-01-PLAN.md (Foundation: shadcn/ui, queries, components)
 Resume file: None
 
 ## Phase 1 Status
@@ -117,3 +122,9 @@ Plan 03 complete: Claude CLI enrichment wrapper with --json-schema structured ou
 Plan 04 complete: POST /api/recipes/upload endpoint with bearer auth, Zod validation, transactional upsert for recipes/ingredients/tags.
 
 Plan 05 complete: Upload client maps EnrichedRecipe to API payload with bearer auth, end-to-end pipeline verified with 5 recipes (scrape->enrich->upload->DB confirmed).
+
+## Phase 3 Status
+
+**IN PROGRESS** - 1/3 plans complete
+
+Plan 01 complete: 7 shadcn/ui components installed, Next.js image domains configured, Drizzle query layer (getRecipes with paginated search/filter + nested tags, getRecipeById with ingredients/tags, getAllTags), RecipeCard and MacroBadge server components.

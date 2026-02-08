@@ -77,7 +77,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Foundation: shadcn/ui components, image config, DB query functions, shared UI components
+- [x] 03-01-PLAN.md -- Foundation: shadcn/ui components, image config, DB query functions, shared UI components
 - [ ] 03-02-PLAN.md -- Catalogue page: recipe grid, search bar, tag filters, pagination, loading skeleton
 - [ ] 03-03-PLAN.md -- Recipe detail page: ingredients, macros, photo, Jow link, not-found handling
 
@@ -184,7 +184,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 |-------|----------------|--------|-----------|
 | 1. Project Foundation + Database + Deployment | 6/6 | ✓ Complete | 2026-02-08 |
 | 2. Recipe Data Pipeline | 5/5 | ✓ Complete | 2026-02-08 |
-| 3. Recipe Catalogue | 0/3 | Not started | - |
+| 3. Recipe Catalogue | 1/3 | In progress | - |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
