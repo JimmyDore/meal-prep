@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 1 of 8 (Project Foundation + Database + Deployment)
-Plan: 4 of 6 in current phase
+Plan: 5 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-08 - Completed 01-02-PLAN.md (Database schema + migrations + seed)
+Last activity: 2026-02-08 - Completed 01-05-PLAN.md (Production infrastructure)
 
-Progress: [#.........] 8% (4/48 plans)
+Progress: [#.........] 13% (5/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 4min
-- Total execution time: 0.2 hours
+- Total plans completed: 5
+- Average duration: 6min
+- Total execution time: 0.5 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 4/6 | 14min | 4min |
+| 01 | 5/6 | 29min | 6min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 1min, 3min, 4min
-- Trend: stable
+- Last 5 plans: 6min, 1min, 3min, 4min, 15min
+- Trend: variable (Plan 05 included user VPS setup time)
 
 *Updated after each plan completion*
 
@@ -56,6 +56,9 @@ Recent decisions affecting current work:
 - [01-02]: Seed script uses standalone postgres+drizzle connection (avoids @t3-oss/env-nextjs Next.js runtime dependency)
 - [01-04]: RecipeSource interface kept minimal (name + fetchRecipes + fetchRecipeById) -- adapter pattern for pluggable sources
 - [01-04]: Unused parameters prefixed with underscore (_id) for Biome lint compliance
+- [01-05]: Domain configured as mealprep.jimmydore.fr (actual value committed for team reference and reproducibility)
+- [01-05]: Deploy user = main user (jimmydore) instead of dedicated deploy user -- simplifies SSH and permissions for solo developer workflow
+- [01-05]: App directory /home/jimmydore/meal-prep instead of /opt/mealprep -- aligns with user home development workflow
 
 ### Pending Todos
 
@@ -63,12 +66,12 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- [Phase 1]: VPS provider + domain name a confirmer avant debut de la Phase 1
+- [Phase 1]: ~~VPS provider + domain name a confirmer avant debut de la Phase 1~~ RESOLVED - VPS configured at mealprep.jimmydore.fr with SSL
 - [Phase 2]: Jow.fr structure a inspecter en live -- Playwright necessaire ou HTTP+Cheerio suffisant?
 - [Phase 6]: Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur
 
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 01-02-PLAN.md (Database schema + migrations + seed)
+Stopped at: Completed 01-05-PLAN.md (Production infrastructure)
 Resume file: None
