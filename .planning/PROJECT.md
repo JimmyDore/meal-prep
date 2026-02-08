@@ -51,6 +51,8 @@ L'utilisateur obtient un plan de repas hebdomadaire optimisé pour ses macros sa
 - **Synchro données**: Upload via API — le script local envoie les recettes au serveur
 - **Enrichissement**: Manuel via Claude Code — pas d'API nutritionnelle automatique, utilisation du plan Max
 - **Source de données**: Jow uniquement — pas d'autres sources de recettes pour le v1
+- **Qualité code**: Tests unitaires et d'intégration obligatoires — couverture de test béton
+- **Architecture**: Abstraire la source de recettes (interface/adapter pattern) — Jow aujourd'hui, d'autres sources demain
 
 ## Key Decisions
 
