@@ -74,12 +74,12 @@ Plans:
   3. L'utilisateur peut filtrer les recettes par tags alimentaires (vegetarien, sans gluten, sans porc) et les filtres se combinent
   4. L'utilisateur peut ouvrir le detail d'une recette et voir les ingredients, macros par portion, temps de preparation et photo
   5. L'utilisateur peut cliquer un lien qui ouvre la recette Jow originale dans un nouvel onglet
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: API recettes (list avec pagination, search full-text, filter par tags)
-- [ ] 03-02: Page catalogue frontend (liste, pagination, barre de recherche, filtres tags)
-- [ ] 03-03: Page detail recette (ingredients, macros, photo, lien Jow)
+- [ ] 03-01-PLAN.md -- Foundation: shadcn/ui components, image config, DB query functions, shared UI components
+- [ ] 03-02-PLAN.md -- Catalogue page: recipe grid, search bar, tag filters, pagination, loading skeleton
+- [ ] 03-03-PLAN.md -- Recipe detail page: ingredients, macros, photo, Jow link, not-found handling
 
 ### Phase 4: Authentication + User Profile
 **Goal**: Les utilisateurs peuvent creer un compte, se connecter, et configurer leur profil sportif et alimentaire
