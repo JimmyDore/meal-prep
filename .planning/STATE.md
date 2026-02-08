@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 1 of 8 (Project Foundation + Database + Deployment)
-Plan: 0 of 6 in current phase
-Status: Ready to plan
-Last activity: 2026-02-08 -- Roadmap revised (9 phases -> 8 phases, deployment merged into Phase 1)
+Plan: 1 of 6 in current phase
+Status: In progress
+Last activity: 2026-02-08 - Completed 01-01-PLAN.md (Project scaffolding)
 
-Progress: [..........] 0%
+Progress: [#.........] 2% (1/48 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 6min
+- Total execution time: 0.1 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01 | 1/6 | 6min | 6min |
 
 **Recent Trend:**
-- Last 5 plans: -
-- Trend: -
+- Last 5 plans: 6min
+- Trend: baseline
 
 *Updated after each plan completion*
 
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - [Roadmap]: Phase 1 delivers Hello World frontend connecte a la DB en production avec auto-deploy
 - [Roadmap]: ENH-01/02/03 inclus dans v1 (Phase 8), pas differes en v2
 - [Roadmap]: Adapter pattern pour sources de recettes impose des Phase 1
+- [01-01]: Biome v2 uses `includes` key (not `include`) and schema URL must match CLI version
+- [01-01]: Non-null assertion suppressed in drizzle.config.ts (standard dotenv pattern)
+- [01-01]: Docker Compose dev-only (no app service, Next.js runs locally for fast HMR)
 
 ### Pending Todos
 
@@ -61,5 +64,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Roadmap revision complete, ready to plan Phase 1
+Stopped at: Completed 01-01-PLAN.md (Project scaffolding)
 Resume file: None
