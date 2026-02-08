@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 1 of 8 (Project Foundation + Database + Deployment)
-Plan: 5 of 6 in current phase
-Status: In progress
-Last activity: 2026-02-08 - Completed 01-05-PLAN.md (Production infrastructure)
+Plan: 6 of 6 in current phase
+Status: Phase complete - Awaiting Phase 2 planning
+Last activity: 2026-02-08 - Completed 01-06-PLAN.md (CI/CD and Hello World)
 
-Progress: [#.........] 13% (5/38 plans)
+Progress: [##........] 16% (6/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 6min
-- Total execution time: 0.5 hours
+- Total plans completed: 6
+- Average duration: 7min
+- Total execution time: 0.7 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 5/6 | 29min | 6min |
+| 01 | 6/6 | 39min | 7min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 1min, 3min, 4min, 15min
-- Trend: variable (Plan 05 included user VPS setup time)
+- Last 5 plans: 1min, 3min, 4min, 15min, 10min
+- Trend: variable (Plan 05 included user VPS setup time, Plan 06 included user verification checkpoint)
 
 *Updated after each plan completion*
 
@@ -59,6 +59,10 @@ Recent decisions affecting current work:
 - [01-05]: Domain configured as mealprep.jimmydore.fr (actual value committed for team reference and reproducibility)
 - [01-05]: Deploy user = main user (jimmydore) instead of dedicated deploy user -- simplifies SSH and permissions for solo developer workflow
 - [01-05]: App directory /home/jimmydore/meal-prep instead of /opt/mealprep -- aligns with user home development workflow
+- [01-06]: CI excludes DB integration tests (pnpm test run --exclude 'src/db/**') -- GitHub Actions runner has no live Postgres
+- [01-06]: SKIP_ENV_VALIDATION=1 in CI type-check and Dockerfile build stage -- bypasses @t3-oss/env-nextjs validation for build-time
+- [01-06]: Dockerfile build stage needs dummy DATABASE_URL for Next.js standalone build with dynamic pages -- @t3-oss/env-nextjs validation runs at build time
+- [01-06]: Production DB migrations applied manually (docker compose exec) -- automation deferred to Phase 2+ when schema changes become frequent
 
 ### Pending Todos
 
@@ -67,11 +71,26 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - [Phase 1]: ~~VPS provider + domain name a confirmer avant debut de la Phase 1~~ RESOLVED - VPS configured at mealprep.jimmydore.fr with SSL
+- [Phase 2]: Migration automation needed before schema changes become frequent -- currently manual via docker compose exec
 - [Phase 2]: Jow.fr structure a inspecter en live -- Playwright necessaire ou HTTP+Cheerio suffisant?
 - [Phase 6]: Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur
 
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 01-05-PLAN.md (Production infrastructure)
+Stopped at: Completed 01-06-PLAN.md (CI/CD and Hello World) - PHASE 1 COMPLETE
 Resume file: None
+
+## Phase 1 Status
+
+**COMPLETE** - All 6 plans executed successfully
+
+✅ Full stack verified end-to-end:
+- Next.js 15 + TypeScript + Tailwind + shadcn/ui
+- Postgres schema (recipes, ingredients, recipe_ingredients) with Drizzle ORM
+- Database integration tests with Vitest
+- VPS deployment with Docker + Nginx + SSL (mealprep.jimmydore.fr)
+- GitHub Actions CI/CD auto-deploys on push to main
+- Hello World page in production queries Postgres and displays server time + recipe count
+
+Ready for Phase 2: Recipe Ingestion (Jow.fr adapter, Shannon tool integration)
