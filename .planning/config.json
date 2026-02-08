@@ -8,5 +8,13 @@
     "research": true,
     "plan_check": true,
     "verifier": true
+  },
+  "testing": {
+    "unit_tests": true,
+    "integration_tests": true,
+    "visual_testing": true,
+    "visual_testing_tool": "mcp-puppeteer",
+    "agent_manual_testing": true,
+    "notes": "Executors/verifiers must run the project locally and visually verify UI via MCP Puppeteer (Chrome) when relevant — not just automated tests"
   }
 }
