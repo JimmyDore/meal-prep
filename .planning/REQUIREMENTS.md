@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Data Pipeline
 
-- [ ] **DATA-01**: Script local scrape les recettes Jow (titre, ingredients, portions, temps de preparation, photo, URL source) avec detection des doublons
-- [ ] **DATA-02**: Skill Claude Code enrichit chaque recette avec ses macronutriments (proteines, glucides, lipides) par ingredient pour 100g
-- [ ] **DATA-03**: API endpoint sur le serveur pour recevoir les recettes enrichies uploadees depuis le script local
+- [x] **DATA-01**: Script local scrape les recettes Jow (titre, ingredients, portions, temps de preparation, photo, URL source) avec detection des doublons
+- [x] **DATA-02**: Skill Claude Code enrichit chaque recette avec ses macronutriments (proteines, glucides, lipides) par ingredient pour 100g
+- [x] **DATA-03**: API endpoint sur le serveur pour recevoir les recettes enrichies uploadees depuis le script local
 - [ ] **DATA-04**: Base de donnees Postgres stocke les recettes avec ingredients, macros par ingredient, tags alimentaires
 
 ### Catalogue Recettes
@@ -100,9 +100,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DATA-01 | Phase 2 | Pending |
-| DATA-02 | Phase 2 | Pending |
-| DATA-03 | Phase 2 | Pending |
+| DATA-01 | Phase 2 | Complete |
+| DATA-02 | Phase 2 | Complete |
+| DATA-03 | Phase 2 | Complete |
 | DATA-04 | Phase 1 | Complete |
 | CAT-01 | Phase 3 | Pending |
 | CAT-02 | Phase 3 | Pending |
