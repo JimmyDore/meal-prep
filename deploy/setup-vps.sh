@@ -24,9 +24,9 @@ set -euo pipefail
 # CONFIGURATION - Update these values before running
 # ==============================================================================
 
-DOMAIN="mealprep.example.com"      # Your actual domain/subdomain
-DEPLOY_USER="deploy"               # Non-root user for running the app
-REPO_URL="git@github.com:YOUR_USER/meal-prep.git"  # Your repo SSH URL
+DOMAIN="mealprep.jimmydore.fr"      # Your actual domain/subdomain
+DEPLOY_USER="jimmydore"             # Non-root user for running the app
+REPO_URL="https://github.com/JimmyDore/meal-prep.git"  # Your repo URL
 APP_DIR="/home/${DEPLOY_USER}/meal-prep"            # Where the app lives
 
 # Database credentials for production
