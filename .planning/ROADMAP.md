@@ -109,13 +109,13 @@ Plans:
   3. L'utilisateur peut definir son objectif nutritionnel (seche, prise de masse, maintien) et ses preferences alimentaires (vegetarien, sans gluten, sans porc, etc.)
   4. L'utilisateur peut saisir ses seances de sport prevues dans la semaine (type d'activite, frequence)
   5. Les donnees d'un utilisateur sont isolees des autres (multi-tenant via RLS) -- un utilisateur ne voit jamais les donnees d'un autre
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: Better Auth integration (register, login, sessions, logout, middleware)
-- [ ] 04-02: Schema profil utilisateur + sport sessions, RLS policies
-- [ ] 04-03: Pages profil frontend (formulaire physique, objectif, preferences alimentaires)
-- [ ] 04-04: Page sport schedule (saisie seances hebdomadaires)
+- [ ] 04-01-PLAN.md -- Better Auth setup (server config, Drizzle adapter, auth schema, API handler, proxy.ts)
+- [ ] 04-02-PLAN.md -- Auth UI (/auth page with login/register tabs, route group protection, header with logout)
+- [ ] 04-03-PLAN.md -- Profile schema (user_profiles, dietary_preferences, sport_activities tables, query layer, Zod schemas)
+- [ ] 04-04-PLAN.md -- Onboarding wizard (4-step form: physical, goal, dietary, sport) + settings page
 
 ### Phase 5: Macro Calculation Engine
 **Goal**: Le systeme calcule automatiquement les targets macros hebdomadaires et les macros reelles par portion de recette
