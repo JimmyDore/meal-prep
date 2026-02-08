@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { ingredients, recipeIngredients, recipeTags, recipes, tags } from "./schema";
+import { ingredients, recipeIngredients, recipes, recipeTags, tags } from "./schema";
 
 const client = postgres(process.env.DATABASE_URL!);
 const db = drizzle(client, { casing: "snake_case" });

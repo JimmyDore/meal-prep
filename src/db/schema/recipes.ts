@@ -1,5 +1,5 @@
-import { integer, pgTable, text } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+import { integer, pgTable, text } from "drizzle-orm/pg-core";
 import { idColumn, timestamps } from "./common";
 import { recipeIngredients } from "./ingredients";
 import { recipeTags } from "./tags";
