@@ -50,7 +50,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+1. **Test the Shannon tool on the website** (testing) - 2026-02-08
 
 ### Blockers/Concerns
 
