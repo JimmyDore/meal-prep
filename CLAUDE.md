@@ -63,6 +63,7 @@ All three stages are resumable (skip already-processed items) and idempotent.
 - DB columns: `snake_case` (via `casing: "snake_case"`)
 - TypeScript fields: `camelCase`
 - Migrations output: `./drizzle/`
+- **After ANY schema change in `src/db/schema/`**, run `pnpm db:generate` to create a migration. Production only applies migrations from `./drizzle/` — schema changes without a migration will break prod.
 
 ### TypeScript
 - Path alias: `@/*` → `./src/*`
@@ -95,6 +96,14 @@ All three stages are resumable (skip already-processed items) and idempotent.
   - Zod validation on nutrition data (0–100g macros, 0–900 calories)
   - Upload API upserts by `jowId` (no duplicates)
 
+### Deployment
+- Production secrets are managed via **GitHub Secrets** (not `.env` on VPS)
+- Deploy workflow: `.github/workflows/deploy.yml` — CI checks, SSH deploy, smoke test
+- New env vars must be added in 3 places: GitHub Secrets, `docker-compose.prod.yml` environment, and `deploy.yml` (env + envs)
+- `NEXT_PUBLIC_*` vars are **baked at build time** — they must be passed as Docker build args in `Dockerfile` (ARG + ENV), not just runtime env vars in compose
+- Pre-commit hook: `biome check --write` via lint-staged on `*.{ts,tsx}`
+- Pre-push hook: `tsc --noEmit`
+
 ## Learnings
 
 <!--
@@ -103,3 +112,6 @@ All three stages are resumable (skip already-processed items) and idempotent.
   append it to this section. Keep entries concise (one line each). Date each entry.
   Format: - YYYY-MM-DD: <learning>
 -->
+- 2026-02-08: Schema changes in `src/db/schema/` require `pnpm db:generate` — prod only runs SQL migrations from `./drizzle/`, not schema push
+- 2026-02-08: `NEXT_PUBLIC_*` env vars must be Docker build args (not just runtime) — they get inlined by `next build`
+- 2026-02-08: All prod env vars flow through GitHub Secrets → deploy.yml → SSH → docker-compose.prod.yml
