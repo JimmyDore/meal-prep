@@ -112,7 +112,7 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Better Auth setup (server config, Drizzle adapter, auth schema, API handler, proxy.ts)
+- [x] 04-01-PLAN.md -- Better Auth setup (server config, Drizzle adapter, auth schema, API handler, proxy.ts)
 - [ ] 04-02-PLAN.md -- Auth UI (/auth page with login/register tabs, route group protection, header with logout)
 - [ ] 04-03-PLAN.md -- Profile schema (user_profiles, dietary_preferences, sport_activities tables, query layer, Zod schemas)
 - [ ] 04-04-PLAN.md -- Onboarding wizard (4-step form: physical, goal, dietary, sport) + settings page
@@ -204,7 +204,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 2. Recipe Data Pipeline | 5/5 | Complete | 2026-02-08 |
 | 3. Recipe Catalogue | 5/5 | Complete | 2026-02-08 |
 | 3.1 Pipeline Enrichment Optimization | 2/2 | Complete | 2026-02-08 |
-| 4. Authentication + User Profile | 0/4 | Not started | - |
+| 4. Authentication + User Profile | 1/4 | In progress | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
