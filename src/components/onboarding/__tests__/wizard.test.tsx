@@ -246,8 +246,8 @@ const completeDefaultValues = {
   activityLevel: "moderement_actif" as const,
   goal: "maintien" as const,
   householdSize: 2,
-  dietaryPreferences: [] as string[],
-  sportActivities: [] as { activityType: string; weeklyFrequency: number }[],
+  dietaryPreferences: [],
+  sportActivities: [],
 };
 
 /**

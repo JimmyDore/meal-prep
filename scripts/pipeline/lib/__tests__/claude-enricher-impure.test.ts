@@ -47,8 +47,8 @@ vi.mock(import("node:crypto"), async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    default: { ...actual, randomUUID: () => "mock-uuid-1234" },
-    randomUUID: () => "mock-uuid-1234",
+    default: { ...actual, randomUUID: () => "00000000-0000-0000-0000-mock-uuid-01" as const },
+    randomUUID: () => "00000000-0000-0000-0000-mock-uuid-01" as const,
   };
 });
 

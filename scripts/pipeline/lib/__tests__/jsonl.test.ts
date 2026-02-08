@@ -31,11 +31,11 @@ vi.mock(import("node:fs"), async (importOriginal) => {
     default: {
       ...actual,
       createReadStream: () => {
-        return Readable.from(nextReadableContent);
+        return Readable.from(nextReadableContent) as ReturnType<typeof actual.createReadStream>;
       },
     },
     createReadStream: () => {
-      return Readable.from(nextReadableContent);
+      return Readable.from(nextReadableContent) as ReturnType<typeof actual.createReadStream>;
     },
   };
 });
