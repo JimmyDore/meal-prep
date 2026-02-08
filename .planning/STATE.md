@@ -5,34 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 2: Recipe Data Pipeline - Schema extended, pipeline infrastructure ready
+**Current focus:** Phase 2: Recipe Data Pipeline - Upload endpoint ready, pipeline can persist recipes
 
 ## Current Position
 
 Phase: 2 of 8 (Recipe Data Pipeline)
-Plan: 1 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-08 - Completed 02-01-PLAN.md (Schema Extension and Pipeline Infrastructure)
+Last activity: 2026-02-08 - Completed 02-04-PLAN.md (Recipe Upload Endpoint)
 
-Progress: [##........] 18% (7/38 plans)
+Progress: [##........] 21% (8/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 7min
-- Total execution time: 0.8 hours
+- Total execution time: 0.9 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
-| 02 | 1/5 | 7min | 7min |
+| 02 | 2/5 | 11min | 6min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 4min, 15min, 10min, 7min
-- Trend: stable around 7min average
+- Last 5 plans: 4min, 15min, 10min, 7min, 4min
+- Trend: stable, getting faster
 
 *Updated after each plan completion*
 
@@ -67,10 +67,13 @@ Recent decisions affecting current work:
 - [02-01]: Applied migration SQL directly to dev DB -- drizzle-kit push interactive prompt not automatable
 - [02-01]: PIPELINE_TOKEN added to .env with dev-pipeline-token placeholder
 - [02-01]: Zod macro bounds: protein/carbs/fat 0-100 per 100g, calories 0-900 per 100g
+- [02-04]: Tag upsert targets slug (not name) for case-insensitive deduplication -- "Rapide" and "rapide" resolve to same tag
+- [02-04]: PIPELINE_TOKEN upgraded from placeholder to secure random 64-char hex for local dev
 
 ### Pending Todos
 
 1. **Test the Shannon tool on the website** (testing) - 2026-02-08
+2. **Set PIPELINE_TOKEN on production VPS** (deployment) - before pipeline goes live
 
 ### Blockers/Concerns
 
@@ -81,8 +84,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T16:02:12Z
-Stopped at: Completed 02-01-PLAN.md (Schema Extension and Pipeline Infrastructure)
+Last session: 2026-02-08T16:12:08Z
+Stopped at: Completed 02-04-PLAN.md (Recipe Upload Endpoint)
 Resume file: None
 
 ## Phase 1 Status
@@ -91,8 +94,10 @@ Resume file: None
 
 ## Phase 2 Status
 
-**IN PROGRESS** - 1/5 plans completed
+**IN PROGRESS** - 2/5 plans completed
 
 Plan 01 complete: Schema extended with 11 recipe columns, ingredients.name unique constraint, PIPELINE_TOKEN env validation, pipeline shared library (types, schemas, JSONL utils, logger).
 
-Next: Plan 02 (Jow Scraper)
+Plan 04 complete: POST /api/recipes/upload endpoint with bearer auth, Zod validation, transactional upsert for recipes/ingredients/tags.
+
+Next: Plans 02, 03, 05 remaining
