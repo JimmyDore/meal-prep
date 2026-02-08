@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { TagFilter } from "@/components/tag-filter";
 
 const mockPush = vi.fn();
@@ -81,9 +81,7 @@ describe("TagFilter", () => {
     mockSearchParams.append("tags", "rapide");
     mockSearchParams.append("tags", "healthy");
 
-    render(
-      <TagFilter tags={sampleTags} activeSlugs={["rapide", "healthy"]} />,
-    );
+    render(<TagFilter tags={sampleTags} activeSlugs={["rapide", "healthy"]} />);
 
     await act(async () => {
       fireEvent.click(screen.getByText("Rapide"));

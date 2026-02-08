@@ -15,16 +15,12 @@ describe("PaginationControls", () => {
   });
 
   it("renders nothing when totalPages is 1", () => {
-    const { container } = render(
-      <PaginationControls currentPage={1} totalPages={1} />,
-    );
+    const { container } = render(<PaginationControls currentPage={1} totalPages={1} />);
     expect(container.innerHTML).toBe("");
   });
 
   it("renders nothing when totalPages is 0", () => {
-    const { container } = render(
-      <PaginationControls currentPage={1} totalPages={0} />,
-    );
+    const { container } = render(<PaginationControls currentPage={1} totalPages={0} />);
     expect(container.innerHTML).toBe("");
   });
 

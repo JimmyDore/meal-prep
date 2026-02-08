@@ -3,7 +3,6 @@ import { cleanupTestDb, closeTestDb, setupTestDb, testDb } from "@/test/db-setup
 
 vi.mock("@/db", () => ({ db: testDb }));
 
-import { user } from "@/db/schema/auth";
 import {
   getUserDietaryPreferences,
   getUserProfile,
@@ -11,6 +10,7 @@ import {
   setUserDietaryPreferences,
   upsertUserProfile,
 } from "@/db/queries/profiles";
+import { user } from "@/db/schema/auth";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -66,9 +66,9 @@ describe("DB Queries: profiles", () => {
       const result = await getUserProfile(userId);
 
       expect(result).not.toBeNull();
-      expect(result!.userId).toBe(userId);
-      expect(result!.weight).toBe(80);
-      expect(result!.height).toBe(180);
+      expect(result?.userId).toBe(userId);
+      expect(result?.weight).toBe(80);
+      expect(result?.height).toBe(180);
     });
   });
 
@@ -111,7 +111,7 @@ describe("DB Queries: profiles", () => {
 
       // Verify only one profile exists
       const fetched = await getUserProfile(userId);
-      expect(fetched!.weight).toBe(80);
+      expect(fetched?.weight).toBe(80);
     });
   });
 

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 // Polyfill ResizeObserver for Radix UI components in jsdom
 global.ResizeObserver = class {

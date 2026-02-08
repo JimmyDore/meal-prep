@@ -3,18 +3,14 @@ import { cleanupTestDb, closeTestDb, setupTestDb, testDb } from "@/test/db-setup
 
 vi.mock("@/db", () => ({ db: testDb }));
 
-import { ingredients, recipeIngredients, recipes, recipeTags, tags } from "@/db/schema";
 import { getRecipeById, getRecipes } from "@/db/queries/recipes";
+import { ingredients, recipeIngredients, recipes, recipeTags, tags } from "@/db/schema";
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-async function insertRecipe(data: {
-  jowId: string;
-  title: string;
-  jowUrl?: string;
-}) {
+async function insertRecipe(data: { jowId: string; title: string; jowUrl?: string }) {
   const [row] = await testDb
     .insert(recipes)
     .values({
@@ -41,10 +37,7 @@ async function insertIngredient(name: string) {
 }
 
 async function insertTag(name: string, slug: string) {
-  const [row] = await testDb
-    .insert(tags)
-    .values({ name, slug })
-    .returning();
+  const [row] = await testDb.insert(tags).values({ name, slug }).returning();
   return row;
 }
 
@@ -149,7 +142,7 @@ describe("DB Queries: recipes", () => {
 
     it("filters recipes by tag slugs (AND logic)", async () => {
       const r1 = await insertRecipe({ jowId: "r1", title: "Quick Chicken" });
-      const r2 = await insertRecipe({ jowId: "r2", title: "Slow Beef" });
+      const _r2 = await insertRecipe({ jowId: "r2", title: "Slow Beef" });
       const r3 = await insertRecipe({ jowId: "r3", title: "Quick Veggie" });
 
       const tagRapide = await insertTag("Rapide", "rapide");
@@ -200,11 +193,11 @@ describe("DB Queries: recipes", () => {
       const result = await getRecipeById(recipe.id);
 
       expect(result).toBeDefined();
-      expect(result!.title).toBe("Poulet Roti");
-      expect(result!.recipeIngredients).toHaveLength(1);
-      expect(result!.recipeIngredients[0].ingredient.name).toBe("Poulet entier");
-      expect(result!.recipeTags).toHaveLength(1);
-      expect(result!.recipeTags[0].tag.name).toBe("Rapide");
+      expect(result?.title).toBe("Poulet Roti");
+      expect(result?.recipeIngredients).toHaveLength(1);
+      expect(result?.recipeIngredients[0].ingredient.name).toBe("Poulet entier");
+      expect(result?.recipeTags).toHaveLength(1);
+      expect(result?.recipeTags[0].tag.name).toBe("Rapide");
     });
 
     it("returns undefined for non-existent UUID", async () => {

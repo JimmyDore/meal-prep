@@ -40,9 +40,7 @@ function validDietary() {
 
 function validSport() {
   return {
-    sportActivities: [
-      { activityType: "musculation" as const, weeklyFrequency: 3 },
-    ],
+    sportActivities: [{ activityType: "musculation" as const, weeklyFrequency: 3 }],
   };
 }
 
@@ -197,12 +195,8 @@ describe("goalSchema", () => {
   });
 
   it("accepts householdSize at bounds (1 and 6)", () => {
-    expect(
-      goalSchema.safeParse({ goal: "maintien", householdSize: 1 }).success,
-    ).toBe(true);
-    expect(
-      goalSchema.safeParse({ goal: "maintien", householdSize: 6 }).success,
-    ).toBe(true);
+    expect(goalSchema.safeParse({ goal: "maintien", householdSize: 1 }).success).toBe(true);
+    expect(goalSchema.safeParse({ goal: "maintien", householdSize: 6 }).success).toBe(true);
   });
 
   it("rejects householdSize below 1", () => {

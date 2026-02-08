@@ -29,10 +29,7 @@ import { POST } from "../route";
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeRequest(
-  body: unknown,
-  headers: Record<string, string> = {},
-): Request {
+function makeRequest(body: unknown, headers: Record<string, string> = {}): Request {
   return new Request("http://localhost/api/recipes/upload", {
     method: "POST",
     headers: {
@@ -111,10 +108,7 @@ describe("POST /api/recipes/upload", () => {
 
   describe("validation", () => {
     it("returns 400 when body is empty object", async () => {
-      const req = makeRequest(
-        {},
-        { Authorization: "Bearer test-pipeline-token" },
-      );
+      const req = makeRequest({}, { Authorization: "Bearer test-pipeline-token" });
       const res = await POST(req);
 
       expect(res.status).toBe(400);
@@ -232,7 +226,7 @@ describe("POST /api/recipes/upload", () => {
       (db.transaction as Mock).mockImplementation(
         async (callback: (tx: unknown) => Promise<string>) => {
           // Create a minimal tx mock that the transaction callback can use
-          const tx = {
+          const _tx = {
             insert: vi.fn().mockReturnValue({
               values: vi.fn().mockReturnValue({
                 onConflictDoUpdate: vi.fn().mockReturnValue({
@@ -246,14 +240,14 @@ describe("POST /api/recipes/upload", () => {
           };
 
           // Also mock the recipe-ingredient link insert (no returning)
-          const linkInsert = vi.fn().mockReturnValue({
+          const _linkInsert = vi.fn().mockReturnValue({
             values: vi.fn().mockReturnValue({
               onConflictDoUpdate: vi.fn().mockResolvedValue(undefined),
             }),
           });
 
           // And tag insert
-          const tagInsert = vi.fn().mockReturnValue({
+          const _tagInsert = vi.fn().mockReturnValue({
             values: vi.fn().mockReturnValue({
               onConflictDoUpdate: vi.fn().mockReturnValue({
                 returning: vi.fn().mockResolvedValue([{ id: "tag-1" }]),
@@ -295,9 +289,7 @@ describe("POST /api/recipes/upload", () => {
 
   describe("error handling", () => {
     it("returns 500 when database transaction throws", async () => {
-      (db.transaction as Mock).mockRejectedValue(
-        new Error("DB connection failed"),
-      );
+      (db.transaction as Mock).mockRejectedValue(new Error("DB connection failed"));
 
       const req = makeRequest(validRecipe, {
         Authorization: "Bearer test-pipeline-token",
