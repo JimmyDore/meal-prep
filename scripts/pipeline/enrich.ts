@@ -92,6 +92,10 @@ async function main(): Promise<void> {
   for (let i = 0; i < toProcess.length; i++) {
     const recipe = toProcess[i];
 
+    log.info(
+      `[${i + 1}/${toProcess.length}] Enriching "${recipe.title}" (${recipe.ingredients.length} ingredients)...`,
+    );
+
     try {
       // Enrich with retry
       const result = enrichRecipeWithRetry(recipe);
@@ -121,6 +125,8 @@ async function main(): Promise<void> {
         log.warn(
           `Recipe "${recipe.title}" flagged: ${flags.join(", ")}`,
         );
+      } else {
+        log.info(`Done "${recipe.title}" -- ${result.ingredients.length} ingredients enriched`);
       }
 
       success++;
@@ -132,11 +138,11 @@ async function main(): Promise<void> {
       // Continue to next recipe -- don't abort pipeline
     }
 
-    // Progress logging every 10 recipes
+    // Progress summary every 10 recipes or at the end
     const processed = i + 1;
     if (processed % 10 === 0 || processed === toProcess.length) {
       log.info(
-        `Enriched ${processed}/${toProcess.length} (${skippedCount} skipped, ${flagged} flagged, ${failed} failed)`,
+        `Progress: ${processed}/${toProcess.length} done (${success} ok, ${flagged} flagged, ${failed} failed)`,
       );
     }
   }
