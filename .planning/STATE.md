@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 1 - Project Foundation + Database + Deployment
+**Current focus:** Phase 1 complete - Ready for Phase 2: Recipe Data Pipeline
 
 ## Current Position
 

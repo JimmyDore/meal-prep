@@ -12,7 +12,7 @@ Ce projet construit un outil de meal prep macro-optimise en 8 phases. On commenc
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Project Foundation + Database + Deployment** - Socle technique, schema Postgres, infra de tests, Docker, VPS, domain + SSL, auto-deploy, Hello World connecte a la DB
+- [x] **Phase 1: Project Foundation + Database + Deployment** - Socle technique, schema Postgres, infra de tests, Docker, VPS, domain + SSL, auto-deploy, Hello World connecte a la DB
 - [ ] **Phase 2: Recipe Data Pipeline** - Scraper local Jow, enrichissement macros Claude Code, upload API serveur
 - [ ] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details
 - [ ] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
@@ -168,7 +168,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation + Database + Deployment | 0/6 | Planned | - |
+| 1. Project Foundation + Database + Deployment | 6/6 | ✓ Complete | 2026-02-08 |
 | 2. Recipe Data Pipeline | 0/4 | Not started | - |
 | 3. Recipe Catalogue | 0/3 | Not started | - |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
