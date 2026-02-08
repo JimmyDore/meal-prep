@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Project Foundation + Database + Deployment** - Socle technique, schema Postgres, infra de tests, Docker, VPS, domain + SSL, auto-deploy, Hello World connecte a la DB
 - [x] **Phase 2: Recipe Data Pipeline** - Scraper local Jow, enrichissement macros Claude Code, upload API serveur
 - [x] **Phase 3: Recipe Catalogue** - Interface de consultation des recettes avec recherche, filtres et details
-- [ ] **Phase 3.1: Pipeline Enrichment Optimization** [INSERTED] - Enrichissement par ingredient unique (pas par recette), deduplication massive pour reduire les appels Claude CLI
+- [x] **Phase 3.1: Pipeline Enrichment Optimization** [INSERTED] - Enrichissement par ingredient unique (pas par recette), deduplication massive pour reduire les appels Claude CLI
 - [ ] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
 - [ ] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
 - [ ] **Phase 6: Basic Meal Plan Generation** - Algorithme de selection de recettes pour plan hebdo sans batch cooking
@@ -96,8 +96,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03.1-01-PLAN.md -- Stage 1 infrastructure: types, schemas, ingredient extractor, batch enricher, prompt update
-- [ ] 03.1-02-PLAN.md -- Stage 2 recipe assembler + two-stage enrich.ts orchestrator
+- [x] 03.1-01-PLAN.md -- Stage 1 infrastructure: types, schemas, ingredient extractor, batch enricher, prompt update
+- [x] 03.1-02-PLAN.md -- Stage 2 recipe assembler + two-stage enrich.ts orchestrator
 
 ### Phase 4: Authentication + User Profile
 **Goal**: Les utilisateurs peuvent creer un compte, se connecter, et configurer leur profil sportif et alimentaire
@@ -203,7 +203,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 1. Project Foundation + Database + Deployment | 6/6 | Complete | 2026-02-08 |
 | 2. Recipe Data Pipeline | 5/5 | Complete | 2026-02-08 |
 | 3. Recipe Catalogue | 5/5 | Complete | 2026-02-08 |
-| 3.1 Pipeline Enrichment Optimization | 0/2 | Not started | - |
+| 3.1 Pipeline Enrichment Optimization | 2/2 | Complete | 2026-02-08 |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
