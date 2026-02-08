@@ -33,11 +33,23 @@ export function parseIsoDuration(iso: string): number | null {
   return total > 0 ? total : null;
 }
 
+/** Map Jow difficulty number to human-readable label */
+const DIFFICULTY_MAP: Record<number, string> = {
+  0: "Tres facile",
+  1: "Facile",
+  2: "Moyen",
+  3: "Difficile",
+};
+
 /**
  * Parse a recipe from __NEXT_DATA__ JSON.
- * Navigates props.pageProps to find the recipe object.
- * Designed defensively with optional chaining -- exact paths may need adjustment
- * after inspecting real data.
+ * Navigates props.pageProps.recipe with the real Jow data structure:
+ * - directions[].label for instructions
+ * - nutritionalFacts[] array with {id, amount} for ENERC/FAT/CHOAVL/PRO/FIBTG
+ * - cookingTime / preparationTime as direct minute numbers
+ * - coversCount for portions
+ * - difficulty as number (0-3)
+ * - constituents[].name, constituents[].quantityPerCover, constituents[].unit.name
  */
 export function parseNextDataRecipe(
   nextData: unknown,
@@ -52,7 +64,6 @@ export function parseNextDataRecipe(
     return null;
   }
 
-  // The recipe object may be at different paths -- try common patterns
   const recipe = pageProps.recipe ?? pageProps.data?.recipe ?? pageProps;
 
   const title = recipe?.title ?? recipe?.name;
@@ -67,7 +78,7 @@ export function parseNextDataRecipe(
     return null;
   }
 
-  // Extract ingredients
+  // Extract ingredients from constituents array
   const rawIngredients: unknown[] =
     recipe?.constituents ?? recipe?.ingredients ?? [];
   const ingredients: ScrapedIngredient[] = [];
@@ -75,122 +86,126 @@ export function parseNextDataRecipe(
   for (const raw of rawIngredients) {
     // biome-ignore lint/suspicious/noExplicitAny: dynamic data
     const ing = raw as any;
-    const ingredient = ing?.ingredient ?? ing;
-    const name =
-      ingredient?.name ??
-      ingredient?.label ??
-      ingredient?.title ??
-      ing?.name ??
-      ing?.label;
+    const name = ing?.name ?? ing?.label ?? ing?.ingredient?.name;
     if (!name) continue;
+
+    // Build unit string from unit.name or first abbreviation label
+    let unit: string | null = null;
+    if (typeof ing?.unit?.name === "string") {
+      unit = ing.unit.name;
+    } else if (Array.isArray(ing?.unit?.abbreviations) && ing.unit.abbreviations.length > 0) {
+      const abbr = ing.unit.abbreviations[0]?.label;
+      if (typeof abbr === "string" && abbr.trim()) unit = abbr.trim();
+    }
+
+    const qty =
+      typeof ing?.quantityPerCover === "number" ? ing.quantityPerCover : null;
 
     ingredients.push({
       name: String(name),
-      quantity: typeof ing?.quantity === "number" ? ing.quantity : null,
-      unit: ing?.unit?.abbreviation ?? ing?.unit?.name ?? ing?.unit ?? null,
-      originalText:
-        ing?.originalText ??
-        `${ing?.quantity ?? ""} ${ing?.unit?.abbreviation ?? ""} ${name}`.trim(),
+      quantity: qty,
+      unit,
+      originalText: `${qty ?? ""} ${unit ?? ""} ${name}`.trim(),
     });
   }
 
-  // Extract nutrition
+  // Extract nutrition from nutritionalFacts array [{id, amount}, ...]
   let jowNutritionPerServing: JowNutritionPerServing | null = null;
-  const nutrition =
-    recipe?.nutritionalComposition ??
-    recipe?.nutrition ??
-    recipe?.nutritionalInfo;
-  if (nutrition) {
-    const calories =
-      nutrition?.calories ??
-      nutrition?.energy ??
-      nutrition?.energyKcal ??
-      null;
-    const fat = nutrition?.fat ?? nutrition?.lipid ?? null;
-    const carbs =
-      nutrition?.carbs ?? nutrition?.carbohydrate ?? nutrition?.glucide ?? null;
-    const protein = nutrition?.protein ?? nutrition?.proteine ?? null;
-    const fiber = nutrition?.fiber ?? nutrition?.fibre ?? null;
+  const nutritionalFacts: unknown[] = recipe?.nutritionalFacts ?? [];
+  if (Array.isArray(nutritionalFacts) && nutritionalFacts.length > 0) {
+    const factsMap = new Map<string, number>();
+    for (const fact of nutritionalFacts) {
+      // biome-ignore lint/suspicious/noExplicitAny: dynamic data
+      const f = fact as any;
+      if (typeof f?.id === "string" && typeof f?.amount === "number") {
+        factsMap.set(f.id, f.amount);
+      }
+    }
+
+    const calories = factsMap.get("ENERC") ?? null;
+    const fat = factsMap.get("FAT") ?? null;
+    const carbs = factsMap.get("CHOAVL") ?? null;
+    const protein = factsMap.get("PRO") ?? null;
+    const fiber = factsMap.get("FIBTG") ?? null;
 
     if (
-      typeof calories === "number" &&
-      typeof fat === "number" &&
-      typeof carbs === "number" &&
-      typeof protein === "number"
+      calories !== null &&
+      fat !== null &&
+      carbs !== null &&
+      protein !== null
     ) {
       jowNutritionPerServing = {
         calories,
         fat,
         carbs,
         protein,
-        fiber: typeof fiber === "number" ? fiber : 0,
+        fiber: fiber ?? 0,
       };
     }
   }
 
-  // Extract instructions
-  const rawSteps: unknown[] =
-    recipe?.steps ?? recipe?.instructions ?? recipe?.preparationSteps ?? [];
+  // Extract instructions from directions[].label
+  const rawDirections: unknown[] =
+    recipe?.directions ?? recipe?.steps ?? recipe?.instructions ?? [];
   const instructions: string[] = [];
-  for (const step of rawSteps) {
+  for (const step of rawDirections) {
     if (typeof step === "string") {
       instructions.push(step);
     } else if (typeof step === "object" && step !== null) {
       // biome-ignore lint/suspicious/noExplicitAny: dynamic step data
       const s = step as any;
-      const text = s?.description ?? s?.text ?? s?.content ?? s?.label;
+      const text = s?.label ?? s?.description ?? s?.text ?? s?.content;
       if (typeof text === "string") instructions.push(text);
     }
+  }
+
+  // Convert difficulty number to string label
+  const rawDifficulty = recipe?.difficulty;
+  let difficulty: string | null = null;
+  if (typeof rawDifficulty === "number") {
+    difficulty = DIFFICULTY_MAP[rawDifficulty] ?? `Level ${rawDifficulty}`;
+  } else if (typeof rawDifficulty === "string") {
+    difficulty = rawDifficulty;
+  }
+
+  // Compute totalTimeMin from cookingTime + preparationTime if not directly available
+  const cookTimeMin =
+    typeof recipe?.cookingTime === "number" ? recipe.cookingTime : null;
+  const prepTimeMin =
+    typeof recipe?.preparationTime === "number"
+      ? recipe.preparationTime
+      : null;
+  let totalTimeMin: number | null = null;
+  if (cookTimeMin !== null && prepTimeMin !== null) {
+    totalTimeMin = cookTimeMin + prepTimeMin;
+  } else if (cookTimeMin !== null) {
+    totalTimeMin = cookTimeMin;
+  } else if (prepTimeMin !== null) {
+    totalTimeMin = prepTimeMin;
   }
 
   // Build result
   const result: ScrapedRecipe = {
     title: String(title),
-    description: String(recipe?.description ?? recipe?.subtitle ?? ""),
+    description: String(recipe?.description ?? recipe?.composition ?? ""),
     jowId,
     jowUrl: url.startsWith("http") ? url : `https://jow.fr${url}`,
-    imageUrl: recipe?.imageUrl ?? recipe?.image?.url ?? recipe?.image ?? null,
-    cookTimeMin:
-      typeof recipe?.cookingTimeMin === "number"
-        ? recipe.cookingTimeMin
-        : typeof recipe?.cookTime === "number"
-          ? recipe.cookTime
-          : null,
-    prepTimeMin:
-      typeof recipe?.preparationTimeMin === "number"
-        ? recipe.preparationTimeMin
-        : typeof recipe?.prepTime === "number"
-          ? recipe.prepTime
-          : null,
-    totalTimeMin:
-      typeof recipe?.totalTimeMin === "number"
-        ? recipe.totalTimeMin
-        : typeof recipe?.totalTime === "number"
-          ? recipe.totalTime
-          : null,
-    difficulty: recipe?.difficulty ?? recipe?.difficultyLevel ?? null,
+    imageUrl: recipe?.imageUrl ?? recipe?.imageUrlHD ?? null,
+    cookTimeMin,
+    prepTimeMin,
+    totalTimeMin,
+    difficulty,
     instructions,
     nutriScore: recipe?.nutriScore ?? recipe?.nutriScoreV2 ?? null,
-    rating:
-      typeof recipe?.rating === "number"
-        ? recipe.rating
-        : typeof recipe?.averageRating === "number"
-          ? recipe.averageRating
-          : null,
+    rating: null, // __NEXT_DATA__ aggregateRating is unreliable (-1 values); use JSON-LD
     ratingCount:
-      typeof recipe?.ratingCount === "number"
-        ? recipe.ratingCount
-        : typeof recipe?.ratingsCount === "number"
-          ? recipe.ratingsCount
-          : null,
-    cuisine: recipe?.cuisine ?? recipe?.cuisineType ?? null,
-    category: recipe?.category ?? recipe?.recipeCategory ?? null,
+      typeof recipe?.totalFeedbacks === "number"
+        ? recipe.totalFeedbacks
+        : null,
+    cuisine: null, // Not available in __NEXT_DATA__
+    category: null, // Not available in __NEXT_DATA__
     originalPortions:
-      typeof recipe?.portions === "number"
-        ? recipe.portions
-        : typeof recipe?.yield === "number"
-          ? recipe.yield
-          : null,
+      typeof recipe?.coversCount === "number" ? recipe.coversCount : null,
     ingredients,
     jowNutritionPerServing,
   };
