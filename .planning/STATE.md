@@ -12,16 +12,16 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 Phase: 4.1 (Comprehensive Unit Tests)
 Plan: 06 of 6 complete
 Status: Phase complete
-Last activity: 2026-02-08 - Completed 04.1-06-PLAN.md (Auth forms + onboarding wizard tests)
+Last activity: 2026-02-08 - Completed 04.1-02-PLAN.md (Pipeline impure function tests)
 
 Progress: [#######...] 71% (27/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 27
+- Total plans completed: 28
 - Average duration: 6min
-- Total execution time: 2.6 hours
+- Total execution time: 2.65 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [#######...] 71% (27/38 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
-| 04.1 | 6/6 | 22min | 4min |
+| 04.1 | 6/6 | 25min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 2min, 3min, 4min, 4min
+- Last 5 plans: 2min, 3min, 4min, 4min, 3min
 - Trend: fast for test-only plans
 
 *Updated after each plan completion*
@@ -123,6 +123,7 @@ Recent decisions affecting current work:
 - [04.1-06]: window.location.href stubbed via Object.defineProperty -- auth forms use window.location.href not router.push
 - [04.1-06]: ResizeObserver + hasPointerCapture polyfills needed for Radix UI in jsdom
 - [04.1-06]: Wizard navigation tests use defaultValues to skip Radix Select interaction -- jsdom lacks scrollIntoView
+- [04.1-02]: vi.mock(import("node:fs")) with importOriginal + default export spread required for vitest 4.x Node.js built-in CJS module mocking
 
 ### Pending Todos
 
@@ -144,8 +145,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T21:58:21Z
-Stopped at: Completed 04.1-06-PLAN.md (Auth forms + onboarding wizard tests)
+Last session: 2026-02-08T22:05:01Z
+Stopped at: Completed 04.1-02-PLAN.md (Pipeline impure function tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -205,6 +206,8 @@ Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sp
 **COMPLETE** - All 6 plans executed successfully
 
 Plan 01 complete: 67 unit tests for pipeline pure functions -- jow-parser (35 tests), recipe-assembler (6 tests), claude-enricher pure helpers (26 tests). Vitest config updated for scripts/**/*.test.ts discovery. Exported parseClaudeOutput, validateIngredients, boundsCheck.
+
+Plan 02 complete: 39 unit tests for pipeline impure functions -- JSONL utilities (13 tests with mocked fs), API client (7 tests with mocked fetch), Claude enricher impure (13 tests with mocked execSync/fs/os/crypto), ingredient extractor (6 tests with mocked readJsonl).
 
 Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline schemas (enrichedIngredient, ingredientMacro, scrapedRecipe, enrichedRecipe) and profile schemas (physical, goal, dietary, sportActivity, sport, profile composite). All numeric bounds and enum values tested.
 
