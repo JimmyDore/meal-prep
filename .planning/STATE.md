@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 1 complete - Ready for Phase 2: Recipe Data Pipeline
+**Current focus:** Phase 2: Recipe Data Pipeline - Schema extended, pipeline infrastructure ready
 
 ## Current Position
 
-Phase: 1 of 8 (Project Foundation + Database + Deployment)
-Plan: 6 of 6 in current phase
-Status: Phase complete - Awaiting Phase 2 planning
-Last activity: 2026-02-08 - Completed 01-06-PLAN.md (CI/CD and Hello World)
+Phase: 2 of 8 (Recipe Data Pipeline)
+Plan: 1 of 5 in current phase
+Status: In progress
+Last activity: 2026-02-08 - Completed 02-01-PLAN.md (Schema Extension and Pipeline Infrastructure)
 
-Progress: [##........] 16% (6/38 plans)
+Progress: [##........] 18% (7/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 7min
-- Total execution time: 0.7 hours
+- Total execution time: 0.8 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 6/6 | 39min | 7min |
+| 02 | 1/5 | 7min | 7min |
 
 **Recent Trend:**
-- Last 5 plans: 1min, 3min, 4min, 15min, 10min
-- Trend: variable (Plan 05 included user VPS setup time, Plan 06 included user verification checkpoint)
+- Last 5 plans: 3min, 4min, 15min, 10min, 7min
+- Trend: stable around 7min average
 
 *Updated after each plan completion*
 
@@ -63,6 +64,9 @@ Recent decisions affecting current work:
 - [01-06]: SKIP_ENV_VALIDATION=1 in CI type-check and Dockerfile build stage -- bypasses @t3-oss/env-nextjs validation for build-time
 - [01-06]: Dockerfile build stage needs dummy DATABASE_URL for Next.js standalone build with dynamic pages -- @t3-oss/env-nextjs validation runs at build time
 - [01-06]: Production DB migrations applied manually (docker compose exec) -- automation deferred to Phase 2+ when schema changes become frequent
+- [02-01]: Applied migration SQL directly to dev DB -- drizzle-kit push interactive prompt not automatable
+- [02-01]: PIPELINE_TOKEN added to .env with dev-pipeline-token placeholder
+- [02-01]: Zod macro bounds: protein/carbs/fat 0-100 per 100g, calories 0-900 per 100g
 
 ### Pending Todos
 
@@ -77,20 +81,18 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08
-Stopped at: Completed 01-06-PLAN.md (CI/CD and Hello World) - PHASE 1 COMPLETE
+Last session: 2026-02-08T16:02:12Z
+Stopped at: Completed 02-01-PLAN.md (Schema Extension and Pipeline Infrastructure)
 Resume file: None
 
 ## Phase 1 Status
 
 **COMPLETE** - All 6 plans executed successfully
 
-✅ Full stack verified end-to-end:
-- Next.js 15 + TypeScript + Tailwind + shadcn/ui
-- Postgres schema (recipes, ingredients, recipe_ingredients) with Drizzle ORM
-- Database integration tests with Vitest
-- VPS deployment with Docker + Nginx + SSL (mealprep.jimmydore.fr)
-- GitHub Actions CI/CD auto-deploys on push to main
-- Hello World page in production queries Postgres and displays server time + recipe count
+## Phase 2 Status
 
-Ready for Phase 2: Recipe Ingestion (Jow.fr adapter, Shannon tool integration)
+**IN PROGRESS** - 1/5 plans completed
+
+Plan 01 complete: Schema extended with 11 recipe columns, ingredients.name unique constraint, PIPELINE_TOKEN env validation, pipeline shared library (types, schemas, JSONL utils, logger).
+
+Next: Plan 02 (Jow Scraper)
