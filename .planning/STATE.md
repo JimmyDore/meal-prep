@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 3.1: Pipeline Enrichment Optimization (inserted)
+**Current focus:** Phase 4: Macro Target Profile (next)
 
 ## Current Position
 
 Phase: 3.1 (Pipeline Enrichment Optimization) [INSERTED]
-Plan: 01 of 2 complete
-Status: In progress
-Last activity: 2026-02-08 - Completed 03.1-01-PLAN.md (Stage 1 infrastructure)
+Plan: 02 of 2 complete
+Status: Phase complete
+Last activity: 2026-02-08 - Completed 03.1-02-PLAN.md (Two-stage pipeline orchestrator)
 
-Progress: [####......] 45% (17/38 plans)
+Progress: [#####.....] 47% (18/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
+- Total plans completed: 18
 - Average duration: 6min
-- Total execution time: 1.85 hours
+- Total execution time: 1.90 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [####......] 45% (17/38 plans)
 | 01 | 6/6 | 39min | 7min |
 | 02 | 5/5 | 46min | 9min |
 | 03 | 5/5 | 15min | 3min |
-| 03.1 | 1/2 | 3min | 3min |
+| 03.1 | 2/2 | 6min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 2min, 1min, 4min, 3min
+- Last 5 plans: 2min, 1min, 4min, 3min, 3min
 - Trend: consistent fast execution
 
 *Updated after each plan completion*
@@ -99,6 +99,9 @@ Recent decisions affecting current work:
 - [03.1-01]: IngredientMacro structurally identical to EnrichedIngredient -- same Zod bounds, separate type for semantic clarity
 - [03.1-01]: Batch count validation: throw if Claude returns fewer/more ingredients than input count
 - [03.1-01]: Prompt updated for ingredient-list context, backward compatible with recipe context
+- [03.1-02]: crossValidateNutrition imported directly in enrich.ts orchestrator, not re-exported from recipe-assembler
+- [03.1-02]: Missing ingredients produce partial enriched recipes with _flags rather than dropping entire recipe
+- [03.1-02]: --stage flag allows running Stage 1 or Stage 2 independently for debugging
 
 ### Pending Todos
 
@@ -116,8 +119,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T19:30:00Z
-Stopped at: Completed 03.1-01-PLAN.md (Stage 1 infrastructure: ingredient extractor + batch enrichment)
+Last session: 2026-02-08T19:36:49Z
+Stopped at: Completed 03.1-02-PLAN.md (Two-stage pipeline orchestrator)
 Resume file: None
 
 ## Phase 1 Status
@@ -154,6 +157,8 @@ Plan 05 complete: Code fixes deployed to production, PIPELINE_TOKEN set on VPS, 
 
 ## Phase 3.1 Status
 
-**IN PROGRESS** - 1/2 plans executed
+**COMPLETE** - All 2 plans executed successfully
 
 Plan 01 complete: Ingredient extractor (924 unique from 19,239 occurrences), batch Claude CLI enrichment with Zod validation and count checking, IngredientMacro type and schema.
+
+Plan 02 complete: Recipe assembler module (loadMacroLookup + assembleEnrichedRecipe), enrich.ts rewritten as two-stage pipeline orchestrator. Stage 1 batch-enriches unique ingredients to reference file (~47 Claude CLI calls). Stage 2 assembles enriched recipes by joining macros, with cross-validation and resumability. Output format identical for upload pipeline.
