@@ -109,12 +109,12 @@ export function OnboardingWizard({ defaultValues, mode }: OnboardingWizardProps)
             </Button>
 
             {isLastStep ? (
-              <Button type="submit" disabled={isPending}>
+              <Button key="submit" type="submit" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
                 Terminer
               </Button>
             ) : (
-              <Button type="button" onClick={handleNext}>
+              <Button key="next" type="button" onClick={handleNext}>
                 Suivant
                 <ChevronRight className="ml-1 size-4" />
               </Button>

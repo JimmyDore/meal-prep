@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -32,7 +31,6 @@ const registerSchema = z
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   const form = useForm<RegisterFormValues>({
@@ -69,7 +67,7 @@ export function RegisterForm() {
       return;
     }
 
-    router.push("/");
+    window.location.href = "/";
   }
 
   return (
