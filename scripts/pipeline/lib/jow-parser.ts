@@ -18,6 +18,20 @@ export function extractJowId(url: string): string {
 }
 
 /**
+ * Extract the recipe slug (without the trailing Jow ID) from a URL.
+ * Jow publishes multiple variants of the same recipe (different portion sizes)
+ * as separate URLs that share the same slug base but differ in their trailing ID.
+ * Example: "/recipes/poulet-au-curry-89y06dxjhfua0twu16x5" -> "poulet-au-curry"
+ */
+export function extractRecipeSlug(url: string): string {
+  const path = new URL(url, "https://jow.fr").pathname;
+  const lastSegment = path.split("/").pop() ?? "";
+  const lastDashIndex = lastSegment.lastIndexOf("-");
+  if (lastDashIndex === -1) return lastSegment;
+  return lastSegment.slice(0, lastDashIndex);
+}
+
+/**
  * Parse ISO 8601 duration to minutes.
  * Supports: PT30M, PT1H15M, PT1H, PT45M, PT2H30M
  * Returns null if unparseable.

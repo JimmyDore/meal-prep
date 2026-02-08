@@ -7,7 +7,7 @@ import {
   discoverRecipeUrls,
   scrapeRecipeDetail,
 } from "./lib/jow-scraper";
-import { extractJowId } from "./lib/jow-parser";
+import { extractJowId, extractRecipeSlug } from "./lib/jow-parser";
 import { createLogger } from "./lib/logger";
 import type { ScrapedRecipe } from "./lib/types";
 
@@ -41,41 +41,67 @@ async function main(): Promise<void> {
     logger.info("Phase 1: Discovering recipe URLs from sitemap...");
     const allUrls = await discoverRecipeUrls(context, logger);
 
+    // Deduplicate recipe variants: Jow publishes multiple URLs for the same
+    // recipe (different portion sizes) that share the same slug but have
+    // different trailing IDs. Keep only the first URL per slug.
+    const seenSlugs = new Set<string>();
+    const uniqueUrls: string[] = [];
+    for (const url of allUrls) {
+      const slug = extractRecipeSlug(url);
+      if (!seenSlugs.has(slug)) {
+        seenSlugs.add(slug);
+        uniqueUrls.push(url);
+      }
+    }
+    const variantsDeduplicated = allUrls.length - uniqueUrls.length;
+    if (variantsDeduplicated > 0) {
+      logger.info(
+        `Deduplicated ${variantsDeduplicated} recipe variants (${allUrls.length} -> ${uniqueUrls.length} unique recipes)`,
+      );
+    }
+
     if (dryRun) {
       logger.info(
-        `Dry run complete. Discovered ${allUrls.length} recipe URLs.`,
+        `Dry run complete. Discovered ${allUrls.length} recipe URLs (${uniqueUrls.length} unique after dedup).`,
       );
       logger.summary({
         success: 0,
         skipped: 0,
         failed: 0,
-        total: allUrls.length,
+        total: uniqueUrls.length,
       });
       return;
     }
 
-    // Resumability: load already-scraped jowIds
+    // Resumability: load already-scraped jowIds AND slugs
+    // We track both because the sitemap may reorder variants between runs,
+    // causing the slug dedup above to pick a different jowId for the same slug.
     const existingIds = new Set<string>();
+    const existingSlugs = new Set<string>();
     if (existsSync(JSONL_PATH)) {
       for await (const recipe of readJsonl<ScrapedRecipe>(JSONL_PATH)) {
         if (recipe.jowId) {
           existingIds.add(recipe.jowId);
         }
+        if (recipe.jowUrl) {
+          existingSlugs.add(extractRecipeSlug(recipe.jowUrl));
+        }
       }
       logger.info(`Found ${existingIds.size} already-scraped recipes`);
     }
 
-    // Filter out already-scraped URLs
-    const urlsToScrape = allUrls.filter((url) => {
+    // Filter out already-scraped URLs (by jowId or slug)
+    const urlsToScrape = uniqueUrls.filter((url) => {
       const id = extractJowId(url);
-      return !existingIds.has(id);
+      const slug = extractRecipeSlug(url);
+      return !existingIds.has(id) && !existingSlugs.has(slug);
     });
 
-    const skipped = allUrls.length - urlsToScrape.length;
+    const skipped = uniqueUrls.length - urlsToScrape.length;
     const toProcess = limit !== null ? urlsToScrape.slice(0, limit) : urlsToScrape;
 
     logger.info(
-      `Phase 2: Scraping ${toProcess.length} recipes (${skipped} skipped, ${allUrls.length} total discovered)`,
+      `Phase 2: Scraping ${toProcess.length} recipes (${skipped} skipped, ${uniqueUrls.length} unique discovered)`,
     );
 
     // Phase 2: Detail scraping
@@ -128,7 +154,7 @@ async function main(): Promise<void> {
       success,
       skipped,
       failed,
-      total: allUrls.length,
+      total: uniqueUrls.length,
     });
   } finally {
     await browser.close();
