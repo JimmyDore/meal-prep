@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 4.1 (Comprehensive Unit Tests)
-Plan: 04 of 6 complete
+Plan: 05 of 6 complete
 Status: In progress
-Last activity: 2026-02-08 - Completed 04.1-01-PLAN.md (Pipeline pure function tests)
+Last activity: 2026-02-08 - Completed 04.1-05-PLAN.md (Catalogue component tests)
 
-Progress: [########..] 86% (24/28 plans)
+Progress: [########..] 89% (25/28 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
+- Total plans completed: 25
 - Average duration: 6min
-- Total execution time: 2.42 hours
+- Total execution time: 2.45 hours
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [########..] 86% (24/28 plans)
 | 03 | 5/5 | 15min | 3min |
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
-| 04.1 | 4/6 | 9min | 2min |
+| 04.1 | 5/6 | 11min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 4min, 13min, 2min, 3min
+- Last 5 plans: 4min, 13min, 2min, 3min, 2min
 - Trend: fast for test-only plans
 
 *Updated after each plan completion*
@@ -138,8 +138,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T21:54:26Z
-Stopped at: Completed 04.1-01-PLAN.md (Pipeline pure function tests)
+Last session: 2026-02-08T21:55:03Z
+Stopped at: Completed 04.1-05-PLAN.md (Catalogue component tests)
 Resume file: None
 
 ## Phase 1 Status
@@ -196,8 +196,10 @@ Plan 04 complete: 4-step onboarding wizard (Physique, Objectif, Alimentation, Sp
 
 ## Phase 4.1 Status
 
-**IN PROGRESS** - 4 of 6 plans executed
+**IN PROGRESS** - 5 of 6 plans executed
 
 Plan 01 complete: 67 unit tests for pipeline pure functions -- jow-parser (35 tests), recipe-assembler (6 tests), claude-enricher pure helpers (26 tests). Vitest config updated for scripts/**/*.test.ts discovery. Exported parseClaudeOutput, validateIngredients, boundsCheck.
 
 Plan 03 complete: 71 boundary tests for all Zod validation schemas -- pipeline schemas (enrichedIngredient, ingredientMacro, scrapedRecipe, enrichedRecipe) and profile schemas (physical, goal, dietary, sportActivity, sport, profile composite). All numeric bounds and enum values tested.
+
+Plan 05 complete: 33 unit tests for catalogue interactive components -- SearchBar (9 tests: debounce timing, URL params), TagFilter (10 tests: toggle on/off, variant assertion), PaginationControls (14 tests: page links, nav buttons, ellipsis, param preservation).
