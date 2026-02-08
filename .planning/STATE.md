@@ -116,6 +116,7 @@ Recent decisions affecting current work:
 1. **Test the Shannon tool on the website** (testing) - 2026-02-08
 2. ~~**Set PIPELINE_TOKEN on production VPS**~~ DONE - set via openssl rand -hex 32
 3. **Run pipeline at scale** (data) - scrape/enrich/upload 50+ recipes to populate catalogue
+4. **Add Google login** (auth) - 2026-02-08
 
 ### Blockers/Concerns
 
