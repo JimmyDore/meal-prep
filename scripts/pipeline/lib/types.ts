@@ -43,6 +43,20 @@ export interface EnrichedIngredient {
   confidence: "high" | "medium" | "low";
 }
 
+/**
+ * Standalone ingredient enrichment (not tied to a recipe).
+ * Structurally identical to EnrichedIngredient but semantically represents
+ * a reference entry in the ingredient-macros.jsonl file.
+ */
+export interface IngredientMacro {
+  name: string;
+  proteinPer100g: number;
+  carbsPer100g: number;
+  fatPer100g: number;
+  caloriesPer100g: number;
+  confidence: "high" | "medium" | "low";
+}
+
 export interface EnrichedRecipe extends ScrapedRecipe {
   enrichedIngredients: EnrichedIngredient[];
 }

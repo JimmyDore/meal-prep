@@ -57,6 +57,22 @@ export const enrichedIngredientSchema = z.object({
 
 export type EnrichedIngredientSchema = z.infer<typeof enrichedIngredientSchema>;
 
+/**
+ * Zod schema for standalone ingredient macro validation.
+ * Used when validating entries in the ingredient-macros.jsonl reference file.
+ * Same bounds as enrichedIngredientSchema: protein/carbs/fat 0-100, calories 0-900.
+ */
+export const ingredientMacroSchema = z.object({
+  name: z.string().min(1),
+  proteinPer100g: z.number().min(0).max(100),
+  carbsPer100g: z.number().min(0).max(100),
+  fatPer100g: z.number().min(0).max(100),
+  caloriesPer100g: z.number().min(0).max(900),
+  confidence: z.enum(["high", "medium", "low"]),
+});
+
+export type IngredientMacroSchema = z.infer<typeof ingredientMacroSchema>;
+
 export const enrichedRecipeSchema = scrapedRecipeSchema.extend({
   enrichedIngredients: z.array(enrichedIngredientSchema).min(1),
 });
