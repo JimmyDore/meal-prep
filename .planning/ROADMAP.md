@@ -35,15 +35,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. L'application tourne sur le VPS accessible via HTTPS avec certificat SSL Let's Encrypt valide sur le nom de domaine configure
   6. Un push sur main/master declenche automatiquement le deploiement de l'application en production
   7. Un mini frontend Hello World est accessible en production, se connecte a la base Postgres, et affiche une confirmation que la connexion DB fonctionne
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 01-01: Next.js scaffolding, Drizzle ORM config, Docker Compose dev
-- [ ] 01-02: Schema Postgres (recipes, ingredients, tags), migrations, seed data
-- [ ] 01-03: Test infrastructure (Vitest, test DB, fixtures, CI lint/type-check)
-- [ ] 01-04: Adapter pattern pour sources de recettes (interface + implementation Jow)
-- [ ] 01-05: Docker Compose production + reverse proxy SSL (Caddy), config VPS, domain + Let's Encrypt
-- [ ] 01-06: Auto-deploy on push to main (CI/CD pipeline) + Hello World frontend connecte a la DB
+- [ ] 01-01-PLAN.md -- Next.js scaffolding, Drizzle ORM config, Docker Compose dev, Dockerfile, Biome
+- [ ] 01-02-PLAN.md -- Schema Postgres (recipes, ingredients, tags), migrations, seed data
+- [ ] 01-03-PLAN.md -- Test infrastructure (Vitest, test DB utilities, smoke tests)
+- [ ] 01-04-PLAN.md -- Adapter pattern pour sources de recettes (RecipeSource interface + JowRecipeSource stub)
+- [ ] 01-05-PLAN.md -- Production Docker Compose, Nginx config, VPS setup script
+- [ ] 01-06-PLAN.md -- GitHub Actions CI/CD pipeline + Hello World frontend connecte a la DB
 
 ### Phase 2: Recipe Data Pipeline
 **Goal**: Un pipeline local fonctionnel scrape les recettes Jow, les enrichit en macros via Claude Code, et les uploade au serveur via API
@@ -168,7 +168,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation + Database + Deployment | 0/6 | Not started | - |
+| 1. Project Foundation + Database + Deployment | 0/6 | Planned | - |
 | 2. Recipe Data Pipeline | 0/4 | Not started | - |
 | 3. Recipe Catalogue | 0/3 | Not started | - |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
