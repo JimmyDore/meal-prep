@@ -41,6 +41,9 @@ yarn-error.log*
 # drizzle migration metadata (migration SQL files are committed)
 drizzle/meta/
 
+# pipeline data (scraped/enriched JSONL output)
+/data/
+
 # vercel
 .vercel
 
