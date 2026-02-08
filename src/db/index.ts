@@ -5,15 +5,19 @@ import * as schema from "./schema";
 
 const client = postgres(env.DATABASE_URL);
 
-const globalForDb = globalThis as unknown as {
-  db: ReturnType<typeof drizzle>;
-};
-
-export const db =
-  globalForDb.db ||
-  drizzle(client, {
+function createDb() {
+  return drizzle(client, {
     schema,
     casing: "snake_case",
   });
+}
+
+type Database = ReturnType<typeof createDb>;
+
+const globalForDb = globalThis as unknown as {
+  db: Database | undefined;
+};
+
+export const db: Database = globalForDb.db ?? createDb();
 
 if (process.env.NODE_ENV !== "production") globalForDb.db = db;

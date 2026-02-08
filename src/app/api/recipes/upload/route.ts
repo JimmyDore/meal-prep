@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/db";
-import {
-  recipes,
-  ingredients,
-  recipeIngredients,
-  tags,
-  recipeTags,
-} from "@/db/schema";
+import { ingredients, recipeIngredients, recipes, recipeTags, tags } from "@/db/schema";
 import { env } from "@/lib/env";
 
 // ---------------------------------------------------------------------------
@@ -219,9 +213,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ id: recipeId }, { status: 201 });
   } catch (error) {
     console.error("Recipe upload failed:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
