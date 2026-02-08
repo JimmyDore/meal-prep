@@ -6,14 +6,17 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     PIPELINE_TOKEN: z.string().min(1).optional(),
+    BETTER_AUTH_SECRET: z.string().min(32),
   },
   client: {
-    // NEXT_PUBLIC_ variables go here
+    NEXT_PUBLIC_APP_URL: z.string().url(),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     PIPELINE_TOKEN: process.env.PIPELINE_TOKEN,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
