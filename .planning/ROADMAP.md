@@ -38,15 +38,15 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 6 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Next.js scaffolding, Drizzle ORM config, Docker Compose dev, Dockerfile, Biome
-- [ ] 01-02-PLAN.md -- Schema Postgres (recipes, ingredients, tags), migrations, seed data
-- [ ] 01-03-PLAN.md -- Test infrastructure (Vitest, test DB utilities, smoke tests)
-- [ ] 01-04-PLAN.md -- Adapter pattern pour sources de recettes (RecipeSource interface + JowRecipeSource stub)
-- [ ] 01-05-PLAN.md -- Production Docker Compose, Nginx config, VPS setup script
-- [ ] 01-06-PLAN.md -- GitHub Actions CI/CD pipeline + Hello World frontend connecte a la DB
+- [x] 01-01-PLAN.md -- Next.js scaffolding, Drizzle ORM config, Docker Compose dev, Dockerfile, Biome
+- [x] 01-02-PLAN.md -- Schema Postgres (recipes, ingredients, tags), migrations, seed data
+- [x] 01-03-PLAN.md -- Test infrastructure (Vitest, test DB utilities, smoke tests)
+- [x] 01-04-PLAN.md -- Adapter pattern pour sources de recettes (RecipeSource interface + JowRecipeSource stub)
+- [x] 01-05-PLAN.md -- Production Docker Compose, Nginx config, VPS setup script
+- [x] 01-06-PLAN.md -- GitHub Actions CI/CD pipeline + Hello World frontend connecte a la DB
 
 ### Phase 2: Recipe Data Pipeline
-**Goal**: Un pipeline local fonctionnel scrape les recettes Jow, les enrichit en macros via Claude Code, et les uploade au serveur via API
+**Goal**: Un pipeline local fonctionnel scrape les recettes Jow, les enrichit en macros via Claude CLI, et les uploade au serveur via API
 **Depends on**: Phase 1
 **Requirements**: DATA-01, DATA-02, DATA-03
 **Success Criteria** (what must be TRUE):
@@ -54,13 +54,14 @@ Plans:
   2. Le skill Claude Code enrichit une recette avec les macros (proteines, glucides, lipides) par ingredient pour 100g, avec validation de coherence (bornes de calories par portion)
   3. L'endpoint API du serveur recoit les recettes enrichies et les persiste en base via upsert idempotent (pas de doublons cote serveur)
   4. Le pipeline complet (scrape -> enrich -> upload) est executable de bout en bout et les recettes sont consultables en base apres execution
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 02-01: Scraper Jow.fr (Playwright, extraction donnees, stockage JSON local, detection doublons)
-- [ ] 02-02: Skill Claude Code enrichissement macros (prompt, validation Zod, bornes de coherence)
-- [ ] 02-03: API endpoint upload recettes (authentification bearer token, upsert idempotent, validation)
-- [ ] 02-04: Integration pipeline end-to-end (orchestration scrape->enrich->upload, tests integration)
+- [ ] 02-01-PLAN.md -- Schema migration (new recipe columns, ingredients.name unique) + pipeline scaffolding (types, schemas, JSONL utils, logger)
+- [ ] 02-02-PLAN.md -- Jow.fr scraper (Playwright, sitemap discovery, recipe detail extraction, JSONL output, resumability)
+- [ ] 02-03-PLAN.md -- Claude CLI macro enrichment (enricher wrapper, prompt, validation, retry, cross-validation)
+- [ ] 02-04-PLAN.md -- Upload API endpoint (bearer token auth, Zod validation, Drizzle upsert transaction)
+- [ ] 02-05-PLAN.md -- Upload client + end-to-end pipeline integration and verification
 
 ### Phase 3: Recipe Catalogue
 **Goal**: L'utilisateur peut parcourir, rechercher et consulter les recettes avec leurs macros dans une interface web
@@ -169,7 +170,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Foundation + Database + Deployment | 6/6 | ✓ Complete | 2026-02-08 |
-| 2. Recipe Data Pipeline | 0/4 | Not started | - |
+| 2. Recipe Data Pipeline | 0/5 | Not started | - |
 | 3. Recipe Catalogue | 0/3 | Not started | - |
 | 4. Authentication + User Profile | 0/4 | Not started | - |
 | 5. Macro Calculation Engine | 0/4 | Not started | - |
