@@ -5,7 +5,7 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-    PIPELINE_TOKEN: z.string().min(1),
+    PIPELINE_TOKEN: z.string().min(1).optional(),
   },
   client: {
     // NEXT_PUBLIC_ variables go here
