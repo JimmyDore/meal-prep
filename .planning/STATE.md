@@ -12,25 +12,25 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 Phase: 1 of 8 (Project Foundation + Database + Deployment)
 Plan: 4 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-08 - Completed 01-04-PLAN.md (RecipeSource adapter pattern)
+Last activity: 2026-02-08 - Completed 01-03-PLAN.md (Test infrastructure)
 
-Progress: [#.........] 4% (2/48 plans)
+Progress: [#.........] 6% (3/48 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 4min
-- Total execution time: 0.1 hours
+- Total plans completed: 3
+- Average duration: 3min
+- Total execution time: 0.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 2/6 | 7min | 4min |
+| 01 | 3/6 | 10min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 6min, 1min
+- Last 5 plans: 6min, 1min, 3min
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -50,6 +50,8 @@ Recent decisions affecting current work:
 - [01-01]: Biome v2 uses `includes` key (not `include`) and schema URL must match CLI version
 - [01-01]: Non-null assertion suppressed in drizzle.config.ts (standard dotenv pattern)
 - [01-01]: Docker Compose dev-only (no app service, Next.js runs locally for fast HMR)
+- [01-03]: drizzle-kit push (not migrations) for test DB schema sync -- ephemeral test DB needs no migration history
+- [01-03]: Hardcoded test DB URL in db-setup.ts -- test utilities independent of Next.js env validation
 - [01-04]: RecipeSource interface kept minimal (name + fetchRecipes + fetchRecipeById) -- adapter pattern for pluggable sources
 - [01-04]: Unused parameters prefixed with underscore (_id) for Biome lint compliance
 
@@ -66,5 +68,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 01-04-PLAN.md (RecipeSource adapter pattern)
+Stopped at: Completed 01-03-PLAN.md (Test infrastructure)
 Resume file: None
