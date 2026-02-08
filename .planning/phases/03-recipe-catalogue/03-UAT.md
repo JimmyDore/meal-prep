@@ -1,9 +1,9 @@
 ---
-status: complete
+status: diagnosed
 phase: 03-recipe-catalogue
 source: 03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md
 started: 2026-02-08T19:00:00Z
-updated: 2026-02-08T19:18:00Z
+updated: 2026-02-08T19:22:00Z
 ---
 
 ## Current Test
@@ -82,7 +82,20 @@ skipped: 1
   reason: "User reported: mealprep.jimmydore.fr/recipes returns 500 Internal Server Error. Production DB likely missing Phase 2 schema migrations and has no recipe data uploaded."
   severity: blocker
   test: 12
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "3 cascading issues: (1) PIPELINE_TOKEN env var missing from docker-compose.prod.yml app service — createEnv() throws on every request at import time. (2) Migration 0001_crazy_husk.sql never applied to prod DB — 11 columns missing from recipes table. (3) No recipe data in prod DB — pipeline only ran locally."
+  artifacts:
+    - path: "docker-compose.prod.yml"
+      issue: "app environment missing PIPELINE_TOKEN"
+    - path: "src/lib/env.ts"
+      issue: "PIPELINE_TOKEN validated as required z.string().min(1) at import time"
+    - path: ".github/workflows/deploy.yml"
+      issue: "no migration step in deploy script"
+    - path: "drizzle/0001_crazy_husk.sql"
+      issue: "migration never applied to production DB"
+  missing:
+    - "Add PIPELINE_TOKEN to docker-compose.prod.yml environment"
+    - "Create PIPELINE_TOKEN in .env on VPS"
+    - "Apply migration 0001_crazy_husk.sql on production DB"
+    - "Add migration step to CI/CD deploy script"
+    - "Run pipeline against production or seed prod DB"
+  debug_session: ".planning/debug/prod-500-recipes.md"
