@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, pgEnum, pgTable, real, text, unique } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, real, text } from "drizzle-orm/pg-core";
 import { user } from "./auth";
 import { idColumn, timestamps } from "./common";
 
