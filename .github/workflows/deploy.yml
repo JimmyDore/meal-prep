@@ -43,7 +43,20 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/jimmydore/meal-prep
+            set -a && source .env && set +a
             git pull origin main
             docker compose -f docker-compose.prod.yml build
             docker compose -f docker-compose.prod.yml up -d
+            sleep 5
+            docker compose -f docker-compose.prod.yml exec -T db psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c "CREATE TABLE IF NOT EXISTS drizzle_migrations (id SERIAL PRIMARY KEY, hash TEXT NOT NULL UNIQUE, created_at TIMESTAMP DEFAULT NOW());"
+            for f in drizzle/[0-9]*.sql; do
+              hash=$(sha256sum "$f" | cut -d' ' -f1)
+              if ! docker compose -f docker-compose.prod.yml exec -T db psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -tAc "SELECT 1 FROM drizzle_migrations WHERE hash='$hash'" | grep -q 1; then
+                echo "Applying migration: $f"
+                docker compose -f docker-compose.prod.yml exec -T db psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} < "$f"
+                docker compose -f docker-compose.prod.yml exec -T db psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c "INSERT INTO drizzle_migrations (hash) VALUES ('$hash');"
+              else
+                echo "Skipping already applied: $f"
+              fi
+            done
             docker image prune -f
