@@ -121,6 +121,7 @@ Recent decisions affecting current work:
 4. **Add Google login** (auth) - 2026-02-08
 5. **Add recipe instructions to detail page** (ui) - 2026-02-08
 6. **Accent-insensitive recipe search** (database) - 2026-02-08 — "pates" should match "pâtes"
+7. **UX revamp of app and onboarding page** (ui) - 2026-02-08 — visual overhaul, better usability
 
 ### Blockers/Concerns
 
