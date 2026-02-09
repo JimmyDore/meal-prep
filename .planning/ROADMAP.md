@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3.1: Pipeline Enrichment Optimization** [INSERTED] - Enrichissement par ingredient unique (pas par recette), deduplication massive pour reduire les appels Claude CLI
 - [x] **Phase 4: Authentication + User Profile** - Comptes utilisateurs, profil sportif, preferences alimentaires
 - [x] **Phase 4.1: Comprehensive Unit Tests** [INSERTED] - Tests unitaires complets pour pipeline, API, DB queries, schemas, et composants React
-- [ ] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
+- [x] **Phase 5: Macro Calculation Engine** - Calcul TDEE, targets macros hebdo, macros par portion
 - [ ] **Phase 6: Basic Meal Plan Generation** - Algorithme de selection de recettes pour plan hebdo sans batch cooking
 - [ ] **Phase 7: Batch Cooking + Plan History** - Support batch cooking avec portions reelles et historique des plans
 - [ ] **Phase 8: Plan Customization + Enhancements** - Lock/swap de repas, liste de courses, favoris
@@ -236,7 +236,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -
 | 3.1 Pipeline Enrichment Optimization | 2/2 | Complete | 2026-02-08 |
 | 4. Authentication + User Profile | 4/4 | Complete | 2026-02-08 |
 | 4.1 Comprehensive Unit Tests | 6/6 | Complete | 2026-02-08 |
-| 5. Macro Calculation Engine | 0/4 | Not started | - |
+| 5. Macro Calculation Engine | 4/4 | Complete | 2026-02-10 |
 | 6. Basic Meal Plan Generation | 0/3 | Not started | - |
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
 | 8. Plan Customization + Enhancements | 0/3 | Not started | - |

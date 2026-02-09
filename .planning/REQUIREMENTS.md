@@ -34,10 +34,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Calcul Macros
 
-- [ ] **MACRO-01**: Systeme calcule le TDEE de l'utilisateur a partir de son profil (formule Mifflin-St Jeor)
-- [ ] **MACRO-02**: Systeme ajuste le TDEE en fonction des seances de sport de la semaine
-- [ ] **MACRO-03**: Systeme calcule les targets macros hebdomadaires (proteines, glucides, lipides) selon l'objectif
-- [ ] **MACRO-04**: Systeme calcule les macros reelles par portion pour chaque recette (a partir des macros par ingredient/100g)
+- [x] **MACRO-01**: Systeme calcule le TDEE de l'utilisateur a partir de son profil (formule Mifflin-St Jeor)
+- [x] **MACRO-02**: Systeme ajuste le TDEE en fonction des seances de sport de la semaine
+- [x] **MACRO-03**: Systeme calcule les targets macros hebdomadaires (proteines, glucides, lipides) selon l'objectif
+- [x] **MACRO-04**: Systeme calcule les macros reelles par portion pour chaque recette (a partir des macros par ingredient/100g)
 
 ### Plan de Repas
 
@@ -116,10 +116,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-05 | Phase 4 | Pending |
 | PROF-06 | Phase 4 | Pending |
 | PROF-07 | Phase 4 | Pending |
-| MACRO-01 | Phase 5 | Pending |
-| MACRO-02 | Phase 5 | Pending |
-| MACRO-03 | Phase 5 | Pending |
-| MACRO-04 | Phase 5 | Pending |
+| MACRO-01 | Phase 5 | Complete |
+| MACRO-02 | Phase 5 | Complete |
+| MACRO-03 | Phase 5 | Complete |
+| MACRO-04 | Phase 5 | Complete |
 | PLAN-01 | Phase 6 | Pending |
 | PLAN-02 | Phase 6 | Pending |
 | PLAN-03 | Phase 6 | Pending |
