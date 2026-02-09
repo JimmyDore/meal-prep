@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 5 (Macro Calculation Engine)
-Plan: 02 of 4 complete
+Plan: 03 of 4 complete
 Status: In progress
-Last activity: 2026-02-09 - Completed 05-02-PLAN.md (unit conversion, recipe macros)
+Last activity: 2026-02-09 - Completed 05-03-PLAN.md (TDEE, macro targets, barrel export)
 
-Progress: [########..] 79% (30/38 plans)
+Progress: [########..] 82% (31/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 30
+- Total plans completed: 31
 - Average duration: 6min
-- Total execution time: 2.73 hours
+- Total execution time: 2.78 hours
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [########..] 79% (30/38 plans)
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
-| 05 | 2/4 | 5min | 3min |
+| 05 | 3/4 | 8min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 4min, 3min, 2min, 3min
+- Last 5 plans: 4min, 3min, 2min, 3min, 3min
 - Trend: consistent speed for pure-function modules
 
 *Updated after each plan completion*
@@ -150,8 +150,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-09T22:55:33Z
-Stopped at: Completed 05-02-PLAN.md (unit conversion, recipe macros calculator)
+Last session: 2026-02-09T23:01:45Z
+Stopped at: Completed 05-03-PLAN.md (TDEE, macro targets, barrel export)
 Resume file: None
 
 ## Phase 1 Status
@@ -224,8 +224,10 @@ Plan 06 complete: 27 unit tests for auth forms and onboarding wizard -- LoginFor
 
 ## Phase 5 Status
 
-**IN PROGRESS** - 2 of 4 plans complete
+**IN PROGRESS** - 3 of 4 plans complete
 
 Plan 01 complete: Nutrition module foundation -- 6 shared interfaces (UserProfile, SportSession, BMRResult, TDEEResult, MacroTargets, RecipeMacrosResult), 8 evidence-based constants (MET values, activity multipliers, macro ratios), calculateBMR with Mifflin-St Jeor equation, 10 unit tests.
 
 Plan 02 complete: Unit conversion and recipe macros -- convertToGrams for 18 French cooking units with accent-stripped piece lookups and French plural singularization, calculateRecipeMacros with confidence scoring and missing ingredient tracking, 54 tests.
+
+Plan 03 complete: TDEE and macro targets -- calculateTDEE with hybrid lifestyle multiplier + MET sport addition (subtract 1 MET), calculateMacroTargets with g/kg protein and 50g min carbs safety, index.ts barrel export for full nutrition module public API, 23 tests (87 total).
