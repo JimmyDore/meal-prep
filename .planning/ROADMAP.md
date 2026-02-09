@@ -156,13 +156,13 @@ Plans:
   2. Le TDEE est ajuste en fonction des seances de sport saisies pour la semaine (plus de sport = plus de calories)
   3. Les targets macros hebdomadaires (proteines, glucides, lipides en grammes) sont calcules selon l'objectif (seche/masse/maintien) et affiches a l'utilisateur
   4. Les macros reelles par portion de chaque recette sont calculees a partir des macros par ingredient/100g et des quantites dans la recette
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: Service calcul TDEE (Mifflin-St Jeor) + ajustement sport
-- [ ] 05-02: Service targets macros hebdo (repartition P/G/L selon objectif)
-- [ ] 05-03: Service macros par portion de recette (calcul depuis macros/100g des ingredients)
-- [ ] 05-04: Affichage targets macros dans le profil utilisateur
+- [ ] 05-01-PLAN.md -- Types, constants, and BMR calculation (Mifflin-St Jeor) with tests
+- [ ] 05-02-PLAN.md -- Unit conversion table and recipe macros per serving calculator with tests
+- [ ] 05-03-PLAN.md -- TDEE calculation (hybrid activity + MET sport) and macro targets derivation with tests
+- [ ] 05-04-PLAN.md -- Macro dashboard page, detail view, and recipe detail computed macros UI
 
 ### Phase 6: Basic Meal Plan Generation
 **Goal**: L'utilisateur peut generer un plan de repas hebdomadaire (14 repas) optimise pour ses targets macros, sans batch cooking
