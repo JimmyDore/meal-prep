@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getRecipeById } from "@/db/queries/recipes";
+import { calculateRecipeMacros } from "@/lib/nutrition";
 
 interface NutritionPerServing {
   fat: number;
@@ -41,6 +42,18 @@ export default async function RecipeDetailPage({ params }: PageProps) {
   }
 
   const nutrition = recipe.jowNutritionPerServing as NutritionPerServing | null;
+
+  // Compute macros from ingredient data
+  const ingredientInputs = recipe.recipeIngredients.map((ri) => ({
+    name: ri.ingredient.name,
+    quantity: ri.quantity,
+    unit: ri.unit,
+    caloriesPer100g: ri.ingredient.caloriesPer100g,
+    proteinPer100g: ri.ingredient.proteinPer100g,
+    carbsPer100g: ri.ingredient.carbsPer100g,
+    fatPer100g: ri.ingredient.fatPer100g,
+  }));
+  const computedMacros = calculateRecipeMacros(ingredientInputs, recipe.originalPortions ?? 1);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -147,20 +160,49 @@ export default async function RecipeDetailPage({ params }: PageProps) {
 
       <Separator className="my-6" />
 
-      {/* Macros per serving section */}
+      {/* Computed macros per serving section */}
       <section>
-        <h2 className="mb-3 text-xl font-semibold">Macros par portion</h2>
-        {nutrition ? (
-          <div className="flex flex-wrap gap-2">
-            <MacroBadge label="Cal" value={nutrition.calories} unit="kcal" color="green" />
-            <MacroBadge label="P" value={nutrition.protein} unit="g" color="red" />
-            <MacroBadge label="G" value={nutrition.carbs} unit="g" color="blue" />
-            <MacroBadge label="L" value={nutrition.fat} unit="g" color="yellow" />
-          </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">Macros non disponibles</p>
+        <div className="mb-3 flex items-center gap-2">
+          <h2 className="text-xl font-semibold">Macros par portion (calcul)</h2>
+          <ConfidenceBadge
+            confidence={computedMacros.confidence}
+            convertedCount={computedMacros.convertedCount}
+            totalCount={computedMacros.totalCount}
+          />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <MacroBadge
+            label="Cal"
+            value={computedMacros.perServing.calories}
+            unit="kcal"
+            color="green"
+          />
+          <MacroBadge label="P" value={computedMacros.perServing.protein} unit="g" color="red" />
+          <MacroBadge label="G" value={computedMacros.perServing.carbs} unit="g" color="blue" />
+          <MacroBadge label="L" value={computedMacros.perServing.fat} unit="g" color="yellow" />
+        </div>
+        {computedMacros.missingIngredients.length > 0 && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            Ingredients non convertis : {computedMacros.missingIngredients.join(", ")}
+          </p>
         )}
       </section>
+
+      {/* Jow original macros (if available) */}
+      {nutrition && (
+        <>
+          <Separator className="my-6" />
+          <section>
+            <h2 className="mb-3 text-xl font-semibold">Macros Jow (original)</h2>
+            <div className="flex flex-wrap gap-2">
+              <MacroBadge label="Cal" value={nutrition.calories} unit="kcal" color="green" />
+              <MacroBadge label="P" value={nutrition.protein} unit="g" color="red" />
+              <MacroBadge label="G" value={nutrition.carbs} unit="g" color="blue" />
+              <MacroBadge label="L" value={nutrition.fat} unit="g" color="yellow" />
+            </div>
+          </section>
+        </>
+      )}
 
       <Separator className="my-6" />
 
@@ -221,5 +263,34 @@ export default async function RecipeDetailPage({ params }: PageProps) {
         </>
       )}
     </div>
+  );
+}
+
+const CONFIDENCE_CONFIG = {
+  high: { label: "Donnees fiables", className: "bg-green-100 text-green-700" },
+  medium: { label: "Valeurs approchees", className: "bg-yellow-100 text-yellow-700" },
+  low: { label: "Estimation partielle", className: "bg-orange-100 text-orange-700" },
+} as const;
+
+function ConfidenceBadge({
+  confidence,
+  convertedCount,
+  totalCount,
+}: {
+  confidence: "high" | "medium" | "low";
+  convertedCount: number;
+  totalCount: number;
+}) {
+  const config = CONFIDENCE_CONFIG[confidence];
+
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${config.className}`}
+      title={
+        confidence === "low" ? `${convertedCount}/${totalCount} ingredients convertis` : undefined
+      }
+    >
+      {config.label}
+    </span>
   );
 }
