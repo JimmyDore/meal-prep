@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 5: Macro Calculation Engine
+**Current focus:** Phase 5: Macro Calculation Engine (COMPLETE)
 
 ## Current Position
 
 Phase: 5 (Macro Calculation Engine)
-Plan: 03 of 4 complete
-Status: In progress
-Last activity: 2026-02-09 - Completed 05-03-PLAN.md (TDEE, macro targets, barrel export)
+Plan: 04 of 4 complete
+Status: Phase complete
+Last activity: 2026-02-10 - Completed 05-04-PLAN.md (macro dashboard and recipe macros UI)
 
-Progress: [########..] 82% (31/38 plans)
+Progress: [########..] 84% (32/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 31
+- Total plans completed: 32
 - Average duration: 6min
-- Total execution time: 2.78 hours
+- Total execution time: 2.86 hours
 
 **By Phase:**
 
@@ -33,11 +33,11 @@ Progress: [########..] 82% (31/38 plans)
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
-| 05 | 3/4 | 8min | 3min |
+| 05 | 4/4 | 13min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 4min, 3min, 2min, 3min, 3min
-- Trend: consistent speed for pure-function modules
+- Last 5 plans: 3min, 2min, 3min, 3min, 5min
+- Trend: consistent speed, UI integration slightly longer than pure-function modules
 
 *Updated after each plan completion*
 
@@ -129,6 +129,9 @@ Recent decisions affecting current work:
 - [05-01]: export interface (not export type) for all nutrition types -- consistent with plan convention
 - [05-02]: Naive French singularization (strip trailing s) for plural ingredient piece weight matching
 - [05-02]: PIECE_WEIGHTS sorted longest-key-first to prevent partial matches (citron vert > citron, tomate cerise > tomate)
+- [05-04]: Server component dashboard runs full BMR->TDEE->MacroTargets chain server-side, client components handle display only
+- [05-04]: Confidence indicator uses three color-coded levels (green/yellow/orange) for recipe macro data quality
+- [05-04]: Both computed and Jow-sourced nutrition shown side-by-side on recipe detail for comparison
 
 ### Pending Todos
 
@@ -150,8 +153,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-09T23:01:45Z
-Stopped at: Completed 05-03-PLAN.md (TDEE, macro targets, barrel export)
+Last session: 2026-02-10T00:20:00Z
+Stopped at: Completed 05-04-PLAN.md (macro dashboard and recipe macros UI) -- Phase 5 COMPLETE
 Resume file: None
 
 ## Phase 1 Status
@@ -224,10 +227,12 @@ Plan 06 complete: 27 unit tests for auth forms and onboarding wizard -- LoginFor
 
 ## Phase 5 Status
 
-**IN PROGRESS** - 3 of 4 plans complete
+**COMPLETE** - All 4 plans executed successfully
 
 Plan 01 complete: Nutrition module foundation -- 6 shared interfaces (UserProfile, SportSession, BMRResult, TDEEResult, MacroTargets, RecipeMacrosResult), 8 evidence-based constants (MET values, activity multipliers, macro ratios), calculateBMR with Mifflin-St Jeor equation, 10 unit tests.
 
 Plan 02 complete: Unit conversion and recipe macros -- convertToGrams for 18 French cooking units with accent-stripped piece lookups and French plural singularization, calculateRecipeMacros with confidence scoring and missing ingredient tracking, 54 tests.
 
 Plan 03 complete: TDEE and macro targets -- calculateTDEE with hybrid lifestyle multiplier + MET sport addition (subtract 1 MET), calculateMacroTargets with g/kg protein and 50g min carbs safety, index.ts barrel export for full nutrition module public API, 23 tests (87 total).
+
+Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets and expandable BMR/TDEE breakdown. Recipe detail page updated with computed per-serving macros and confidence indicator. Header nav link to dashboard added. User-approved via checkpoint.
