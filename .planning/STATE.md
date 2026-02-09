@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 5 (Macro Calculation Engine)
-Plan: 01 of 4 complete
+Plan: 02 of 4 complete
 Status: In progress
-Last activity: 2026-02-09 - Completed 05-01-PLAN.md (nutrition types, constants, BMR)
+Last activity: 2026-02-09 - Completed 05-02-PLAN.md (unit conversion, recipe macros)
 
-Progress: [########..] 76% (29/38 plans)
+Progress: [########..] 79% (30/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
+- Total plans completed: 30
 - Average duration: 6min
-- Total execution time: 2.68 hours
+- Total execution time: 2.73 hours
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [########..] 76% (29/38 plans)
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
-| 05 | 1/4 | 2min | 2min |
+| 05 | 2/4 | 5min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 4min, 4min, 3min, 2min
+- Last 5 plans: 4min, 4min, 3min, 2min, 3min
 - Trend: consistent speed for pure-function modules
 
 *Updated after each plan completion*
@@ -127,6 +127,8 @@ Recent decisions affecting current work:
 - [04.1-02]: vi.mock(import("node:fs")) with importOriginal + default export spread required for vitest 4.x Node.js built-in CJS module mocking
 - [05-01]: Constants typed with Record<EnumType, number> for compile-time exhaustiveness -- adding a new DB enum value without updating the constant triggers a type error
 - [05-01]: export interface (not export type) for all nutrition types -- consistent with plan convention
+- [05-02]: Naive French singularization (strip trailing s) for plural ingredient piece weight matching
+- [05-02]: PIECE_WEIGHTS sorted longest-key-first to prevent partial matches (citron vert > citron, tomate cerise > tomate)
 
 ### Pending Todos
 
@@ -148,8 +150,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-09T22:53:00Z
-Stopped at: Completed 05-01-PLAN.md (nutrition types, constants, BMR calculation)
+Last session: 2026-02-09T22:55:33Z
+Stopped at: Completed 05-02-PLAN.md (unit conversion, recipe macros calculator)
 Resume file: None
 
 ## Phase 1 Status
@@ -222,6 +224,8 @@ Plan 06 complete: 27 unit tests for auth forms and onboarding wizard -- LoginFor
 
 ## Phase 5 Status
 
-**IN PROGRESS** - 1 of 4 plans complete
+**IN PROGRESS** - 2 of 4 plans complete
 
 Plan 01 complete: Nutrition module foundation -- 6 shared interfaces (UserProfile, SportSession, BMRResult, TDEEResult, MacroTargets, RecipeMacrosResult), 8 evidence-based constants (MET values, activity multipliers, macro ratios), calculateBMR with Mifflin-St Jeor equation, 10 unit tests.
+
+Plan 02 complete: Unit conversion and recipe macros -- convertToGrams for 18 French cooking units with accent-stripped piece lookups and French plural singularization, calculateRecipeMacros with confidence scoring and missing ingredient tracking, 54 tests.
