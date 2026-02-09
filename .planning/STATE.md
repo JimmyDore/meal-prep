@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 
 ## Current Position
 
-Phase: 4.1 (Comprehensive Unit Tests)
-Plan: 06 of 6 complete
-Status: Phase complete
-Last activity: 2026-02-08 - Completed phase 04.1 (all 6 plans, 283 tests)
+Phase: 5 (Macro Calculation Engine)
+Plan: 01 of 4 complete
+Status: In progress
+Last activity: 2026-02-09 - Completed 05-01-PLAN.md (nutrition types, constants, BMR)
 
-Progress: [#######...] 74% (28/38 plans)
+Progress: [########..] 76% (29/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 28
+- Total plans completed: 29
 - Average duration: 6min
-- Total execution time: 2.65 hours
+- Total execution time: 2.68 hours
 
 **By Phase:**
 
@@ -33,10 +33,11 @@ Progress: [#######...] 74% (28/38 plans)
 | 03.1 | 2/2 | 6min | 3min |
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
+| 05 | 1/4 | 2min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 3min, 4min, 4min, 3min
-- Trend: fast for test-only plans
+- Last 5 plans: 3min, 4min, 4min, 3min, 2min
+- Trend: consistent speed for pure-function modules
 
 *Updated after each plan completion*
 
@@ -124,6 +125,8 @@ Recent decisions affecting current work:
 - [04.1-06]: ResizeObserver + hasPointerCapture polyfills needed for Radix UI in jsdom
 - [04.1-06]: Wizard navigation tests use defaultValues to skip Radix Select interaction -- jsdom lacks scrollIntoView
 - [04.1-02]: vi.mock(import("node:fs")) with importOriginal + default export spread required for vitest 4.x Node.js built-in CJS module mocking
+- [05-01]: Constants typed with Record<EnumType, number> for compile-time exhaustiveness -- adding a new DB enum value without updating the constant triggers a type error
+- [05-01]: export interface (not export type) for all nutrition types -- consistent with plan convention
 
 ### Pending Todos
 
@@ -145,8 +148,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-08T23:30:00Z
-Stopped at: Completed phase 04.1 (Comprehensive Unit Tests) - all 6 plans, 283 tests, verified
+Last session: 2026-02-09T22:53:00Z
+Stopped at: Completed 05-01-PLAN.md (nutrition types, constants, BMR calculation)
 Resume file: None
 
 ## Phase 1 Status
@@ -216,3 +219,9 @@ Plan 04 complete: 35 tests for API upload route (11 unit tests with mocked DB/en
 Plan 05 complete: 33 unit tests for catalogue interactive components -- SearchBar (9 tests: debounce timing, URL params), TagFilter (10 tests: toggle on/off, variant assertion), PaginationControls (14 tests: page links, nav buttons, ellipsis, param preservation).
 
 Plan 06 complete: 27 unit tests for auth forms and onboarding wizard -- LoginForm (8 tests: rendering, validation, signIn, redirect, errors), RegisterForm (8 tests: rendering, password mismatch, signUp+signIn flow, errors), OnboardingWizard (11 tests: step rendering, navigation, validation blocking, submit in both modes, error handling).
+
+## Phase 5 Status
+
+**IN PROGRESS** - 1 of 4 plans complete
+
+Plan 01 complete: Nutrition module foundation -- 6 shared interfaces (UserProfile, SportSession, BMRResult, TDEEResult, MacroTargets, RecipeMacrosResult), 8 evidence-based constants (MET values, activity multipliers, macro ratios), calculateBMR with Mifflin-St Jeor equation, 10 unit tests.
