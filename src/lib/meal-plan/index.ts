@@ -1,11 +1,11 @@
 /**
- * Meal plan scoring module -- public API.
+ * Meal plan module -- public API.
  *
- * Provides scoring functions to evaluate how well a set of recipes
- * matches weekly macro targets.
+ * Provides scoring and generation functions for weekly meal plans
+ * optimized against macro nutrient targets.
  *
  * Usage:
- *   import { scorePlan, dailyToWeekly, matchColor } from "@/lib/meal-plan";
+ *   import { generateMealPlan, scorePlan, dailyToWeekly, matchColor } from "@/lib/meal-plan";
  */
 
 export {
@@ -18,6 +18,7 @@ export {
   MEALS_PER_DAY,
   TOTAL_MEALS,
 } from "./constants";
+export { generateMealPlan } from "./generate";
 export {
   calculateVarietyScore,
   dailyToWeekly,
