@@ -144,6 +144,7 @@ Recent decisions affecting current work:
 6. **Accent-insensitive recipe search** (database) - 2026-02-08 — "pates" should match "pâtes"
 7. **UX revamp of app and onboarding page** (ui) - 2026-02-08 — visual overhaul, better usability
 8. **Detecteur de carences via prise de sang** (general) - 2026-02-08 — import/saisie resultats sanguins, detection carences micronutriments, suggestions alimentaires
+9. **Parametres ajustables sur le calcul macro** (general) - 2026-02-08 — coefficients metaboliques personnalisables, override targets P/G/L, feedback loop poids
 
 ### Blockers/Concerns
 
