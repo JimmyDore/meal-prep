@@ -1,6 +1,6 @@
 "use client";
 
-import { Calculator, LogOut, User } from "lucide-react";
+import { Calculator, CalendarDays, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -60,6 +60,12 @@ export function Header({ userEmail, userName }: HeaderProps) {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href="/plan">
+                <CalendarDays className="size-4" />
+                Mon plan
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/dashboard">
                 <Calculator className="size-4" />
