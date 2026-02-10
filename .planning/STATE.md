@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 6 (Basic Meal Plan Generation)
-Plan: 01 of 5 complete
+Plan: 02 of 5 complete
 Status: In progress
-Last activity: 2026-02-10 - Completed 06-01-PLAN.md (meal plan scoring module)
+Last activity: 2026-02-10 - Completed 06-02-PLAN.md (DB schema and queries for meal plans)
 
-Progress: [########..] 87% (33/38 plans)
+Progress: [#########.] 92% (34/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
-- Average duration: 6min
-- Total execution time: 2.91 hours
+- Total plans completed: 34
+- Average duration: 5min
+- Total execution time: 2.96 hours
 
 **By Phase:**
 
@@ -34,10 +34,11 @@ Progress: [########..] 87% (33/38 plans)
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
 | 05 | 4/4 | 13min | 3min |
+| 06 | 2/5 | 6min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 3min, 3min, 5min, 3min
-- Trend: consistent speed, pure-function TDD modules fast
+- Last 5 plans: 3min, 3min, 5min, 3min, 3min
+- Trend: consistent speed, schema+query plans fast
 
 *Updated after each plan completion*
 
@@ -135,6 +136,8 @@ Recent decisions affecting current work:
 - [05-04]: Both computed and Jow-sourced nutrition shown side-by-side on recipe detail for comparison
 - [06-01]: DEVIATION_CEILING = 0.2 (20% deviation = score 0) -- deliberately aggressive to push algorithm toward close matches
 - [06-01]: Variety score penalizes consecutive same cuisine OR category -- null values excluded from comparison (no penalty for missing metadata)
+- [06-02]: mealPlanSlots added to recipesRelations and mealPlans to userRelations -- bidirectional Drizzle relational traversal
+- [06-02]: real() for overallScore -- consistent with existing nutrient column pattern (rating, caloriesPer100g, etc.)
 
 ### Pending Todos
 
@@ -160,8 +163,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-10T10:31:43Z
-Stopped at: Completed 06-01-PLAN.md (meal plan scoring module)
+Last session: 2026-02-10T10:32:08Z
+Stopped at: Completed 06-02-PLAN.md (DB schema and queries for meal plans)
 Resume file: None
 
 ## Phase 1 Status
@@ -246,6 +249,8 @@ Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets
 
 ## Phase 6 Status
 
-**IN PROGRESS** - 1 of 5 plans complete
+**IN PROGRESS** - 2 of 5 plans complete
 
 Plan 01 complete: Meal plan scoring module -- 9 types (WeeklyMacroTargets, ScoredRecipe, MealSlot, MacroScore, PlanScore, PlanResult, ScoringWeights, GenerationParams, MatchColor), 8 constants (DEFAULT_WEIGHTS, MATCH_THRESHOLDS, DEVIATION_CEILING, etc.), 6 pure scoring functions (scorePlan, macroScore, sumMacros, calculateVarietyScore, dailyToWeekly, matchColor), 27 unit tests via TDD.
+
+Plan 02 complete: DB schema and queries -- mealPlans + mealPlanSlots tables with mealTypeEnum pgEnum, migration 0003, three query functions (getAllRecipesWithIngredients, saveMealPlan transactional, getUserMealPlan with nested slots+recipes).
