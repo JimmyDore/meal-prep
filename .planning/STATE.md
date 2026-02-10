@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 6 (Basic Meal Plan Generation)
-Plan: 03 of 5 complete
+Plan: 04 of 5 complete
 Status: In progress
-Last activity: 2026-02-10 - Completed 06-03-PLAN.md (meal plan generation algorithm via TDD)
+Last activity: 2026-02-10 - Completed 06-04-PLAN.md (server actions and UI prep)
 
-Progress: [#########.] 95% (35/37 plans)
+Progress: [#########.] 97% (36/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 35
+- Total plans completed: 36
 - Average duration: 5min
-- Total execution time: 3.03 hours
+- Total execution time: 3.06 hours
 
 **By Phase:**
 
@@ -34,11 +34,11 @@ Progress: [#########.] 95% (35/37 plans)
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
 | 05 | 4/4 | 13min | 3min |
-| 06 | 3/5 | 10min | 3min |
+| 06 | 4/5 | 12min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 5min, 3min, 3min, 4min
-- Trend: consistent speed, TDD algorithm plan slightly longer
+- Last 5 plans: 5min, 3min, 3min, 4min, 2min
+- Trend: consistent speed, simple wiring plans fastest
 
 *Updated after each plan completion*
 
@@ -141,6 +141,7 @@ Recent decisions affecting current work:
 - [06-03]: sampleUnique clamps index with Math.min(idx, length-1) to handle PRNG returning exactly 1.0 -- prevents out-of-bounds splice
 - [06-03]: ZERO_SCORE constant extracted for reuse as initial bestScore comparator and emptyResult score
 - [06-03]: Local optimization uses greedy first-improvement per slot (not best-of-all swaps) -- good enough for <100ms performance
+- [06-04]: saveMealPlan imported as saveMealPlanDB to avoid name clash with savePlan server action
 
 ### Pending Todos
 
@@ -166,8 +167,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-10T10:39:58Z
-Stopped at: Completed 06-03-PLAN.md (meal plan generation algorithm via TDD)
+Last session: 2026-02-10T10:45:21Z
+Stopped at: Completed 06-04-PLAN.md (server actions and UI prep)
 Resume file: None
 
 ## Phase 1 Status
@@ -252,10 +253,12 @@ Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets
 
 ## Phase 6 Status
 
-**IN PROGRESS** - 3 of 5 plans complete
+**IN PROGRESS** - 4 of 5 plans complete
 
 Plan 01 complete: Meal plan scoring module -- 9 types (WeeklyMacroTargets, ScoredRecipe, MealSlot, MacroScore, PlanScore, PlanResult, ScoringWeights, GenerationParams, MatchColor), 8 constants (DEFAULT_WEIGHTS, MATCH_THRESHOLDS, DEVIATION_CEILING, etc.), 6 pure scoring functions (scorePlan, macroScore, sumMacros, calculateVarietyScore, dailyToWeekly, matchColor), 27 unit tests via TDD.
 
 Plan 02 complete: DB schema and queries -- mealPlans + mealPlanSlots tables with mealTypeEnum pgEnum, migration 0003, three query functions (getAllRecipesWithIngredients, saveMealPlan transactional, getUserMealPlan with nested slots+recipes).
 
 Plan 03 complete: Generation algorithm via TDD -- generateMealPlan with random-restart hill-climbing (50 iterations default) and local single-swap optimization (3 passes default), confidence-based pre-filtering, seeded random for determinism, 16 unit tests (43 total in module).
+
+Plan 04 complete: Server actions and UI prep -- generatePlan server action chains full nutrition pipeline (auth -> profile -> BMR -> TDEE -> macroTargets -> dailyToWeekly -> recipePool -> generateMealPlan), savePlan persists plan + slots to DB. shadcn progress/collapsible/tooltip installed. Header "Mon plan" link added.
