@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 5: Macro Calculation Engine (COMPLETE)
+**Current focus:** Phase 6: Basic Meal Plan Generation (In progress)
 
 ## Current Position
 
-Phase: 5 (Macro Calculation Engine)
-Plan: 04 of 4 complete
-Status: Phase complete
-Last activity: 2026-02-10 - Completed 05-04-PLAN.md (macro dashboard and recipe macros UI)
+Phase: 6 (Basic Meal Plan Generation)
+Plan: 01 of 5 complete
+Status: In progress
+Last activity: 2026-02-10 - Completed 06-01-PLAN.md (meal plan scoring module)
 
-Progress: [########..] 84% (32/38 plans)
+Progress: [########..] 87% (33/38 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
+- Total plans completed: 33
 - Average duration: 6min
-- Total execution time: 2.86 hours
+- Total execution time: 2.91 hours
 
 **By Phase:**
 
@@ -36,8 +36,8 @@ Progress: [########..] 84% (32/38 plans)
 | 05 | 4/4 | 13min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 2min, 3min, 3min, 5min
-- Trend: consistent speed, UI integration slightly longer than pure-function modules
+- Last 5 plans: 2min, 3min, 3min, 5min, 3min
+- Trend: consistent speed, pure-function TDD modules fast
 
 *Updated after each plan completion*
 
@@ -133,6 +133,8 @@ Recent decisions affecting current work:
 - [05-04]: Server component dashboard runs full BMR->TDEE->MacroTargets chain server-side, client components handle display only
 - [05-04]: Confidence indicator uses three color-coded levels (green/yellow/orange) for recipe macro data quality
 - [05-04]: Both computed and Jow-sourced nutrition shown side-by-side on recipe detail for comparison
+- [06-01]: DEVIATION_CEILING = 0.2 (20% deviation = score 0) -- deliberately aggressive to push algorithm toward close matches
+- [06-01]: Variety score penalizes consecutive same cuisine OR category -- null values excluded from comparison (no penalty for missing metadata)
 
 ### Pending Todos
 
@@ -154,12 +156,12 @@ Recent decisions affecting current work:
 - [Phase 2]: ~~Migration automation needed before schema changes become frequent -- currently manual via docker compose exec~~ RESOLVED - Automated migration step added to deploy.yml in 03-04
 - [Phase 2]: ~~Jow.fr structure a inspecter en live -- Playwright necessaire ou HTTP+Cheerio suffisant?~~ RESOLVED - Playwright used, __NEXT_DATA__ + JSON-LD merge strategy confirmed working for 3,214 recipes
 - [Phase 2]: ~~End-to-end pipeline verification~~ RESOLVED - 5 recipes verified scrape->enrich->upload->DB
-- [Phase 6]: Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur
+- [Phase 6]: ~~Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur~~ PARTIALLY RESOLVED - Scoring function implemented with weighted multi-objective evaluation (06-01). Generation algorithm still needed (06-03).
 
 ## Session Continuity
 
-Last session: 2026-02-10T00:20:00Z
-Stopped at: Completed 05-04-PLAN.md (macro dashboard and recipe macros UI) -- Phase 5 COMPLETE
+Last session: 2026-02-10T10:31:43Z
+Stopped at: Completed 06-01-PLAN.md (meal plan scoring module)
 Resume file: None
 
 ## Phase 1 Status
@@ -241,3 +243,9 @@ Plan 02 complete: Unit conversion and recipe macros -- convertToGrams for 18 Fre
 Plan 03 complete: TDEE and macro targets -- calculateTDEE with hybrid lifestyle multiplier + MET sport addition (subtract 1 MET), calculateMacroTargets with g/kg protein and 50g min carbs safety, index.ts barrel export for full nutrition module public API, 23 tests (87 total).
 
 Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets and expandable BMR/TDEE breakdown. Recipe detail page updated with computed per-serving macros and confidence indicator. Header nav link to dashboard added. User-approved via checkpoint.
+
+## Phase 6 Status
+
+**IN PROGRESS** - 1 of 5 plans complete
+
+Plan 01 complete: Meal plan scoring module -- 9 types (WeeklyMacroTargets, ScoredRecipe, MealSlot, MacroScore, PlanScore, PlanResult, ScoringWeights, GenerationParams, MatchColor), 8 constants (DEFAULT_WEIGHTS, MATCH_THRESHOLDS, DEVIATION_CEILING, etc.), 6 pure scoring functions (scorePlan, macroScore, sumMacros, calculateVarietyScore, dailyToWeekly, matchColor), 27 unit tests via TDD.
