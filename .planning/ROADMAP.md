@@ -23,6 +23,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 7: Batch Cooking + Plan History** - Support batch cooking avec portions reelles et historique des plans
 - [ ] **Phase 8: Plan Customization + Enhancements** - Lock/swap de repas, liste de courses, favoris
 - [ ] **Phase 9: Fridge Ingredient Recipe Selection** - Suggestion de recettes a partir des ingredients restants dans le frigo
+- [ ] **Phase 10: Ingredient Pricing + Recipe Cost** - Prix moyen des ingredients, cout par portion, integration dans l'algorithme de selection
 
 ## Quality Gate
 
@@ -223,10 +224,23 @@ Plans:
 Plans:
 - [ ] 09-01: TBD (run /gsd:plan-phase 9 to break down)
 
+### Phase 10: Ingredient Pricing + Recipe Cost
+**Goal**: Enrichir les ingredients avec leur prix moyen en France pour calculer un cout par portion de chaque recette, et integrer ce critere dans l'algorithme de selection de plans repas
+**Depends on**: Phase 6
+**Success Criteria** (what must be TRUE):
+  1. Chaque ingredient de la base a un prix moyen estime (en euros par kg ou par unite) via un pipeline d'enrichissement (source a determiner: AI estimation, API supermarche, ou scraping)
+  2. Le cout par portion de chaque recette est calcule a partir des prix ingredients et des quantites dans la recette
+  3. L'utilisateur peut voir le cout estime par portion sur la page detail de chaque recette
+  4. L'algorithme de generation de plans repas integre le cout comme critere de selection (budget max configurable ou optimisation cout/macros)
+**Plans**: TBD
+
+Plans:
+- [ ] 10-01: TBD (run /gsd:plan-phase 10 to break down)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -> 8 -> 9
+Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -241,3 +255,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
 | 8. Plan Customization + Enhancements | 0/3 | Not started | - |
 | 9. Fridge Ingredient Recipe Selection | 0/? | Not started | - |
+| 10. Ingredient Pricing + Recipe Cost | 0/? | Not started | - |

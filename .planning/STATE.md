@@ -48,9 +48,10 @@ Progress: [########..] 84% (32/38 plans)
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Roadmap]: Phase 10 added -- ingredient pricing + recipe cost estimation, integrated into meal plan algorithm selection
 - [Roadmap]: Phase 4.1 inserted -- comprehensive unit tests for all existing code (pipeline, API, DB, schemas, React components) before building Phase 5+
 - [Roadmap]: Phase 3.1 inserted -- pipeline enrichment optimization (deduplicate ingredients, enrich unique ones once via Claude CLI instead of per-recipe)
-- [Roadmap]: 9 phases (revised from 8), Phase 9 added for fridge ingredient recipe selection
+- [Roadmap]: 10 phases (revised from 9), Phase 10 added for ingredient pricing and recipe cost
 - [Roadmap]: Original 8 phases with algorithm split en 2 (basic Phase 6, batch cooking Phase 7)
 - [Roadmap]: Deployment merged into Phase 1 -- deploy-first strategy eliminates release blocker early
 - [Roadmap]: Phase 1 delivers Hello World frontend connecte a la DB en production avec auto-deploy
@@ -142,6 +143,7 @@ Recent decisions affecting current work:
 5. **Add recipe instructions to detail page** (ui) - 2026-02-08
 6. **Accent-insensitive recipe search** (database) - 2026-02-08 — "pates" should match "pâtes"
 7. **UX revamp of app and onboarding page** (ui) - 2026-02-08 — visual overhaul, better usability
+8. **Detecteur de carences via prise de sang** (general) - 2026-02-08 — import/saisie resultats sanguins, detection carences micronutriments, suggestions alimentaires
 
 ### Blockers/Concerns
 
