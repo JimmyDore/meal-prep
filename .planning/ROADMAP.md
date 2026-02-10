@@ -160,27 +160,30 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Types, constants, and BMR calculation (Mifflin-St Jeor) with tests
-- [ ] 05-02-PLAN.md -- Unit conversion table and recipe macros per serving calculator with tests
-- [ ] 05-03-PLAN.md -- TDEE calculation (hybrid activity + MET sport) and macro targets derivation with tests
-- [ ] 05-04-PLAN.md -- Macro dashboard page, detail view, and recipe detail computed macros UI
+- [x] 05-01-PLAN.md -- Types, constants, and BMR calculation (Mifflin-St Jeor) with tests
+- [x] 05-02-PLAN.md -- Unit conversion table and recipe macros per serving calculator with tests
+- [x] 05-03-PLAN.md -- TDEE calculation (hybrid activity + MET sport) and macro targets derivation with tests
+- [x] 05-04-PLAN.md -- Macro dashboard page, detail view, and recipe detail computed macros UI
 
 ### Phase 6: Basic Meal Plan Generation
 **Goal**: L'utilisateur peut generer un plan de repas hebdomadaire (14 repas) optimise pour ses targets macros, sans batch cooking
 **Depends on**: Phase 5
-**Requirements**: PLAN-01, PLAN-02, PLAN-03, PLAN-06, PLAN-07
+**Requirements**: PLAN-01, PLAN-02, PLAN-06, PLAN-07
 **Success Criteria** (what must be TRUE):
   1. L'utilisateur peut generer un plan de repas hebdomadaire (midi + soir, 7 jours = 14 repas) en un clic
   2. L'algorithme selectionne les recettes pour que les macros totales du plan approchent les targets hebdomadaires (+/- 10%)
-  3. L'algorithme exclut automatiquement les recettes incompatibles avec les preferences alimentaires de l'utilisateur
-  4. L'utilisateur voit le resume macros du plan (totaux journaliers et hebdo vs objectifs) avec indicateurs visuels
-  5. L'utilisateur peut regenerer le plan complet en un clic et obtenir un nouveau plan different
-**Plans**: TBD
+  3. L'utilisateur voit le resume macros du plan (totaux journaliers et hebdo vs objectifs) avec indicateurs visuels
+  4. L'utilisateur peut regenerer le plan complet en un clic et obtenir un nouveau plan different
+
+NOTE: Success criteria #3 from original (dietary preference filtering) is DEFERRED per CONTEXT.md decisions. Focus on macro optimization only for Phase 6.
+**Plans**: 5 plans
 
 Plans:
-- [ ] 06-01: Algorithme de selection (greedy constraint-based, variete, preferences, scoring macro)
-- [ ] 06-02: API generation de plan + stockage meal_plans/meal_plan_items
-- [ ] 06-03: Page plan hebdo frontend (grille 7j x 2 repas, resume macros, bouton regenerer)
+- [ ] 06-01-PLAN.md -- Scoring module: types, constants, scoring functions (macroScore, scorePlan, matchColor, varietyScore) with TDD
+- [ ] 06-02-PLAN.md -- DB schema (meal_plans, meal_plan_slots tables) + migration + query layer (recipe pool fetch, save/load plan)
+- [ ] 06-03-PLAN.md -- Generation algorithm: random-restart hill-climbing with local optimization, seeded PRNG for tests, with TDD
+- [ ] 06-04-PLAN.md -- Server actions (generatePlan, savePlan) + shadcn components (progress, collapsible, tooltip) + header nav link
+- [ ] 06-05-PLAN.md -- /plan page UI: 7-column weekly grid, expandable recipe cards, daily/weekly macro summaries, generate/save controls
 
 ### Phase 7: Batch Cooking + Plan History
 **Goal**: L'algorithme supporte le batch cooking avec calcul reel des portions, et l'utilisateur peut consulter ses plans precedents
@@ -251,7 +254,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 4.1 -> 5 -> 6 -> 7 -
 | 4. Authentication + User Profile | 4/4 | Complete | 2026-02-08 |
 | 4.1 Comprehensive Unit Tests | 6/6 | Complete | 2026-02-08 |
 | 5. Macro Calculation Engine | 4/4 | Complete | 2026-02-10 |
-| 6. Basic Meal Plan Generation | 0/3 | Not started | - |
+| 6. Basic Meal Plan Generation | 0/5 | Not started | - |
 | 7. Batch Cooking + Plan History | 0/3 | Not started | - |
 | 8. Plan Customization + Enhancements | 0/3 | Not started | - |
 | 9. Fridge Ingredient Recipe Selection | 0/? | Not started | - |
