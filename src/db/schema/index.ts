@@ -2,6 +2,7 @@ export * from "./auth";
 export * from "./common";
 export * from "./dietary-preferences";
 export * from "./ingredients";
+export * from "./meal-plans";
 export * from "./profiles";
 export * from "./recipes";
 export * from "./sport-activities";

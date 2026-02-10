@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { userDietaryPreferences } from "./dietary-preferences";
+import { mealPlans } from "./meal-plans";
 import { userProfiles } from "./profiles";
 import { userSportActivities } from "./sport-activities";
 
@@ -82,6 +83,7 @@ export const userRelations = relations(user, ({ one, many }) => ({
   profile: one(userProfiles),
   dietaryPreferences: many(userDietaryPreferences),
   sportActivities: many(userSportActivities),
+  mealPlans: many(mealPlans),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({

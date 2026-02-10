@@ -22,6 +22,13 @@
       "when": 1770591075988,
       "tag": "0002_chunky_kabuki",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1770719414303,
+      "tag": "0003_oval_the_santerians",
+      "breakpoints": true
     }
   ]
 }
