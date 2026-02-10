@@ -47,19 +47,21 @@ function assignSlots(recipes: ScoredRecipe[]): MealSlot[] {
   }));
 }
 
+/** Score representing zero match -- used for empty plans and as initial best. */
+const ZERO_SCORE: PlanScore = {
+  overall: 0,
+  protein: { target: 0, actual: 0, delta: 0, percentage: 0 },
+  carbs: { target: 0, actual: 0, delta: 0, percentage: 0 },
+  fat: { target: 0, actual: 0, delta: 0, percentage: 0 },
+  calories: { target: 0, actual: 0, delta: 0, percentage: 0 },
+  variety: 0,
+};
+
 /**
  * Return an empty PlanResult with score 0, used for edge cases.
  */
 function emptyResult(warnings: string[]): PlanResult {
-  const emptyScore: PlanScore = {
-    overall: 0,
-    protein: { target: 0, actual: 0, delta: 0, percentage: 0 },
-    carbs: { target: 0, actual: 0, delta: 0, percentage: 0 },
-    fat: { target: 0, actual: 0, delta: 0, percentage: 0 },
-    calories: { target: 0, actual: 0, delta: 0, percentage: 0 },
-    variety: 0,
-  };
-  return { slots: [], score: emptyScore, warnings };
+  return { slots: [], score: ZERO_SCORE, warnings };
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +132,7 @@ export function generateMealPlan(params: GenerationParams): PlanResult {
   // -------------------------------------------------------------------------
 
   let bestSlots: MealSlot[] = [];
-  let bestScore: PlanScore = emptyResult([]).score;
+  let bestScore: PlanScore = ZERO_SCORE;
 
   for (let i = 0; i < iterations; i++) {
     const sampled = sampleUnique(pool, sampleSize, random);
