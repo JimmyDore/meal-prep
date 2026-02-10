@@ -19,8 +19,8 @@ function makeRecipe(overrides: Partial<ScoredRecipe> = {}): ScoredRecipe {
     title: overrides.title ?? "Test Recipe",
     perServing: overrides.perServing ?? { calories: 500, protein: 30, carbs: 60, fat: 20 },
     confidence: overrides.confidence ?? "high",
-    cuisine: overrides.cuisine ?? "francaise",
-    category: overrides.category ?? "plat",
+    cuisine: "cuisine" in overrides ? (overrides.cuisine as string | null) : "francaise",
+    category: "category" in overrides ? (overrides.category as string | null) : "plat",
   };
 }
 
