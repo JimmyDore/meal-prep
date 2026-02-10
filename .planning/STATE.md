@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Position
 
 Phase: 6 (Basic Meal Plan Generation)
-Plan: 02 of 5 complete
+Plan: 03 of 5 complete
 Status: In progress
-Last activity: 2026-02-10 - Completed 06-02-PLAN.md (DB schema and queries for meal plans)
+Last activity: 2026-02-10 - Completed 06-03-PLAN.md (meal plan generation algorithm via TDD)
 
-Progress: [#########.] 92% (34/37 plans)
+Progress: [#########.] 95% (35/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 34
+- Total plans completed: 35
 - Average duration: 5min
-- Total execution time: 2.96 hours
+- Total execution time: 3.03 hours
 
 **By Phase:**
 
@@ -34,11 +34,11 @@ Progress: [#########.] 92% (34/37 plans)
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
 | 05 | 4/4 | 13min | 3min |
-| 06 | 2/5 | 6min | 3min |
+| 06 | 3/5 | 10min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 3min, 3min, 5min, 3min, 3min
-- Trend: consistent speed, schema+query plans fast
+- Last 5 plans: 3min, 5min, 3min, 3min, 4min
+- Trend: consistent speed, TDD algorithm plan slightly longer
 
 *Updated after each plan completion*
 
@@ -138,6 +138,9 @@ Recent decisions affecting current work:
 - [06-01]: Variety score penalizes consecutive same cuisine OR category -- null values excluded from comparison (no penalty for missing metadata)
 - [06-02]: mealPlanSlots added to recipesRelations and mealPlans to userRelations -- bidirectional Drizzle relational traversal
 - [06-02]: real() for overallScore -- consistent with existing nutrient column pattern (rating, caloriesPer100g, etc.)
+- [06-03]: sampleUnique clamps index with Math.min(idx, length-1) to handle PRNG returning exactly 1.0 -- prevents out-of-bounds splice
+- [06-03]: ZERO_SCORE constant extracted for reuse as initial bestScore comparator and emptyResult score
+- [06-03]: Local optimization uses greedy first-improvement per slot (not best-of-all swaps) -- good enough for <100ms performance
 
 ### Pending Todos
 
@@ -159,12 +162,12 @@ Recent decisions affecting current work:
 - [Phase 2]: ~~Migration automation needed before schema changes become frequent -- currently manual via docker compose exec~~ RESOLVED - Automated migration step added to deploy.yml in 03-04
 - [Phase 2]: ~~Jow.fr structure a inspecter en live -- Playwright necessaire ou HTTP+Cheerio suffisant?~~ RESOLVED - Playwright used, __NEXT_DATA__ + JSON-LD merge strategy confirmed working for 3,214 recipes
 - [Phase 2]: ~~End-to-end pipeline verification~~ RESOLVED - 5 recipes verified scrape->enrich->upload->DB
-- [Phase 6]: ~~Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur~~ PARTIALLY RESOLVED - Scoring function implemented with weighted multi-objective evaluation (06-01). Generation algorithm still needed (06-03).
+- [Phase 6]: ~~Algorithme constraint-based a designer -- scoring function et poids a calibrer avec feedback utilisateur~~ RESOLVED - Scoring function (06-01) and generation algorithm (06-03) both implemented. Algorithm uses random-restart hill-climbing with local optimization.
 
 ## Session Continuity
 
-Last session: 2026-02-10T10:32:08Z
-Stopped at: Completed 06-02-PLAN.md (DB schema and queries for meal plans)
+Last session: 2026-02-10T10:39:58Z
+Stopped at: Completed 06-03-PLAN.md (meal plan generation algorithm via TDD)
 Resume file: None
 
 ## Phase 1 Status
@@ -249,8 +252,10 @@ Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets
 
 ## Phase 6 Status
 
-**IN PROGRESS** - 2 of 5 plans complete
+**IN PROGRESS** - 3 of 5 plans complete
 
 Plan 01 complete: Meal plan scoring module -- 9 types (WeeklyMacroTargets, ScoredRecipe, MealSlot, MacroScore, PlanScore, PlanResult, ScoringWeights, GenerationParams, MatchColor), 8 constants (DEFAULT_WEIGHTS, MATCH_THRESHOLDS, DEVIATION_CEILING, etc.), 6 pure scoring functions (scorePlan, macroScore, sumMacros, calculateVarietyScore, dailyToWeekly, matchColor), 27 unit tests via TDD.
 
 Plan 02 complete: DB schema and queries -- mealPlans + mealPlanSlots tables with mealTypeEnum pgEnum, migration 0003, three query functions (getAllRecipesWithIngredients, saveMealPlan transactional, getUserMealPlan with nested slots+recipes).
+
+Plan 03 complete: Generation algorithm via TDD -- generateMealPlan with random-restart hill-climbing (50 iterations default) and local single-swap optimization (3 passes default), confidence-based pre-filtering, seeded random for determinism, 16 unit tests (43 total in module).
