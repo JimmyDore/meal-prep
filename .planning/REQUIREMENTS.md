@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DATA-01**: Script local scrape les recettes Jow (titre, ingredients, portions, temps de preparation, photo, URL source) avec detection des doublons
 - [x] **DATA-02**: Skill Claude Code enrichit chaque recette avec ses macronutriments (proteines, glucides, lipides) par ingredient pour 100g
 - [x] **DATA-03**: API endpoint sur le serveur pour recevoir les recettes enrichies uploadees depuis le script local
-- [ ] **DATA-04**: Base de donnees Postgres stocke les recettes avec ingredients, macros par ingredient, tags alimentaires
+- [x] **DATA-04**: Base de donnees Postgres stocke les recettes avec ingredients, macros par ingredient, tags alimentaires
 
 ### Catalogue Recettes
 
@@ -24,13 +24,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Profil Utilisateur
 
-- [ ] **PROF-01**: User peut creer un compte avec email/password
-- [ ] **PROF-02**: User peut se connecter et rester connecte entre les sessions
-- [ ] **PROF-03**: User peut se deconnecter
-- [ ] **PROF-04**: User peut saisir son profil (poids, taille, age, sexe, niveau d'activite)
-- [ ] **PROF-05**: User peut definir son objectif (seche, prise de masse, maintien)
-- [ ] **PROF-06**: User peut saisir ses preferences alimentaires (vegetarien, sans gluten, sans porc, etc.)
-- [ ] **PROF-07**: User peut saisir ses seances de sport prevues dans la semaine (type, frequence)
+- [x] **PROF-01**: User peut creer un compte avec email/password
+- [x] **PROF-02**: User peut se connecter et rester connecte entre les sessions
+- [x] **PROF-03**: User peut se deconnecter
+- [x] **PROF-04**: User peut saisir son profil (poids, taille, age, sexe, niveau d'activite)
+- [x] **PROF-05**: User peut definir son objectif (seche, prise de masse, maintien)
+- [x] **PROF-06**: User peut saisir ses preferences alimentaires (vegetarien, sans gluten, sans porc, etc.)
+- [x] **PROF-07**: User peut saisir ses seances de sport prevues dans la semaine (type, frequence)
 
 ### Calcul Macros
 
@@ -41,13 +41,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Plan de Repas
 
-- [ ] **PLAN-01**: User peut generer un plan de repas hebdomadaire (midi + soir, 7 jours = 14 repas)
-- [ ] **PLAN-02**: Algorithme selectionne les recettes pour optimiser l'atteinte des targets macros hebdomadaires
+- [x] **PLAN-01**: User peut generer un plan de repas hebdomadaire (midi + soir, 7 jours = 14 repas)
+- [x] **PLAN-02**: Algorithme selectionne les recettes pour optimiser l'atteinte des targets macros hebdomadaires
 - [ ] **PLAN-03**: Algorithme respecte les preferences alimentaires de l'utilisateur (exclut les recettes non compatibles)
 - [ ] **PLAN-04**: Algorithme supporte le batch cooking (x2, x3) -- une recette couvre plusieurs repas
 - [ ] **PLAN-05**: Algorithme calcule les portions reelles en batch cooking via les macros (pas les multiplicateurs Jow)
-- [ ] **PLAN-06**: User voit le resume macros du plan (totaux journaliers et hebdo vs objectifs)
-- [ ] **PLAN-07**: User peut regenerer le plan complet en un clic
+- [x] **PLAN-06**: User voit le resume macros du plan (totaux journaliers et hebdo vs objectifs)
+- [x] **PLAN-07**: User peut regenerer le plan complet en un clic
 - [ ] **PLAN-08**: User peut consulter l'historique de ses plans generes precedemment
 
 ### Personnalisation & Enhancements
@@ -109,24 +109,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAT-03 | Phase 3 | Complete |
 | CAT-04 | Phase 3 | Complete |
 | CAT-05 | Phase 3 | Complete |
-| PROF-01 | Phase 4 | Pending |
-| PROF-02 | Phase 4 | Pending |
-| PROF-03 | Phase 4 | Pending |
-| PROF-04 | Phase 4 | Pending |
-| PROF-05 | Phase 4 | Pending |
-| PROF-06 | Phase 4 | Pending |
-| PROF-07 | Phase 4 | Pending |
+| PROF-01 | Phase 4 | Complete |
+| PROF-02 | Phase 4 | Complete |
+| PROF-03 | Phase 4 | Complete |
+| PROF-04 | Phase 4 | Complete |
+| PROF-05 | Phase 4 | Complete |
+| PROF-06 | Phase 4 | Complete |
+| PROF-07 | Phase 4 | Complete |
 | MACRO-01 | Phase 5 | Complete |
 | MACRO-02 | Phase 5 | Complete |
 | MACRO-03 | Phase 5 | Complete |
 | MACRO-04 | Phase 5 | Complete |
-| PLAN-01 | Phase 6 | Pending |
-| PLAN-02 | Phase 6 | Pending |
+| PLAN-01 | Phase 6 | Complete |
+| PLAN-02 | Phase 6 | Complete |
 | PLAN-03 | Phase 6 | Pending |
 | PLAN-04 | Phase 7 | Pending |
 | PLAN-05 | Phase 7 | Pending |
-| PLAN-06 | Phase 6 | Pending |
-| PLAN-07 | Phase 6 | Pending |
+| PLAN-06 | Phase 6 | Complete |
+| PLAN-07 | Phase 6 | Complete |
 | PLAN-08 | Phase 7 | Pending |
 | ENH-01 | Phase 8 | Pending |
 | ENH-02 | Phase 8 | Pending |
