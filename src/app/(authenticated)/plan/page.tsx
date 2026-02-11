@@ -4,7 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFullUserProfile } from "@/db/queries/profiles";
 import { auth } from "@/lib/auth";
-import { dailyToWeekly } from "@/lib/meal-plan";
+import { dailyToWeekly, scaleDailyTargets } from "@/lib/meal-plan";
 import { calculateBMR, calculateMacroTargets, calculateTDEE } from "@/lib/nutrition";
 import { PlanClient } from "./plan-client";
 
@@ -66,7 +66,13 @@ export default async function PlanPage() {
     { weight: profile.weight, activityLevel: profile.activityLevel },
     sportSessions,
   );
-  const dailyTargets = calculateMacroTargets(tdee, { weight: profile.weight, goal: profile.goal });
+  const fullDailyTargets = calculateMacroTargets(tdee, {
+    weight: profile.weight,
+    goal: profile.goal,
+  });
+
+  // Scale targets to reflect only the planned meals (lunch + dinner = ~65% of daily intake)
+  const dailyTargets = scaleDailyTargets(fullDailyTargets);
   const weeklyTargets = dailyToWeekly(dailyTargets);
 
   return (

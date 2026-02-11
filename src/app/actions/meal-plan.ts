@@ -8,7 +8,12 @@ import {
 import { getFullUserProfile } from "@/db/queries/profiles";
 import { auth } from "@/lib/auth";
 import type { PlanResult, ScoredRecipe, WeeklyMacroTargets } from "@/lib/meal-plan";
-import { dailyToWeekly, generateMealPlan } from "@/lib/meal-plan";
+import {
+  dailyToWeekly,
+  EXCLUDED_CATEGORIES,
+  generateMealPlan,
+  scaleDailyTargets,
+} from "@/lib/meal-plan";
 import type { MacroTargets } from "@/lib/nutrition";
 import {
   calculateBMR,
@@ -62,35 +67,40 @@ export async function generatePlan(): Promise<
     }));
 
     const tdee = calculateTDEE(bmr, { weight, activityLevel }, sportSessions);
-    const dailyTargets = calculateMacroTargets(tdee, { weight, goal });
+    const fullDailyTargets = calculateMacroTargets(tdee, { weight, goal });
+
+    // Scale targets to reflect only the planned meals (lunch + dinner = ~65% of daily intake)
+    const dailyTargets = scaleDailyTargets(fullDailyTargets);
     const weeklyTargets = dailyToWeekly(dailyTargets);
 
-    // Build recipe pool with computed macros
+    // Build recipe pool with computed macros, excluding non-meal categories
     const allRecipes = await getAllRecipesWithIngredients();
 
-    const recipePool: ScoredRecipe[] = allRecipes.map((recipe) => {
-      const macros = calculateRecipeMacros(
-        recipe.recipeIngredients.map((ri) => ({
-          name: ri.ingredient.name,
-          quantity: ri.quantity,
-          unit: ri.unit,
-          caloriesPer100g: ri.ingredient.caloriesPer100g,
-          proteinPer100g: ri.ingredient.proteinPer100g,
-          carbsPer100g: ri.ingredient.carbsPer100g,
-          fatPer100g: ri.ingredient.fatPer100g,
-        })),
-        recipe.originalPortions ?? 1,
-      );
+    const recipePool: ScoredRecipe[] = allRecipes
+      .filter((recipe) => !recipe.category || !EXCLUDED_CATEGORIES.has(recipe.category))
+      .map((recipe) => {
+        const macros = calculateRecipeMacros(
+          recipe.recipeIngredients.map((ri) => ({
+            name: ri.ingredient.name,
+            quantity: ri.quantity,
+            unit: ri.unit,
+            caloriesPer100g: ri.ingredient.caloriesPer100g,
+            proteinPer100g: ri.ingredient.proteinPer100g,
+            carbsPer100g: ri.ingredient.carbsPer100g,
+            fatPer100g: ri.ingredient.fatPer100g,
+          })),
+          recipe.originalPortions ?? 1,
+        );
 
-      return {
-        id: recipe.id,
-        title: recipe.title,
-        perServing: macros.perServing,
-        confidence: macros.confidence,
-        cuisine: recipe.cuisine,
-        category: recipe.category,
-      };
-    });
+        return {
+          id: recipe.id,
+          title: recipe.title,
+          perServing: macros.perServing,
+          confidence: macros.confidence,
+          cuisine: recipe.cuisine,
+          category: recipe.category,
+        };
+      });
 
     // Generate plan
     const plan = generateMealPlan({ weeklyTargets, recipePool });

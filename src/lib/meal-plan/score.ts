@@ -7,7 +7,13 @@
  */
 
 import type { MacroTargets } from "@/lib/nutrition";
-import { DEFAULT_WEIGHTS, DEVIATION_CEILING, MATCH_THRESHOLDS } from "./constants";
+import {
+  DAILY_BALANCE_CEILING,
+  DEFAULT_WEIGHTS,
+  DEVIATION_CEILING,
+  MATCH_THRESHOLDS,
+  MEAL_COVERAGE_RATIO,
+} from "./constants";
 import type {
   MacroScore,
   MatchColor,
@@ -16,6 +22,34 @@ import type {
   ScoringWeights,
   WeeklyMacroTargets,
 } from "./types";
+
+// ---------------------------------------------------------------------------
+// scaleDailyTargets
+// ---------------------------------------------------------------------------
+
+/**
+ * Scale full-day macro targets to reflect only the planned meals.
+ *
+ * The meal plan covers lunch + dinner (2 meals), not breakfast/snacks.
+ * This scales the TDEE-based daily targets by MEAL_COVERAGE_RATIO so the
+ * algorithm and UI compare against what these 2 meals should realistically
+ * deliver (~65% of total daily intake).
+ *
+ * @param daily - Full-day macro targets from TDEE calculation
+ * @param ratio - Fraction of daily intake covered (defaults to MEAL_COVERAGE_RATIO)
+ * @returns Scaled daily targets rounded to nearest integer
+ */
+export function scaleDailyTargets(
+  daily: MacroTargets,
+  ratio: number = MEAL_COVERAGE_RATIO,
+): MacroTargets {
+  return {
+    calories: Math.round(daily.calories * ratio),
+    protein: Math.round(daily.protein * ratio),
+    carbs: Math.round(daily.carbs * ratio),
+    fat: Math.round(daily.fat * ratio),
+  };
+}
 
 // ---------------------------------------------------------------------------
 // dailyToWeekly
@@ -137,14 +171,65 @@ export function calculateVarietyScore(slots: MealSlot[]): number {
 }
 
 // ---------------------------------------------------------------------------
+// calculateDailyBalanceScore
+// ---------------------------------------------------------------------------
+
+/**
+ * Calculate a 0-100 score for how close each day's calories are to the daily target.
+ *
+ * Uses the mean absolute percentage error (MAPE) of per-day calorie totals
+ * relative to the daily calorie target. This measures both evenness AND
+ * absolute level — "all days equally under-target" scores poorly, unlike
+ * a pure evenness metric (CV) which would give it 100.
+ *
+ * Days with no meals (e.g., incomplete plans with < 14 slots) are excluded
+ * from the calculation to avoid penalizing partial plans for empty days.
+ *
+ * @param slots - All meal slots in the plan
+ * @param dailyCalorieTarget - Target calories per day (e.g., weeklyTarget / 7)
+ * @param ceiling - MAPE at which score hits 0 (default: DAILY_BALANCE_CEILING)
+ * @returns Score from 0 to 100
+ */
+export function calculateDailyBalanceScore(
+  slots: MealSlot[],
+  dailyCalorieTarget: number,
+  ceiling: number = DAILY_BALANCE_CEILING,
+): number {
+  if (slots.length === 0) return 100;
+  if (dailyCalorieTarget === 0) return 100;
+
+  // Sum calories per day
+  const dailyCals = new Map<number, number>();
+  for (const slot of slots) {
+    dailyCals.set(
+      slot.dayIndex,
+      (dailyCals.get(slot.dayIndex) ?? 0) + slot.recipe.perServing.calories,
+    );
+  }
+
+  const values = [...dailyCals.values()];
+  if (values.length <= 1) return 100;
+
+  // Mean absolute percentage error from daily target
+  const mape =
+    values.reduce((sum, v) => sum + Math.abs(v - dailyCalorieTarget) / dailyCalorieTarget, 0) /
+    values.length;
+
+  // Linear score: MAPE=0 -> 100, MAPE>=ceiling -> 0
+  const raw = (1 - mape / ceiling) * 100;
+  return Math.max(0, Math.min(100, Math.round(raw)));
+}
+
+// ---------------------------------------------------------------------------
 // scorePlan
 // ---------------------------------------------------------------------------
 
 /**
  * Score a complete meal plan against weekly macro targets.
  *
- * Returns an overall weighted score (0-100) combining individual macro scores
- * and variety score. Uses DEFAULT_WEIGHTS if custom weights not provided.
+ * Returns an overall weighted score (0-100) combining individual macro scores,
+ * variety score, and daily calorie balance score.
+ * Uses DEFAULT_WEIGHTS if custom weights not provided.
  */
 export function scorePlan(
   slots: MealSlot[],
@@ -158,13 +243,16 @@ export function scorePlan(
   const carbsScore = macroScore(totals.carbs, weeklyTargets.carbs);
   const fatScore = macroScore(totals.fat, weeklyTargets.fat);
   const variety = calculateVarietyScore(slots);
+  const dailyCalorieTarget = weeklyTargets.calories / 7;
+  const dailyBalance = calculateDailyBalanceScore(slots, dailyCalorieTarget);
 
   const overall = Math.round(
     proteinScore.percentage * weights.protein +
       caloriesScore.percentage * weights.calories +
       carbsScore.percentage * weights.carbs +
       fatScore.percentage * weights.fat +
-      variety * weights.variety,
+      variety * weights.variety +
+      dailyBalance * weights.dailyBalance,
   );
 
   return {
@@ -174,6 +262,7 @@ export function scorePlan(
     fat: fatScore,
     calories: caloriesScore,
     variety,
+    dailyBalance,
   };
 }
 

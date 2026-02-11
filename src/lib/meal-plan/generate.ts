@@ -55,6 +55,7 @@ const ZERO_SCORE: PlanScore = {
   fat: { target: 0, actual: 0, delta: 0, percentage: 0 },
   calories: { target: 0, actual: 0, delta: 0, percentage: 0 },
   variety: 0,
+  dailyBalance: 0,
 };
 
 /**

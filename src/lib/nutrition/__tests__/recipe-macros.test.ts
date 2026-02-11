@@ -28,28 +28,26 @@ describe("calculateRecipeMacros", () => {
         4,
       );
 
-      // Total: 500g chicken (factor 5) + 300g rice (factor 3)
+      // Quantities are per-cover (per person) from Jow:
+      // 500g chicken (factor 5) + 300g rice (factor 3) = 1 serving
+      // Per serving (= sum of per-cover ingredients):
       // Calories: 5*165 + 3*130 = 825 + 390 = 1215
       // Protein: 5*31 + 3*2.7 = 155 + 8.1 = 163.1
       // Carbs: 5*0 + 3*28 = 84
       // Fat: 5*3.6 + 3*0.3 = 18 + 0.9 = 18.9
-      expect(result.totalRecipe).toEqual({
+      expect(result.perServing).toEqual({
         calories: 1215,
         protein: 163,
         carbs: 84,
         fat: 19,
       });
 
-      // Per serving (4 portions)
-      // Calories: 1215/4 = 303.75 -> 304
-      // Protein: 163.1/4 = 40.775 -> 41
-      // Carbs: 84/4 = 21
-      // Fat: 18.9/4 = 4.725 -> 5
-      expect(result.perServing).toEqual({
-        calories: 304,
-        protein: 41,
-        carbs: 21,
-        fat: 5,
+      // Total recipe = perServing * 4 portions
+      expect(result.totalRecipe).toEqual({
+        calories: 4860,
+        protein: 652,
+        carbs: 336,
+        fat: 76,
       });
 
       expect(result.confidence).toBe("high");

@@ -1,10 +1,15 @@
 /**
  * Per-serving recipe macro calculator.
  *
- * Computes total and per-serving macronutrients for a recipe by:
+ * Computes per-serving and total macronutrients for a recipe by:
  * 1. Converting each ingredient's quantity+unit to grams via unit-conversion
  * 2. Applying per-100g macro data to get absolute macros per ingredient
- * 3. Summing totals and dividing by number of portions
+ * 3. Summing to get per-serving macros (quantities are already per-cover from Jow)
+ * 4. Multiplying by portions to get total recipe macros
+ *
+ * IMPORTANT: Jow stores ingredient quantities as `quantityPerCover` (per person).
+ * The sum of converted ingredient macros already represents ONE serving.
+ * totalRecipe = perServing * originalPortions (the whole batch for all covers).
  *
  * Tracks conversion confidence and missing ingredients for data quality reporting.
  */
@@ -36,8 +41,11 @@ interface IngredientInput {
 /**
  * Calculates per-serving and total macronutrients for a recipe.
  *
+ * Ingredient quantities from Jow are `quantityPerCover` (already per-person).
+ * The sum of ingredient macros = one serving. Total recipe = perServing * portions.
+ *
  * @param ingredients - Array of ingredient inputs with quantity, unit, and per-100g macros
- * @param originalPortions - Number of servings the recipe yields (clamped to min 1)
+ * @param originalPortions - Number of servings/covers the recipe yields (clamped to min 1)
  * @returns RecipeMacrosResult with perServing, totalRecipe, confidence, and missingIngredients
  */
 export function calculateRecipeMacros(
@@ -46,10 +54,10 @@ export function calculateRecipeMacros(
 ): RecipeMacrosResult {
   const portions = originalPortions > 0 ? originalPortions : 1;
 
-  let totalCalories = 0;
-  let totalProtein = 0;
-  let totalCarbs = 0;
-  let totalFat = 0;
+  let servingCalories = 0;
+  let servingProtein = 0;
+  let servingCarbs = 0;
+  let servingFat = 0;
 
   let convertedCount = 0;
   const totalCount = ingredients.length;
@@ -76,11 +84,12 @@ export function calculateRecipeMacros(
     }
 
     // Calculate macros: factor = grams / 100
+    // Quantities are per-cover (per person), so this gives per-serving macros directly
     const factor = grams / 100;
-    totalCalories += factor * ingredient.caloriesPer100g;
-    totalProtein += factor * (ingredient.proteinPer100g ?? 0);
-    totalCarbs += factor * (ingredient.carbsPer100g ?? 0);
-    totalFat += factor * (ingredient.fatPer100g ?? 0);
+    servingCalories += factor * ingredient.caloriesPer100g;
+    servingProtein += factor * (ingredient.proteinPer100g ?? 0);
+    servingCarbs += factor * (ingredient.carbsPer100g ?? 0);
+    servingFat += factor * (ingredient.fatPer100g ?? 0);
 
     convertedCount++;
   }
@@ -101,17 +110,19 @@ export function calculateRecipeMacros(
   }
 
   return {
+    // Quantities are already per-cover — sum IS the per-serving value
     perServing: {
-      calories: Math.round(totalCalories / portions),
-      protein: Math.round(totalProtein / portions),
-      carbs: Math.round(totalCarbs / portions),
-      fat: Math.round(totalFat / portions),
+      calories: Math.round(servingCalories),
+      protein: Math.round(servingProtein),
+      carbs: Math.round(servingCarbs),
+      fat: Math.round(servingFat),
     },
+    // Total recipe = per-serving * number of covers
     totalRecipe: {
-      calories: Math.round(totalCalories),
-      protein: Math.round(totalProtein),
-      carbs: Math.round(totalCarbs),
-      fat: Math.round(totalFat),
+      calories: Math.round(servingCalories * portions),
+      protein: Math.round(servingProtein * portions),
+      carbs: Math.round(servingCarbs * portions),
+      fat: Math.round(servingFat * portions),
     },
     confidence,
     convertedCount,

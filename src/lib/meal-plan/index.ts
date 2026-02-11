@@ -9,21 +9,26 @@
  */
 
 export {
+  DAILY_BALANCE_CEILING,
   DAYS_PER_WEEK,
   DEFAULT_ITERATIONS,
   DEFAULT_MAX_LOCAL_PASSES,
   DEFAULT_WEIGHTS,
   DEVIATION_CEILING,
+  EXCLUDED_CATEGORIES,
   MATCH_THRESHOLDS,
+  MEAL_COVERAGE_RATIO,
   MEALS_PER_DAY,
   TOTAL_MEALS,
 } from "./constants";
 export { generateMealPlan } from "./generate";
 export {
+  calculateDailyBalanceScore,
   calculateVarietyScore,
   dailyToWeekly,
   macroScore,
   matchColor,
+  scaleDailyTargets,
   scorePlan,
   sumMacros,
 } from "./score";

@@ -90,6 +90,8 @@ export interface PlanScore {
   calories: MacroScore;
   /** Variety score (0-100) */
   variety: number;
+  /** Daily calorie balance score (0-100): 100 = perfectly even across days */
+  dailyBalance: number;
 }
 
 /** Complete plan result with slots, score, and warnings. */
@@ -118,6 +120,8 @@ export interface ScoringWeights {
   fat: number;
   /** Weight for variety score */
   variety: number;
+  /** Weight for daily calorie balance score */
+  dailyBalance: number;
 }
 
 /** Parameters for the meal plan generation algorithm. */
