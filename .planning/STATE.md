@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-08)
 
 **Core value:** L'utilisateur obtient un plan de repas hebdomadaire optimise pour ses macros sans avoir a choisir les recettes lui-meme.
-**Current focus:** Phase 6: Basic Meal Plan Generation (In progress)
+**Current focus:** Phase 6: Basic Meal Plan Generation (Complete)
 
 ## Current Position
 
 Phase: 6 (Basic Meal Plan Generation)
-Plan: 04 of 5 complete
-Status: In progress
-Last activity: 2026-02-10 - Completed 06-04-PLAN.md (server actions and UI prep)
+Plan: 05 of 5 complete
+Status: Phase complete
+Last activity: 2026-02-11 - Completed 06-05-PLAN.md (/plan page UI)
 
-Progress: [#########.] 97% (36/37 plans)
+Progress: [##########] 100% (37/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 36
+- Total plans completed: 37
 - Average duration: 5min
-- Total execution time: 3.06 hours
+- Total execution time: 3.13 hours
 
 **By Phase:**
 
@@ -34,11 +34,11 @@ Progress: [#########.] 97% (36/37 plans)
 | 04 | 4/4 | 28min | 7min |
 | 04.1 | 6/6 | 25min | 4min |
 | 05 | 4/4 | 13min | 3min |
-| 06 | 4/5 | 12min | 3min |
+| 06 | 5/5 | 16min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 5min, 3min, 3min, 4min, 2min
-- Trend: consistent speed, simple wiring plans fastest
+- Last 5 plans: 3min, 3min, 4min, 2min, 4min
+- Trend: consistent speed, UI wiring plans fast
 
 *Updated after each plan completion*
 
@@ -142,6 +142,10 @@ Recent decisions affecting current work:
 - [06-03]: ZERO_SCORE constant extracted for reuse as initial bestScore comparator and emptyResult score
 - [06-03]: Local optimization uses greedy first-improvement per slot (not best-of-all swaps) -- good enough for <100ms performance
 - [06-04]: saveMealPlan imported as saveMealPlanDB to avoid name clash with savePlan server action
+- [06-05]: max-w-7xl container (wider than dashboard) to fit 7-column grid
+- [06-05]: Horizontal scroll with snap on mobile (< lg breakpoint) instead of stacked cards
+- [06-05]: One-click generation with immediate preview, plan NOT auto-saved -- explicit Sauvegarder button
+- [06-05]: Toast notifications via sonner for save feedback
 
 ### Pending Todos
 
@@ -167,8 +171,8 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-10T10:45:21Z
-Stopped at: Completed 06-04-PLAN.md (server actions and UI prep)
+Last session: 2026-02-11T04:54:00Z
+Stopped at: Completed 06-05-PLAN.md (/plan page UI) -- Phase 6 complete
 Resume file: None
 
 ## Phase 1 Status
@@ -253,7 +257,7 @@ Plan 04 complete: Macro dashboard at /dashboard with daily calorie/P/G/L targets
 
 ## Phase 6 Status
 
-**IN PROGRESS** - 4 of 5 plans complete
+**COMPLETE** - All 5 plans executed successfully
 
 Plan 01 complete: Meal plan scoring module -- 9 types (WeeklyMacroTargets, ScoredRecipe, MealSlot, MacroScore, PlanScore, PlanResult, ScoringWeights, GenerationParams, MatchColor), 8 constants (DEFAULT_WEIGHTS, MATCH_THRESHOLDS, DEVIATION_CEILING, etc.), 6 pure scoring functions (scorePlan, macroScore, sumMacros, calculateVarietyScore, dailyToWeekly, matchColor), 27 unit tests via TDD.
 
@@ -262,3 +266,5 @@ Plan 02 complete: DB schema and queries -- mealPlans + mealPlanSlots tables with
 Plan 03 complete: Generation algorithm via TDD -- generateMealPlan with random-restart hill-climbing (50 iterations default) and local single-swap optimization (3 passes default), confidence-based pre-filtering, seeded random for determinism, 16 unit tests (43 total in module).
 
 Plan 04 complete: Server actions and UI prep -- generatePlan server action chains full nutrition pipeline (auth -> profile -> BMR -> TDEE -> macroTargets -> dailyToWeekly -> recipePool -> generateMealPlan), savePlan persists plan + slots to DB. shadcn progress/collapsible/tooltip installed. Header "Mon plan" link added.
+
+Plan 05 complete: /plan page UI with 5 meal-plan components (MatchBadge, MealSlotCard, DailySummary, WeeklySummary, WeeklyGrid), responsive 7-column CSS Grid for desktop / horizontal scroll with snap for mobile, one-click generation with skeleton loading, explicit save flow with toast notifications. User-approved via checkpoint.
